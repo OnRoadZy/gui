@@ -5,9 +5,9 @@
 
 @defclass/title[editor-canvas% object% (canvas<%>)]{
 
-An @racket[editor-canvas%] object manages and displays a
- @racket[text%] or @racket[pasteboard%] object.
-
+@;{An @racket[editor-canvas%] object manages and displays a
+ @racket[text%] or @racket[pasteboard%] object.}
+一个@racket[editor-canvas%]对象管理和显示一个@racket[text%]或@racket[pasteboard%]对象。
 
 @defconstructor[([parent (or/c (is-a?/c frame%) (is-a?/c dialog%) 
                                (is-a?/c panel%) (is-a?/c pane%))]
@@ -32,14 +32,16 @@ An @racket[editor-canvas%] object manages and displays a
                  [stretchable-width any/c #t]
                  [stretchable-height any/c #t])]{
 
-If a canvas is initialized with @racket[#f] for @racket[editor],
- install an editor later with @method[editor-canvas% set-editor].
+@;{If a canvas is initialized with @racket[#f] for @racket[editor],
+ install an editor later with @method[editor-canvas% set-editor].}
+如果一个画布用@racket[#f]对@racket[editor]初始化，安装一个编辑器晚于@method[editor-canvas% set-editor]。
 
-The @racket[style] list can contain the following flags:
+@;{The @racket[style] list can contain the following flags:}
+  @racket[style]列表可以容纳以下的标志：
 
 @itemize[
 
- @item{@racket['no-border] --- omits a border around the canvas}
+ @item{@racket['no-border] @;{--- omits a border around the canvas}——省略画布周围的边框；}
 
  @item{@racket['control-border] --- gives the canvas a border that is
                               like a @racket[text-field%] control}

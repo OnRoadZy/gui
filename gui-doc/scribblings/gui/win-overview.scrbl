@@ -1,102 +1,115 @@
 #lang scribble/doc
 @(require scribble/eval "common.rkt" "diagrams.rkt")
 
-@title[#:tag "windowing-overview"]{Windowing}
+@;{@title[#:tag "windowing-overview"]{Windowing}}
+@title[#:tag "windowing-overview"]{窗口}
 
-The windowing toolbox provides the basic building blocks of GUI
+@;{The windowing toolbox provides the basic building blocks of GUI
  programs, including frames (top-level windows), modal dialogs, menus,
  buttons, check boxes, text fields, and radio buttons---all as
- classes.
+ classes.}
+窗口工具箱提供了GUI程序的基本构建块，包括框架（顶层窗口）、模式对话框、菜单、按钮、复选框、文本字段和单选按钮，这些都是类。
 
-@margin-note{See @secref["classes" #:doc '(lib
+@;{@margin-note{See @secref["classes" #:doc '(lib
 "scribblings/guide/guide.scrbl")] for an introduction to classes and
-interfaces in Racket.}
+interfaces in Racket.}}
+@margin-note{有关Racket中类和接口的介绍，请参见《@secref["类和对象（Classes and Objects）" #:doc '(lib
+"scribblings/guide/guide.scrbl")]》。}
 
-@section{Creating Windows}
+@;{@section{Creating Windows}}
+@section{创建窗口}
 
-To create a new top-level window, instantiate the @racket[frame%]
- class:
+@;{To create a new top-level window, instantiate the @racket[frame%]
+ class:}
+要创建新的顶级窗口，请实例化frame%类：
 
 @racketblock[
-(code:comment @#,t{Make a frame by instantiating the @racket[frame%] class})
+(code:comment @#,t{@;{Make a frame by instantiating the @racket[frame%] class}通过实例化一个@racket[frame%]类制作一个框架})
 (define frame (new frame% [label "Example"]))
  
-(code:comment @#,t{Show the frame by calling its @method[top-level-window<%> show] method})
+(code:comment @#,t{@;{Show the frame by calling its @method[top-level-window<%> show] method}通过调用框架的@method[top-level-window<%> show]方法显示这个框架})
 (send frame #,(:: top-level-window<%> show) #t)
 ]
 
-The built-in classes provide various mechanisms for handling GUI
+@;{The built-in classes provide various mechanisms for handling GUI
  events. For example, when instantiating the @racket[button%] class,
  supply an event callback procedure to be invoked
  when the user clicks the button. The following example program
  creates a frame with a text message and a button; when the user
- clicks the button, the message changes:
+ clicks the button, the message changes:}
+内置类为处理GUI事件提供了各种机制。例如，在实例化@racket[button%]类时，提供一个事件回调过程，当用户单击该按钮时调用该过程。下面的示例程序创建一个带有文本消息和按钮的框架；当用户单击按钮时，消息将更改：
 
 @racketblock[
-(code:comment @#,t{Make a frame by instantiating the @racket[frame%] class})
+(code:comment @#,t{@;{Make a frame by instantiating the @racket[frame%] class}通过实例化一个@racket[frame%]类制作一个框架})
 (define frame (new frame% [label "Example"]))
 
-(code:comment @#,t{Make a static text message in the frame})
+(code:comment @#,t{@;{Make a static text message in the frame}在框架内制作一个静态文本信息})
 (define msg (new message% [parent frame]
                           [label "No events so far..."]))
 
-(code:comment @#,t{Make a button in the frame})
+(code:comment @#,t{@;{Make a button in the frame}在框架中制作按钮})
 (new button% [parent frame] 
              [label "Click Me"]
-             (code:comment @#,t{Callback procedure for a button click:})
+             (code:comment @#,t{@;{Callback procedure for a button click:}按钮点击的回调过程：})
              [callback (lambda (button event) 
                          (send msg #,(method message% set-label) "Button click"))])
 
-(code:comment @#,t{Show the frame by calling its @racket[show] method})
+(code:comment @#,t{@;{Show the frame by calling its @racket[show] method}通过调用框架的@racket[show]方法显示框架})
 (send frame #,(:: top-level-window<%> show) #t)
 ]
 
-Programmers never implement the GUI event loop directly. Instead, the
+@;{Programmers never implement the GUI event loop directly. Instead, the
  windowing system automatically pulls each event from an internal queue and
  dispatches the event to an appropriate window. The dispatch invokes
  the window's callback procedure or calls one of the window's
  methods. In the above program, the windowing system automatically invokes the
  button's callback procedure whenever the user clicks @onscreen{Click
- Me}.
+ Me}.}
+程序员从不直接实现GUI事件循环。相反，窗口系统会自动将每个事件从内部队列中拉出来，并将事件分派到适当的窗口中。调度调用窗口的回调过程或调用窗口的某个方法。在上面的程序中，每当用户单击@onscreen{Click
+ Me}时，窗口系统自动调用按钮的回调过程。
 
-If a window receives multiple kinds of events, the events are
+@;{If a window receives multiple kinds of events, the events are
  dispatched to methods of the window's class instead of to a callback
  procedure. For example, a drawing canvas receives update events,
  mouse events, keyboard events, and sizing events; to handle them,
  derive a new class from the built-in
  @racket[canvas%] class and override the event-handling methods. The
  following expression extends the frame created above with a canvas
- that handles mouse and keyboard events:
+ that handles mouse and keyboard events:}
+如果一个窗口接收到多种类型的事件，那么这些事件将被调度到该窗口类的方法，而不是回调过程。例如，绘图画布接收更新事件、鼠标事件、键盘事件和大小调整事件；要处理这些事件，请从内置的@racket[canvas%]类派生一个新类，并重写事件处理方法。以下表达式扩展了上面创建的框架，该框架具有处理鼠标和键盘事件的画布：
 
 @racketblock[
-(code:comment @#,t{Derive a new canvas (a drawing window) class to handle events})
+(code:comment @#,t{@;{Derive a new canvas (a drawing window) class to handle events}派生新的画布（绘图窗口）类以处理事件})
 (define my-canvas%
-  (class canvas% (code:comment @#,t{The base class is @racket[canvas%]})
-    (code:comment @#,t{Define overriding method to handle mouse events})
+  (class canvas% (code:comment @#,t{@;{The base class is @racket[canvas%]}基类是@racket[canvas%]})
+    (code:comment @#,t{@;{Define overriding method to handle mouse events}定义用于处理鼠标事件的重写方法})
     (define/override (#,(:: canvas<%> on-event) event)
       (send msg #,(:: message% set-label) "Canvas mouse"))
-    (code:comment @#,t{Define overriding method to handle keyboard events})
+    (code:comment @#,t{@;{Define overriding method to handle keyboard events}定义重写方法以处理键盘事件})
     (define/override (#,(:: canvas<%> on-char) event)
       (send msg #,(:: message% set-label) "Canvas keyboard"))
-    (code:comment @#,t{Call the superclass init, passing on all init args})
+    (code:comment @#,t{@;{Call the superclass init, passing on all init args}调用超类初始化，传递所有初始化参数})
     (super-new)))
 
-(code:comment @#,t{Make a canvas that handles events in the frame})
+(code:comment @#,t{@;{Make a canvas that handles events in the frame}制作一个画布来处理框架中的事件})
 (new my-canvas% [parent frame])
 ]
 
-After running the above code, manually resize the frame to see the
+@;{After running the above code, manually resize the frame to see the
  new canvas.  Moving the cursor over the canvas calls the canvas's
  @method[canvas<%> on-event] method with an object representing a
  motion event. Clicking on the canvas calls @method[canvas<%>
  on-event]. While the canvas has the keyboard focus, typing on the
- keyboard invokes the canvas's @method[canvas<%> on-char] method.
+ keyboard invokes the canvas's @method[canvas<%> on-char] method.}
+运行上述代码后，手动调整框架大小以查看新画布。将光标移动到画布上会调用画布的 @method[canvas<%> on-event]方法，其中对象表示运动事件。单击画布调用@method[canvas<%>
+ on-event]事件。当画布具有键盘焦点时，在键盘上键入将调用画布的@method[canvas<%> on-char]方法。
 
-The windowing system dispatches GUI events sequentially; that is, after invoking
+@;{The windowing system dispatches GUI events sequentially; that is, after invoking
  an event-handling callback or method, the windowing system waits until the
  handler returns before dispatching the next event. To illustrate the
  sequential nature of events, extend the frame again, adding a
- @onscreen{Pause} button:
+ @onscreen{Pause} button:}
+窗口化系统按顺序发送GUI事件；也就是说，在调用事件处理回调或方法之后，窗口化系统等待处理程序返回，然后再调度下一个事件。要说明事件的顺序性，请再次扩展帧，添加一个@onscreen{Pause}按钮：
 
 @racketblock[
 (new button% [parent frame] 
@@ -104,12 +117,13 @@ The windowing system dispatches GUI events sequentially; that is, after invoking
              [callback (lambda (button event) (sleep 5))])
 ]
 
-After the user clicks @onscreen{Pause}, the entire frame becomes
+@;{After the user clicks @onscreen{Pause}, the entire frame becomes
  unresponsive for five seconds; the windowing system cannot dispatch more events
  until the call to @racket[sleep] returns. For more information about
- event dispatching, see @secref["eventspaceinfo"].
+ event dispatching, see @secref["eventspaceinfo"].}
+用户单击@onscreen{Pause}后，整个帧将停止响应5秒钟；窗口系统无法发送更多事件，直到调用@racket[sleep]返回。有关事件调度的详细信息，请参阅《事件调度和事件空间（Event Dispatching and Eventspaces）@secref["eventspaceinfo"]》。
 
-In addition to dispatching events, the GUI classes also handle the
+@;{In addition to dispatching events, the GUI classes also handle the
  graphical layout of windows. Our example frame demonstrates a simple
  layout; the frame's elements are lined up top-to-bottom. In general,
  a programmer specifies the layout of a window by assigning each GUI
@@ -117,7 +131,8 @@ In addition to dispatching events, the GUI classes also handle the
  as a frame, arranges its children in a column, and a horizontal
  container arranges its children in a row. A container can be a child
  of another container; for example, to place two buttons side-by-side
- in our frame, create a horizontal panel for the new buttons:
+ in our frame, create a horizontal panel for the new buttons:}
+除了调度事件之外，GUI类还处理窗口的图形布局。我们的示例框架演示了一个简单的布局；框架的元素从上到下排列。通常，程序员通过将每个GUI元素分配给父@tech{容器（container）}来指定窗口的布局。垂直容器（如框架）将其子容器排列在一列中，水平容器将其子容器排列在一行中。容器可以是另一个容器的子容器；例如，要在框架中并排放置两个按钮，请为新按钮创建一个水平面板：
 
 @racketblock[
 (define panel (new horizontal-panel% [parent frame]))
@@ -131,13 +146,15 @@ In addition to dispatching events, the GUI classes also handle the
                          (send msg #,(:: message% set-label) "Right click"))])
 ]
 
-For more information about window layout and containers, see
- @secref["containeroverview"].
+@;{For more information about window layout and containers, see
+ @secref["containeroverview"].}
+有关窗口布局和容器的详细信息，请参见《几何图形管理（ Geometry Management）@secref["containeroverview"]》。
 
 
-@section[#:tag "canvas-drawing"]{Drawing in Canvases}
+@;{@section[#:tag "canvas-drawing"]{Drawing in Canvases}}
+@section[#:tag "canvas-drawing"]{在画布中画图}
 
-The content of a canvas is determined by its @method[canvas% on-paint]
+@;{The content of a canvas is determined by its @method[canvas% on-paint]
 method, where the default @method[canvas% on-paint] calls the
 @racket[paint-callback] function that is supplied when the canvas is
 created. The @method[canvas% on-paint] method receives no arguments
@@ -146,10 +163,12 @@ and uses the canvas's @method[canvas<%> get-dc] method to obtain a
 (DC) for drawing; the default @method[canvas% on-paint] method passes
 the canvas and this DC on to the @racket[paint-callback] function.
 Drawing operations of the @racket[racket/draw] toolbox on the DC are
-reflected in the content of the canvas onscreen.
+reflected in the content of the canvas onscreen.}
+画布的内容由其@method[canvas% on-paint]方法确定，其中默认的@method[canvas% on-paint]调用在创建画布时提供的@racket[paint-callback]函数。@method[canvas% on-paint]方法不接收任何参数，并使用画布的@method[canvas<%> get-dc]方法获取@tech[#:doc '(lib "scribblings/draw/draw.scrbl")]{绘图上下文}（DC）；默认的@method[canvas% on-paint]方法将画布和此DC传递给 @racket[paint-callback]函数。DC上的@racket[racket/draw]工具箱的绘制操作反映在屏幕上画布的内容中。
 
-For example, the following program creates a canvas
-that displays large, friendly letters:
+@;{For example, the following program creates a canvas
+that displays large, friendly letters:}
+例如，下面的程序创建一个画布，显示大而友好的字母：
 
 @racketblock[
 (define frame (new frame% 
@@ -165,108 +184,133 @@ that displays large, friendly letters:
 (send frame #,(:: top-level-window<%> show) #t)
 ]
 
-The background color of a canvas can be set through the
+@;{The background color of a canvas can be set through the
 @method[canvas<%> set-canvas-background] method. To make the canvas
 transparent (so that it takes on its parent's color and texture as its
 initial content), supply @racket['transparent] in the @racket[style]
-argument when creating the canvas.
+argument when creating the canvas.}
+画布的背景色可以通过@method[canvas<%> set-canvas-background]方法进行设置。要使画布透明（以便它以其父级的颜色和纹理作为初始内容），请在创建画布时在@racket[style]参数中提供@racket['transparent]。
 
-See @secref["overview" #:doc '(lib "scribblings/draw/draw.scrbl")] in
+@;{See @secref["overview" #:doc '(lib "scribblings/draw/draw.scrbl")] in
 @other-doc['(lib "scribblings/draw/draw.scrbl")] for an overview of
 drawing with the @racket[racket/draw] library. For more advanced
-information on canvas drawing, see @secref["animation"].
+information on canvas drawing, see @secref["animation"].}
+有关使用@racket[racket/draw]库绘制的概述，请参见《@secref["Racket绘图工具包（The Racket Drawing Toolkit）" #:doc '(lib "scribblings/draw/draw.scrbl")]》中的概述。有关画布绘制的更多高级信息，请参见《画布中的动画（Animation in Canvases）@secref["animation"]》。
 
+@;{@section{Core Windowing Classes}}
+@section{1.3 核心窗口类}
 
-@section{Core Windowing Classes}
-
-The fundamental graphical element in the windowing toolbox is an
+@;{The fundamental graphical element in the windowing toolbox is an
  @deftech{area}. The following classes implement the different types
- of areas in the windowing toolbox:
+ of areas in the windowing toolbox:}
+窗口工具箱中的基本图形元素是一个@deftech{area}。以下类实现了窗口工具箱中不同类型的区域：
 
 @itemize[
 
- @item{@deftech{Containers} --- areas that can
- contain other areas:
+ @item{@;{@deftech{Containers} --- areas that can
+ contain other areas:}
+         @deftech{容器（Containers）}——可以包含其他区域的区域：
 
  @itemize[
 
- @item{@racket[frame%] --- a @deftech{frame} is a top-level window
+ @item{@;{@racket[frame%] --- a @deftech{frame} is a top-level window
  that the user can move and resize.}
+   @racket[frame%]——一个@deftech{框架（frame）}是一个顶级窗口，用户可以移动和调整其大小。}
 
- @item{@racket[dialog%] --- a @deftech{dialog} is a modal top-level
+ @item{@;{@racket[dialog%] --- a @deftech{dialog} is a modal top-level
  window; when a dialog is shown, other top-level windows are disabled
  until the dialog is dismissed.}
+   @racket[dialog%]——@deftech{对话框（dialog）}是模式顶级窗口；显示对话框时，其他顶级窗口将被禁用，直到对话框被取消。}
 
- @item{@racket[panel%] --- a @deftech{panel} is a subcontainer
+ @item{@;{@racket[panel%] --- a @deftech{panel} is a subcontainer
  within a container. The toolbox provides three subclasses of
  @racket[panel%]: @racket[vertical-panel%],
  @racket[horizontal-panel%], and @racket[tab-panel%].}
+   @racket[panel%]——@deftech{容器（panel）}是容器中的子容器。工具箱提供了 @racket[panel%]的三个子类： @racket[vertical-panel%]、
+ @racket[horizontal-panel%]和@racket[tab-panel%]。}
 
- @item{@racket[pane%] --- a @deftech{pane} is a lightweight panel.
+ @item{@;{@racket[pane%] --- a @deftech{pane} is a lightweight panel.
  It has no graphical representation or event-handling capabilities.
  The @racket[pane%] class has three subclasses:
  @racket[vertical-pane%], @racket[horizontal-pane%], and
  @racket[grow-box-spacer-pane%].}
+    racket[pane%]——@deftech{窗格（pane）}是轻量级的面板。它没有图形表示或事件处理功能。@racket[pane%]类有三个子类：@racket[vertical-pane%]、@racket[horizontal-pane%]和@racket[grow-box-spacer-pane%]。}
 
  ]}
 
- @item{@deftech{Containees} --- areas that must be
- contained within other areas:
+ @item{@;{@deftech{Containees} --- areas that must be
+ contained within other areas:}
+  @deftech{窗格（Containees）}——必须包含在其他区域中的区域：
 
  @itemize[
 
- @item{@racket[panel%] --- a panel is a containee as well as
+ @item{@;{@racket[panel%] --- a panel is a containee as well as
  a container.}
+    @racket[panel%]——panel既是窗格也是容器。}
 
- @item{@racket[pane%] --- a pane is a containee as well as a
+ @item{@;{@racket[pane%] --- a pane is a containee as well as a
  container.}
+    @racket[pane%]——pane既是窗格也是容器。}
 
- @item{@racket[canvas%] --- a @deftech{canvas} is a subwindow for
+ @item{@;{@racket[canvas%] --- a @deftech{canvas} is a subwindow for
  drawing on the screen.}
+   @racket[canvas%]——@deftech{画布（canvas）}是在屏幕上绘制的子窗口。}
 
- @item{@racket[editor-canvas%] --- an @deftech{editor canvas} is a
+ @item{@;{@racket[editor-canvas%] --- an @deftech{editor canvas} is a
  subwindow for displaying a text editor or pasteboard editor. The
  @racket[editor-canvas%] class is documented with the editor classes
  in @secref["editor-overview"].}
+    @racket[editor-canvas%]——@deftech{编辑器画布（editor-canvas）}是用于显示文本编辑器或粘贴板编辑器的子窗口。@racket[editor-canvas%]类与《编辑器（ Editors）》@secref["editor-overview"]中的编辑器类一起记录。}
 
- @item{@deftech{Controls} --- containees that the user can manipulate:
+ @item{@;{@deftech{Controls} --- containees that the user can manipulate:
+    @deftech{控件（Controls）}——包含用户可以操作的内容：}
 
  @itemize[
 
-   @item{@racket[message%] --- a @deftech{message} is a static
+   @item{@;{@racket[message%] --- a @deftech{message} is a static
    text field or bitmap with no user interaction.}
+     @racket[message%]——@deftech{消息(message)}是一个静态文本字段或位图，没有用户交互。}
 
-   @item{@racket[button%] --- a @deftech{button} is a clickable
+   @item{@;{@racket[button%] --- a @deftech{button} is a clickable
    control.}
+     @racket[button%]——@deftech{按钮(button)}是可单击的控件。}
 
-   @item{@racket[check-box%] --- a @deftech{check box} is a
+   @item{@;{@racket[check-box%] --- a @deftech{check box} is a
    clickable control; the user clicks the control to set or remove
    its check mark.}
+     @racket[check-box%]——@deftech{复选框（check box）}是可单击的控件，用户单击该控件以设置或删除其复选标记。}
 
-   @item{@racket[radio-box%] --- a @deftech{radio box} is a
+   @item{@;{@racket[radio-box%] --- a @deftech{radio box} is a
    collection of mutually exclusive @deftech{radio buttons}; when the
    user clicks a radio button, it is selected and the radio box's
    previously selected radio button is deselected.}
+     @racket[radio-box%]——@deftech{单选框（radio box）}是互相排斥的单选按钮的集合；当用户单击某个单选按钮时，将选中该单选框，并取消选中该单选框以前选定的单选按钮。}
 
-   @item{@racket[choice%] --- a @deftech{choice item} is a pop-up
+   @item{@;{@racket[choice%] --- a @deftech{choice item} is a pop-up
    menu of text choices; the user selects one item in the control.}
+     @racket[choice%]——@deftech{选择项（choice item）}是文本选项的弹出菜单，用户在控件中选择一项。}
 
-   @item{@racket[list-box%] --- a @deftech{list box} is a
+   @item{@;{@racket[list-box%] --- a @deftech{list box} is a
    scrollable lists of text choices; the user selects one or more
    items in the list (depending on the style of the list box).}
+     @racket[list-box%]——@deftech{列表框（list box）}是文本选项的可滚动列表，用户选择列表中的一个或多个项目（取决于列表框的样式）。}
 
-   @item{@racket[text-field%] --- a @deftech{text field} is a box
+   @item{@;{@racket[text-field%] --- a @deftech{text field} is a box
    for simple text entry.}
+      @racket[text-field%]—— @deftech{文本字段（text field）}是用于简单文本输入的框。}
 
-   @item{@racket[combo-field%] --- a @deftech{combo field} combines
+   @item{@;{@racket[combo-field%] --- a @deftech{combo field} combines
    a text field with a pop-up menu of choices.}
+     @racket[combo-field%]——@deftech{组合字段（combo field）}将文本字段与弹出的选项菜单组合在一起。}
 
-   @item{@racket[slider%] --- a @deftech{slider} is a dragable
+   @item{@;{@racket[slider%] --- a @deftech{slider} is a dragable
    control that selects an integer value within a fixed range.}
+     @racket[slider%]——@deftech{滑块（slider）}是一个可拖动的控件，用于选择固定范围内的整数值。}
 
-   @item{@racket[gauge%] --- a @deftech{gauge} is an output-only
+   @item{@;{@racket[gauge%] --- a @deftech{gauge} is an output-only
    control (the user cannot change the value) for reporting an integer
    value within a fixed range.}
+     @racket[gauge%]——@deftech{计数器（gauge）}是一个仅输出的控件（用户不能更改该值），用于报告固定范围内的整数值。}
 
   ]}
 
@@ -274,33 +318,37 @@ The fundamental graphical element in the windowing toolbox is an
 
 ]
 
-As suggested by the above listing, certain @tech{areas}, called
+@;{As suggested by the above listing, certain @tech{areas}, called
  @tech{containers}, manage certain other areas, called
  @tech{containees}. Some areas, such as panels, are both
- @tech{containers} and @tech{containees}.
+ @tech{containers} and @tech{containees}.}
+正如上面的列表所建议的，某些区域（@tech{area}），称为容器（@tech{container}），管理某些其他区域，称为集装箱（@tech{containee}）。有些区域，如面板，既是@tech{容器}又是@tech{集装箱}。
 
-Most areas are @deftech{windows}, but some are
+@;{Most areas are @deftech{windows}, but some are
  @deftech{non-windows}. A @tech{window}, such as a @tech{panel}, has a
  graphical representation, receives keyboard and mouse events, and can
  be disabled or hidden.  In contrast, a @tech{non-window}, such as a
  @tech{pane}, is useful only for geometry management; a
  @tech{non-window} does not receive mouse events, and it cannot be
- disabled or hidden.
+ disabled or hidden.}
+大多数区域是@deftech{窗口（windows）}，但有些是@deftech{非窗户（non-windows）}。 @tech{窗口}（如 @tech{panel（面板）}）具有图形表示，接收键盘和鼠标事件，可以禁用或隐藏。相反，@tech{非窗口}（如@tech{pane（窗格）}）仅对几何图形管理有用；非窗口不接收鼠标事件，并且不能禁用或隐藏。
 
-Every @tech{area} is an instance of the @racket[area<%>]
+@;{Every @tech{area} is an instance of the @racket[area<%>]
  interface. Each @tech{container} is also an instance of the
  @racket[area-container<%>] interface, whereas each @tech{containee}
  is an instance of @racket[subarea<%>]. @tech{Windows} are instances
  of @racket[window<%>]. The @racket[area-container<%>],
  @racket[subarea<%>], and @racket[window<%>] interfaces are
- subinterfaces of @racket[area<%>].
+ subinterfaces of @racket[area<%>].}
+每个@tech{area}（区域）都是@racket[area<%>]接口的实例。每个@tech{container}（容器）也是 @racket[area-container<%>]接口的实例，而每个窗格是@racket[subarea<%>]的实例。@tech{Windows}（窗口）是 @racket[window<%>]的实例。@racket[area-container<%>]、@racket[subarea<%>]和@racket[window<%>]接口是@racket[area<%>]的子接口。
 
-The following diagram shows more of the type hierarchy under
- @racket[area<%>]:
+@;{The following diagram shows more of the type hierarchy under
+ @racket[area<%>]:}
+下图显示了在area<%>下的更多类型层次结构：
 
 @diagram->table[short-windowing-diagram]
 
-The diagram below extends the one above to show the complete type
+@;{The diagram below extends the one above to show the complete type
  hierarchy under @racket[area<%>]. (Some of the types are represented
  by interfaces, and some types are represented by classes. In
  principle, every area type should be represented by an interface, but
@@ -308,76 +356,82 @@ The diagram below extends the one above to show the complete type
  the corresponding interface is omitted from the toolbox.)  To avoid
  intersecting lines, the hierarchy is drawn for a cylindrical surface;
  lines from @racket[subarea<%>] and @racket[subwindow<%>] wrap from
- the left edge of the diagram to the right edge.
+ the left edge of the diagram to the right edge.}
+下面的图扩展了上面的图，以显示@racket[area<%>]下的完整类型层次结构。（有些类型由接口表示，有些类型由类表示。原则上，每种区域类型都应该用一个接口来表示，但是只要窗口工具箱提供了具体的实现，相应的接口就会从工具箱中省略。）为了避免交叉线，将为柱面绘制层次结构；@racket[subarea<%>] 和@racket[subwindow<%>]的线从图表的左边缘到右边缘换行。
 
 @diagram->table[windowing-diagram]
 
-Menu bars, menus, and menu items are graphical elements, but not areas
+@;{Menu bars, menus, and menu items are graphical elements, but not areas
  (i.e., they do not have all of the properties that are common to
  areas, such as an adjustable graphical size).  Instead, the menu
- classes form a separate container--containee hierarchy:
+ classes form a separate container--containee hierarchy:}
+菜单栏、菜单和菜单项是图形元素，但不是区域（即，它们没有区域通用的所有属性，如可调图形大小）。相反，菜单类形成了一个单独的容器—窗格层次结构：
 
 @itemize[
 
- @item{@deftech{Menu Item Containers}
+ @item{@deftech{@;{Menu Item Containers}菜单项容器}
 
   @itemize[
 
-  @item{@racket[menu-bar%] --- a @deftech{menu bar} is a top-level
-  collection of menus that are associated with a frame.}
+  @item{@racket[menu-bar%]@;{ --- a @deftech{menu bar} is a top-level
+  collection of menus that are associated with a frame.}——菜单栏是与框架关联的顶级菜单集合。}
 
-  @item{@racket[menu%] --- a @deftech{menu} contains a set of menu
+  @item{@racket[menu%]@;{ --- a @deftech{menu} contains a set of menu
   items. The menu can appear in a menu bar, in a popup menu, or as a
-  submenu in another menu.}
+  submenu in another menu.}——一个菜单包含一组菜单项。菜单可以出现在菜单栏、弹出菜单或其他菜单的子菜单中。}
 
-  @item{@racket[popup-menu%] --- a @deftech{popup menu} is a
+  @item{@racket[popup-menu%]@;{ --- a @deftech{popup menu} is a
   top-level menu that is dynamically displayed in a canvas or
-  editor canvas.}
+  editor canvas.}——弹出菜单是动态显示在画布或编辑器画布中的顶级菜单。}
 
   ]}
   
- @item{@deftech{Menu Items}
+ @item{@deftech{@;{Menu Items}菜单项}
 
   @itemize[
   
-  @item{@racket[separator-menu-item%] --- a @deftech{separator} is
-  an unselectable line in a menu or popup menu.}
+  @item{@racket[separator-menu-item%]@;{ --- a @deftech{separator} is
+  an unselectable line in a menu or popup menu.}——分隔符是菜单或弹出菜单中不可选择的行。}
 
-  @item{@racket[menu-item%] --- a @deftech{plain menu item} is a
+  @item{@racket[menu-item%]@;{ --- a @deftech{plain menu item} is a
   selectable text item in a menu. When the item is selected, its
-  callback procedure is invoked.}
+  callback procedure is invoked.}——纯菜单项是菜单中可选择的文本项。当选择该项时，将调用其回调过程。}
 
-  @item{@racket[checkable-menu-item%] --- a @deftech{checkable menu
+  @item{@racket[checkable-menu-item%]@;{ --- a @deftech{checkable menu
   item} is a text item in a menu; the user selects a checkable menu
-  item to toggle a check mark next to the item.}
+  item to toggle a check mark next to the item.}——可选中菜单项是菜单中的文本项，用户选择可选中菜单项以切换该项旁边的复选标记。}
 
-  @item{@racket[menu%] --- a menu is a menu item as well as a menu
-  item container.}
+  @item{@racket[menu%]@;{ --- a menu is a menu item as well as a menu
+  item container.}——菜单是菜单项和菜单项容器。}
 
   ]}
 
 ]
 
-The following diagram shows the complete type hierarchy for the menu
-system:
+@;{The following diagram shows the complete type hierarchy for the menu
+system:}
+下图显示了菜单系统的完整类型层次结构：
 
 @diagram->table[menu-diagram]
 
 @; ------------------------------------------------------------------------
 
-@section[#:tag "containeroverview"]{Geometry Management}
+@;{@section[#:tag "containeroverview"]{Geometry Management}}
+@section[#:tag "containeroverview"]{几何管理}
 
-The windowing toolbox's geometry management makes it easy to design windows that look
+@;{The windowing toolbox's geometry management makes it easy to design windows that look
  right on all platforms, despite different graphical representations
  of GUI elements. Geometry management is based on containers; each
  container arranges its children based on simple constraints, such as
- the current size of a frame and the natural size of a button.
+ the current size of a frame and the natural size of a button.}
+窗口工具箱的几何图形管理使得设计在所有平台上都看起来正确的窗口变得容易，尽管图形用户界面元素的图形表示方式不同。几何管理基于容器；每个容器根据简单的约束（如框架的当前大小和按钮的自然大小）排列其子容器。
 
-The built-in container classes include horizontal panels (and panes),
+@;{The built-in container classes include horizontal panels (and panes),
  which align their children in a row, and vertical panels (and panes),
  which align their children in a column. By nesting horizontal and
  vertical containers, a programmer can achieve most any layout.  For
- example, to construct a dialog with the shape
+ example, to construct a dialog with the shape}
+内置容器类包括水平面板（和窗格）和垂直面板（和窗格），水平面板（和窗格）将它们的子级排成一行，垂直面板（和窗格）将它们的子级排成一列。通过嵌套水平和垂直容器，程序员可以实现大多数布局。例如，要用形状构造一个对话框
 
 @verbatim[#:indent 2]{
   ------------------------------------------------------
@@ -390,30 +444,31 @@ The built-in container classes include horizontal panels (and panes),
   ------------------------------------------------------
 }
 
-with the following program:
+@;{with the following program:}
+使用以下程序：
 
 @racketblock[
-(code:comment @#,t{Create a dialog})
+(code:comment @#,t{@;{Create a dialog}创建一个对话框})
 (define dialog (instantiate dialog% ("Example")))
 
-(code:comment @#,t{Add a text field to the dialog})
+(code:comment @#,t{@;{Add a text field to the dialog}添加一个文本字段到对话框})
 (new text-field% [parent dialog] [label "Your name"])
 
-(code:comment @#,t{Add a horizontal panel to the dialog, with centering for buttons})
+(code:comment @#,t{@;{Add a horizontal panel to the dialog, with centering for buttons}添加一个水平面板(horizontal panel)到对话框})
 (define panel (new horizontal-panel% [parent dialog]
                                      [alignment '(center center)]))
 
-(code:comment @#,t{Add @onscreen{Cancel} and @onscreen{Ok} buttons to the horizontal panel})
+(code:comment @#,t{@;{Add @onscreen{Cancel} and @onscreen{Ok} buttons to the horizontal panel}添加@onscreen{Cancel}和@onscreen{Ok}按钮到水平面板})
 (new button% [parent panel] [label "Cancel"])
 (new button% [parent panel] [label "Ok"])
 (when (system-position-ok-before-cancel?)
   (send panel #,(:: area-container<%> change-children) reverse))
 
-(code:comment @#,t{Show the dialog})
+(code:comment @#,t{@;{Show the dialog}显示对话框})
 (send dialog #,(:: dialog% show) #t)
 ]
 
-Each container arranges its children using the natural size of each
+@;{Each container arranges its children using the natural size of each
  child, which usually depends on instantiation parameters of the
  child, such as the label on a button or the number of choices in a
  radio box. In the above example, the dialog stretches horizontally to
@@ -421,48 +476,53 @@ Each container arranges its children using the natural size of each
  vertically to match the total height of the field and the
  buttons. The dialog then stretches the horizontal panel to fill the
  bottom half of the dialog. Finally, the horizontal panel uses the sum
- of the buttons' minimum widths to center them horizontally.
+ of the buttons' minimum widths to center them horizontally.}
+每个容器使用每个子容器的自然大小排列其子容器，通常取决于子容器的实例化参数，例如按钮上的标签或单选框中的选项数。在上面的示例中，对话框水平延伸以匹配文本字段的最小宽度，垂直延伸以匹配字段和按钮的总高度。然后，对话框拉伸水平面板以填充对话框的下半部分。最后，水平面板使用按钮的最小宽度之和使它们水平居中。
 
-As the example demonstrates, a stretchable container grows to fill its
+@;{As the example demonstrates, a stretchable container grows to fill its
  environment, and it distributes extra space among its stretchable
  children. By default, panels are stretchable in both directions,
  whereas buttons are not stretchable in either direction. The
  programmer can change whether an individual GUI element is
- stretchable.
+ stretchable.}
+如示例所示，一个可伸缩容器增长以填充其环境，并在其可伸缩子容器之间分配额外的空间。默认情况下，面板在两个方向都可以拉伸，而按钮在两个方向都不能拉伸。程序员可以更改单个GUI元素是否可伸缩。
 
-The following subsections describe the container system in detail,
+@;{The following subsections describe the container system in detail,
  first discussing the attributes of a containee in
  @secref["containees"], and then describing
  the attributes of a container in
  @secref["containers"]. In addition to the
  built-in vertical and horizontal containers, programmers can define
  new types of containers as discussed in the final subsection,
- @secref["new-containers"].
+ @secref["new-containers"].}
+下面的小节将详细描述容器系统，首先在《@secref["containers"]》中讨论集装箱的属性，然后在《@secref["containers"]》中描述容器的属性。除了内置的垂直和水平容器外，程序员还可以定义新类型容器，如最后一小节《定义新类型的容器（ Defining New Types of Containers）》@secref["containees"]中讨论的那样。
 
+@;{@subsection[#:tag "containees"]{Containees}}
+@subsection[#:tag "containees"]{集装箱}
 
-@subsection[#:tag "containees"]{Containees}
-
-Each @tech{containee}, or child, has the following properties:
+@;{Each @tech{containee}, or child, has the following properties:}
+每个@tech{集装箱（containee）}或子级具有以下属性：
 
 @itemize[
  
- @item{a @deftech{graphical minimum width} and a @deftech{graphical minimum height};}
+ @item{@;{a @deftech{graphical minimum width} and a @deftech{graphical minimum height};}@deftech{图形最小宽度（graphical minimum width）}和@deftech{图形最小高度（graphical minimum height）}；}
 
- @item{a @deftech{requested minimum width} and a @deftech{requested minimum height};}
+ @item{@;{a @deftech{requested minimum width} and a @deftech{requested minimum height};}@deftech{要求的最小宽度（requested minimum width）}和@deftech{要求的最小高度（requested minimum height）}；}
 
- @item{horizontal and vertical @deftech{stretchability} (on or off); and}
+ @item{@;{horizontal and vertical @deftech{stretchability} (on or off); and}水平和垂直 @deftech{伸缩性（stretchability）}（开或关），以及}
 
- @item{horizontal and vertical @tech{margins}.}
+ @item{@;{horizontal and vertical @tech{margins}.}水平和垂直边距。}
 
 ]
 
-A @tech{container} arranges its children based on these four
+@;{A @tech{container} arranges its children based on these four
  properties of each @tech{containee}. A @tech{containee}'s parent
  container is specified when the @tech{containee} is created. A window
  @tech{containee} can be @tech{hidden} or @tech{deleted} within its
- parent, and its parent can be changed by @tech{reparent}ing.
+ parent, and its parent can be changed by @tech{reparent}ing.}
+@tech{容器}根据每个@tech{集装箱}的这四个属性排列其子容器。创建@tech{集装箱}时指定@tech{集装箱}的父容器。一个窗口@tech{集装箱}在他的父级内可以是@tech{被隐藏（hidden）}或@tech{被删除（deleted）}，并且可以通过@tech{重新定父级（reparent）}来更改其父级。
 
-The @deftech{graphical minimum size} of a particular containee, as
+@;{The @deftech{graphical minimum size} of a particular containee, as
  reported by @method[area<%> get-graphical-min-size], depends on the
  platform, the label of the containee (for a control), and style
  attributes specified when creating the containee. For example, a
@@ -471,17 +531,19 @@ The @deftech{graphical minimum size} of a particular containee, as
  button) cannot be changed; it is fixed at creation time. (A control's
  minimum size is @italic{not} recalculated when its label is changed.)
  The graphical minimum size of a panel or pane depends on the total
- minimum size of its children and the way that they are arranged.
+ minimum size of its children and the way that they are arranged.}
+作为 @method[area<%> get-graphical-min-size]报告的，一个特定窗格的@deftech{图形最小尺寸（graphical minimum size}取决于创建窗格时所指定的平台、窗格的标签（对于控件）以及样式属性。例如，按钮的最小图形尺寸确保标签的整个文本可见。控件（如按钮）的最小图形大小无法更改；它在创建时被固定。（控件的最小尺寸在其标签更改时@italic{不会}重新计算。）面板或窗格的图形最小尺寸取决于其子级的总最小尺寸和排列方式。
 
-To select a size for a containee, its parent container considers the
+@;{To select a size for a containee, its parent container considers the
  containee's @deftech{requested minimum size} rather than its
  graphical minimum size (assuming the requested minimum is larger than
  the graphical minimum). Unlike the graphical minimum, the requested
  minimum size of a containee can be changed by a programmer at any
  time using the @method[area<%> min-width] and
- @method[area<%> min-height] methods.
+ @method[area<%> min-height] methods.}
+要为窗格选择尺寸，其父容器将考虑窗格的@deftech{请求最小尺寸（requested minimum size）}，而不是其图形最小尺寸（假定请求的最小尺寸大于图形最小尺寸）。与图形最小尺寸不同，程序员可以随时使用@method[area<%> min-width]和@method[area<%> min-height]方法更改容器的请求最小尺寸。
 
-Unless a containee is stretchable (in a particular direction), it
+@;{Unless a containee is stretchable (in a particular direction), it
  always shrinks to its minimum size (in the corresponding
  direction). Otherwise, containees are stretched to fill all available
  space in a container. Each containee begins with a default
@@ -489,9 +551,10 @@ Unless a containee is stretchable (in a particular direction), it
  whereas a one-line text field is initially stretchable in the
  horizontal direction. A programmer can change the stretchability of a
  containee at any time using the @method[area<%> stretchable-width]
- and @method[area<%> stretchable-height] methods.
+ and @method[area<%> stretchable-height] methods.}
+除非容器是可拉伸的（在特定方向），否则它总是收缩到最小尺寸（在相应方向）。否则，容器被拉伸以填充容器中的所有可用空间。每个集装箱（containee）都以默认的可伸缩性开始。例如，按钮最初不可拉伸，而单行文本字段最初可在水平方向拉伸。程序员可以使用@method[area<%> stretchable-width]和@method[area<%> stretchable-height]方法随时更改容器的可伸缩性。
 
-A @deftech{margin} is space surrounding a containee. Each containee's
+@;{A @deftech{margin} is space surrounding a containee. Each containee's
  margin is independent of its minimum size, but from the container's
  point of view, a margin effectively increases the minimum size of the
  containee. For example, if a button has a vertical margin of
@@ -500,17 +563,21 @@ A @deftech{margin} is space surrounding a containee. Each containee's
  that is allocated for the button's minimum height. A programmer can
  adjust a containee's margin with @method[subarea<%> horiz-margin] and
  @method[subarea<%> vert-margin]. The default margin is @racket[2] for
- a control, and @racket[0] for any other type of containee.
+ a control, and @racket[0] for any other type of containee.}
+@deftech{边距（margin）}是围绕集装箱的空间。每个集装箱的边距与其最小尺寸无关，但从视图的容器角度来看，边距有效地增加了容器的最小尺寸。例如，如果按钮的垂直边距为@racket[2]，则容器必须分配足够的空间，以便在按钮的上方和下方保留两个像素的空间，以及为按钮的最小高度分配的空间。程序员可以用@method[subarea<%> horiz-margin]和@method[subarea<%> vert-margin]调整集装箱的边距。控件的默认边距为@racket[2]，任何其他类型的集装箱的默认边距为@racket[0]。
 
-In practice, the @tech{requested minimum size} and @tech{margin} of a
+@;{In practice, the @tech{requested minimum size} and @tech{margin} of a
  control are rarely changed, although they are often changed for a
  canvas. @tech{Stretchability} is commonly adjusted for any type of
- containee, depending on the visual effect desired by the programmer.
+ containee, depending on the visual effect desired by the programmer.}
+实际上，控件的@tech{请求最小尺寸（requested minimum size）}和@tech{边距（margin）}很少更改，尽管它们经常更改为画布。根据编程人员所需的视觉效果，@tech{可伸缩性（stretchability)}通常适用于任何类型的集装箱。
 
 
-@subsection[#:tag "containers"]{Containers}
+@;{@subsection[#:tag "containers"]{Containers}}
+@subsection[#:tag "containers"]{容器}
 
-A container has the following properties:
+@;{A container has the following properties:}
+容器具有以下属性：
 
 @itemize[
  
