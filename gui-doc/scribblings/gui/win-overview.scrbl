@@ -731,75 +731,88 @@ The widths and heights for both the input and output include the
  placing the control.
 
 
-@section[#:tag "mouseandkey"]{Mouse and Keyboard Events}
+@;{@section[#:tag "mouseandkey"]{Mouse and Keyboard Events}}
+@section[#:tag "mouseandkey"]{鼠标和键盘事件}
 
-Whenever the user moves the mouse, clicks or releases a mouse button,
+@;{Whenever the user moves the mouse, clicks or releases a mouse button,
  or presses a key on the keyboard, an event is generated for some
  window. The window that receives the event depends on the current
- state of the graphic display:
+ state of the graphic display:}
+每当用户移动鼠标、单击或释放鼠标按钮或按下键盘上的键时，就会为某些窗口生成一个事件。接收事件的窗口取决于图形显示的当前状态：
 
 @itemize[
 
- @item{@index['("mouse events" "overview")]{The} receiving window of a
+ @item{@;{@index['("mouse events" "overview")]{The} receiving window of a
  mouse event is usually the window under the cursor when the mouse is
  moved or clicked. If the mouse is over a child window, the child
- window receives the event rather than its parent.
+ window receives the event rather than its parent.}
+@index['("mouse events" "overview")]{鼠标事件的接收窗口}通常是鼠标移动或单击时光标下的窗口。如果鼠标位于子窗口上，则子窗口将接收事件，而不是其父窗口。
 
- When the user clicks in a window, the window ``grabs'' the mouse, so
+ @;{When the user clicks in a window, the window ``grabs'' the mouse, so
  that @italic{all} mouse events go to that window until the mouse
  button is released (regardless of the location of the cursor). As a
  result, a user can click on a scrollbar thumb and drag it without
- keeping the cursor strictly inside the scrollbar control.
+ keeping the cursor strictly inside the scrollbar control.}
+当用户在窗口中单击时，窗口“抓取”鼠标，以便@italic{所有}鼠标事件都转到该窗口，直到释放鼠标按钮（无论光标的位置如何）。因此，用户可以单击滚动条拇指并拖动它，而不必将光标严格保留在滚动条控件内。
 
- A mouse button-release event is normally generated for each mouse
+@;{ A mouse button-release event is normally generated for each mouse
  button-down event, but a button-release event might get dropped. For
  example, a modal dialog might appear and take over the mouse. More
  generally, any kind of mouse event can get dropped in principle, so
  avoid algorithms that depend on precise mouse-event sequences. For
  example, a mouse tracking handler should reset the tracking state
  when it receives an event other than a dragging event.}
+通常会为每个鼠标按钮按下事件生成一个鼠标按钮释放事件，但按钮释放事件可能会被丢弃。例如，可能会出现模式对话框并接管鼠标。更一般地说，任何类型的鼠标事件原则上都可以被丢弃，因此避免使用依赖于精确鼠标事件序列的算法。例如，当鼠标跟踪处理程序接收到拖动事件以外的事件时，它应该重置跟踪状态。}
 
- @item{@index['("keyboard focus" "overview")]{@index['("keyboard
+ @item{@;{@index['("keyboard focus" "overview")]{@index['("keyboard
  events" "overview")]{The}} receiving window of a keyboard event is
  the window that owns the @deftech{keyboard focus} at the time of the
  event. Only one window owns the focus at any time, and focus
  ownership is typically displayed by a window in some manner. For
  example, a text field control shows focus ownership by displaying a
- blinking caret.
+ blinking caret.}
+@index['("keyboard focus" "overview")]{@index['("keyboard
+ events" "overview")]{键盘事件的接收窗口}}是事件发生时拥有@deftech{键盘焦点}的窗口。任何时候只有一个窗口拥有焦点，焦点所有权通常由窗口以某种方式显示。例如，文本字段控件通过显示闪烁的插入符号来显示焦点所有权。
 
- Within a top-level window, only certain kinds of subwindows can have
+ @;{Within a top-level window, only certain kinds of subwindows can have
  the focus, depending on the conventions of the platform. Furthermore,
  the subwindow that initially owns the focus is platform-specific. A
  user can moves the focus in various ways, usually by clicking the
  target window. A program can use the @method[window<%> focus] method
- to move the focus to a subwindow or to set the initial focus.
+ to move the focus to a subwindow or to set the initial focus.}
+在一个顶级窗口中，根据平台的约定，只有某些类型的子窗口可以具有焦点。此外，最初拥有焦点的子窗口是特定于平台的。用户可以通过多种方式移动焦点，通常是通过单击目标窗口。程序可以使用@method[window<%> focus]方法将焦点移动到子窗口或设置初始焦点。
 
- A @indexed-racket['wheel-up] or @indexed-racket['wheel-down]
+@;{ A @indexed-racket['wheel-up] or @indexed-racket['wheel-down]
  event may be sent to a window other than the one with the keyboard
- focus, depending on how the operating system handles wheel events.
+ focus, depending on how the operating system handles wheel events.}
+根据操作系统处理滚轮事件的方式，可以将@indexed-racket['wheel-up]或@indexed-racket['wheel-down]事件发送到键盘焦点窗口以外的其他窗口。 
 
- A key-press event may correspond to either an actual key press or an
+@;{ A key-press event may correspond to either an actual key press or an
  auto-key repeat. Multiple key-press events without intervening
  key-release events normally indicate an auto-key. Like any input
  event, however, key-release events sometimes get dropped (e.g., due
  to the appearance of a modal dialog).}
+一个按键事件可能对应于实际按键或自动按键重复。不干预按键释放事件的多个按键事件通常表示自动按键。但是，与任何输入事件一样，密钥发布事件有时会被删除（例如，由于模式对话框的出现）。}
 
 ]
 
-Controls, such as buttons and list boxes, handle keyboard and mouse
+@;{Controls, such as buttons and list boxes, handle keyboard and mouse
  events automatically, eventually invoking the callback procedure that
  was provided when the control was created. A canvas propagates mouse
  and keyboard events to its @method[canvas<%> on-event] and
- @method[canvas<%> on-char] methods, respectively.
+ @method[canvas<%> on-char] methods, respectively.}
+控件（如按钮和列表框）自动处理键盘和鼠标事件，最终调用创建控件时提供的回调过程。画布将鼠标和键盘事件分别传播到其 @method[canvas<%> on-event]和@method[canvas<%> on-char]方法。
 
-@index['("events" "delivery")]{A} mouse and keyboard event is
+@;{@index['("events" "delivery")]{A} mouse and keyboard event is
  delivered in a special way to its window. Each ancestor of the
  receiving window gets a chance to intercept the event through the
  @method[window<%> on-subwindow-event] and @method[window<%>
  on-subwindow-char] methods. See the method descriptions for more
- information.
+ information.}
+@index['("events" "delivery")]{鼠标和键盘事件}以特殊方式传递到其窗口。接收窗口的每个祖先都有机会通过@method[window<%> on-subwindow-event]和@method[window<%>
+ on-subwindow-char]方法截获事件。有关详细信息，请参见方法说明。
 
-@index['("keyboard focus" "navigation")]{The} default
+@;{@index['("keyboard focus" "navigation")]{The} default
  @method[window<%> on-subwindow-char] method for a top-level window
  intercepts keyboard events to detect menu-shortcut events and
  focus-navigation events. See @xmethod[frame% on-subwindow-char] and
@@ -811,7 +824,9 @@ Controls, such as buttons and list boxes, handle keyboard and mouse
  invokes the system menu on Windows, but this shortcut is
  implemented by @method[top-level-window<%> on-system-menu-char],
  which is called by @xmethod[frame% on-subwindow-char] and
- @xmethod[dialog% on-subwindow-char].)
+ @xmethod[dialog% on-subwindow-char].)}
+@index['("keyboard focus" "navigation")]{顶级窗口的默认@method[window<%> on-subwindow-char]方法}截取键盘事件以检测菜单快捷方式事件和焦点导航事件。有关详细信息，请参见@xmethod[frame% on-subwindow-char] and
+ @xmethod[dialog% on-subwindow-char]。某些特定于操作系统的密钥组合是在低级别捕获的，不能重写。例如，在Windows和Unix上，按下并释放Alt总是将键盘焦点移动到菜单栏。同样，Alt-Tab在Windows上切换到不同的应用程序。（Alt-Space调用Windows上的系统菜单，但此快捷方式是由@method[top-level-window<%> on-system-menu-char]实现的，该命令在@xmethod[frame% on-subwindow-char]和@xmethod[dialog% on-subwindow-char]上调用。）
 
 @; ------------------------------------------------------------------------
 
