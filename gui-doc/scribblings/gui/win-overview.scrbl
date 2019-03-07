@@ -581,67 +581,81 @@ system:}
 
 @itemize[
  
- @item{a list of (non-deleted) children containees;}
+ @item{@;{a list of (non-deleted) children containees;}
+  包含（未删除）子集装箱的列表；}
 
- @item{a requested minimum width and a requested minimum height;}
+ @item{@;{a requested minimum width and a requested minimum height;}
+  要求的最小宽度和最小高度；}
 
- @item{a spacing used between the children;}
+ @item{@;{a spacing used between the children;}
+  子级之间的间隔；}
 
- @item{a border margin used around the total set of children;}
+ @item{@;{a border margin used around the total set of children;}
+ 边框边距用于围绕在整个子级集合周围；}
 
- @item{horizontal and vertical stretchability (on or off); and}
+ @item{@;{horizontal and vertical stretchability (on or off); and}
+  水平和垂直伸缩性（开或关）；以及}
 
- @item{an alignment setting for positioning leftover space.}
+ @item{@;{an alignment setting for positioning leftover space.}
+  对齐设置以用于定位剩余空间。}
 
 ]
 
-These properties are factored into the container's calculation of its
+@;{These properties are factored into the container's calculation of its
  own size and the arrangement of its children. For a container that is
  also a containee (e.g., a panel), the container's requested minimum
- size and stretchability are the same as for its containee aspect.
+ size and stretchability are the same as for its containee aspect.}
+这些属性被分解到容器本身的尺寸计算和子容器的排列中。对于也是集装箱的容器（例如，面板），容器需求最小尺寸和可伸展性与其集装箱方面相同。
 
-A containee's parent container is specified when the containee is
+@;{A containee's parent container is specified when the containee is
  created. A containee
  window can be @tech{hidden} or @tech{deleted} within its parent
  container, and its parent can be changed by @tech{reparent}ing
  (but a non-window containee cannot be @tech{hidden},
- @tech{deleted}, or @tech{reparent}ed):
+ @tech{deleted}, or @tech{reparent}ed):}
+创建集装箱时指定集装箱的父容器。集装箱窗口可以在其父容器中@tech{隐藏（hidden）}或@tech{删除（deleted）}，并且可以通过@tech{重新设置（reparent）}来更改其父容器（但非窗口集装箱不能@tech{隐藏}、@tech{删除}或@tech{重新设置}）：
 
 @itemize[
 
- @item{A @deftech{hidden} child is invisible to the user, but space is
+ @item{@;{A @deftech{hidden} child is invisible to the user, but space is
  still allocated for each hidden child within a container. To hide or
  show a child, call the child's @method[window<%> show] method.}
+@deftech{隐藏（hidden）}的子级对用户不可见，但仍为容器中的每个隐藏子级分配空间。要隐藏或显示子级，请调用子级的@method[window<%> show]方法。}
 
- @item{A @deftech{deleted} child is hidden @italic{and} ignored by
+ @item{@;{A @deftech{deleted} child is hidden @italic{and} ignored by
  container as it arranges its other children, so no space is reserved
  in the container for a deleted child.  To make a child deleted or
  non-deleted, call the container's @method[area-container<%>
  delete-child] or @method[area-container<%> add-child] method (which
  calls the child's @method[window<%> show] method).}
+已@deftech{删除（deleted）}的子级在排列其其他子级时被容器隐藏并忽略，因此容器中没有为已删除的子级保留空间。若要使子级被删除或未被删除，请调用容器的@method[area-container<%>
+ delete-child]或@method[area-container<%> add-child]方法（该方法调用子级的@method[window<%> show]方法）。}
 
- @item{To @deftech{reparent} a window containee, use the
+ @item{@;{To @deftech{reparent} a window containee, use the
  @method[subwindow<%> reparent] method. The window retains its
  @tech{hidden} or @tech{deleted} status within its new parent.}
+ 要重新分析窗口窗格，请使用reparent方法。窗口将其隐藏或删除状态保留在新父级中。}
 
 ]
 
-When a child is created, it is initially shown and non-deleted. A
+@;{When a child is created, it is initially shown and non-deleted. A
  deleted child is subject to garbage collection when no external
  reference to the child exists. A list of non-deleted children (hidden
  or not) is available from a container through its
- @method[area-container<%> get-children] method.
+ @method[area-container<%> get-children] method.}
+创建子级时，它最初会显示并不会被删除。如果不存在对子级的外部引用，则删除的子级将受到垃圾收集的影响。通过容器的@method[area-container<%> get-children]方法，可以从容器中获得未删除子项（隐藏或未删除）的列表。
 
-The order of the children in a container's non-deleted list is
+@;{The order of the children in a container's non-deleted list is
  significant. For example, a vertical panel puts the first child in
  its list at the top of the panel, and so on. When a new child is
  created, it is put at the end of its container's list of
  children. The order of a container's list can be changed dynamically
  via the @method[area-container<%> change-children] method. (The
  @method[area-container<%> change-children] method can also be used to
- activate or deactivate children.)
+ activate or deactivate children.)}
+容器的未删除列表中子级的顺序非常重要。例如，垂直面板将第一个子项放在面板顶部的列表中，依此类推。创建新的子级时，它将放在其容器的子级列表的末尾。容器列表的顺序可以通过@method[area-container<%> change-children]方法动态更改。（@method[area-container<%> change-children]方法也可用于激活或停用子项。）
 
-The @tech{graphical minimum size} of a container, as reported by
+@;{The @tech{graphical minimum size} of a container, as reported by
  @method[area<%> get-graphical-min-size], is calculated by combining
  the minimum sizes of its children (summing them or taking the
  maximum, as appropriate to the layout strategy of the container)
@@ -649,9 +663,11 @@ The @tech{graphical minimum size} of a container, as reported by
  minimum may be specified by the programmer using @method[area<%>
  min-width] and @method[area<%> min-height] methods; when the computed
  minimum for a container is larger than the programmer-specified
- minimum, then the programmer-specified minimum is ignored.
+ minimum, then the programmer-specified minimum is ignored.}
+根据 @method[area<%> get-graphical-min-size]报告，容器的@tech{图形最小尺寸}是通过结合其子级的最小尺寸（求和或取最大值，根据容器的布局策略）以及容器的间距和边界边距来计算的。程序员可以使用@method[area<%>
+ min-width]和@method[area<%> min-height]方法指定较大的最小值；当容器的计算最小值大于程序员指定的最小值时，则忽略程序员指定的最小值。
 
-A container's spacing determines the amount of space left between
+@;{A container's spacing determines the amount of space left between
  adjacent children in the container, in addition to any space required
  by the children's margins. A container's border margin determines the
  amount of space to add around the collection of children; it
@@ -659,15 +675,17 @@ A container's spacing determines the amount of space left between
  can be placed.  A programmer can adjust a container's border and
  spacing dynamically via the @method[area-container<%> border] and
  @method[area-container<%> spacing] methods. The default border and
- spacing are @racket[0] for all container types.
+ spacing are @racket[0] for all container types.}
+容器的间距决定了容器中相邻子容器之间的剩余空间量，以及子容器边距所需的任何空间。容器的边界边距决定了在子集合周围添加的空间量；它有效地减少了容器中可以放置子集合的区域。程序员可以通过边界@method[area-container<%> border]和@method[area-container<%> spacing]方法动态调整容器的边界和间距。所有容器类型的默认边框和间距均为@racket[0]。
 
-Because a panel or pane is a containee as well as a container, it has
+@;{Because a panel or pane is a containee as well as a container, it has
  a containee margin in addition to its border margin. For a panel,
  these margins are not redundant because the panel can have a
  graphical border; the border is drawn inside the panel's containee
- margin, but outside the panel's border margin.
+ margin, but outside the panel's border margin.}
+因为面板或窗格既是集装箱又是容器，所以除了边界边距外，它还有一个集装箱边界。对于面板，这些边距不是多余的，因为面板可以有图形边框；边框绘制在面板的包含边距内，但不在面板的边框边距外。
 
-For a top-level-window container, such as a frame or dialog, the
+@;{For a top-level-window container, such as a frame or dialog, the
  container's stretchability determines whether the user can resize the
  window to something larger than its minimum size. Thus, the user
  cannot resize a frame that is not stretchable. For other types of
@@ -678,9 +696,10 @@ For a top-level-window container, such as a frame or dialog, the
  which is intended as a lightweight spacer class rather than a useful
  container class---but a programmer can change the stretchability of
  an area at any time via the @method[area<%> stretchable-width] and
- @method[area<%> stretchable-height] methods.
+ @method[area<%> stretchable-height] methods.}
+对于顶级窗口容器（如框架或对话框），容器的可伸缩性决定了用户是否可以将窗口调整为大于其最小大小的大小。因此，用户无法调整不可拉伸的框架的尺寸。对于其他类型的容器（即面板和窗格），容器的可伸缩性是其作为其他容器中集装箱的可伸缩性。所有类型的容器最初都可以在两个方向上进行拉伸，但g@racket[grow-box-spacer-pane%]的实例除外，后者旨在作为轻型间隔类而不是有用的容器类，但是程序员可以通过@method[area<%> stretchable-width]和@method[area<%> stretchable-height]方法随时更改区域的可拉伸性。
 
-The alignment specification for a container determines how it
+@;{The alignment specification for a container determines how it
  positions its children when the container has leftover space. (A
  container can only have leftover space in a particular direction when
  none of its children are stretchable in that direction.) For example,
@@ -689,11 +708,13 @@ The alignment specification for a container determines how it
  accumulated to the right.  When the container's horizontal alignment
  is @indexed-racket['center], each child is horizontally centered in
  the container. A container's alignment is changed with the
- @method[area-container<%> set-alignment] method.
+ @method[area-container<%> set-alignment] method.}
+容器的对齐规范决定了当容器有剩余空间时如何定位其子容器。（当容器的子级都不可拉伸时，容器只能在特定方向上具有剩余空间。）例如，当容器的水平对齐为@indexed-racket['left]时，子级在容器中左对齐，剩余空间累积到右侧。当容器的水平对齐方式为@indexed-racket['center]时，每个子容器在容器中水平居中。容器的对齐方式使用@method[area-container<%> set-alignment]方法更改。
 
-@subsection[#:tag "new-containers"]{Defining New Types of Containers}
+@;{@subsection[#:tag "new-containers"]{Defining New Types of Containers}}
+@subsection[#:tag "new-containers"]{定义新类型的容器}
 
-Although nested horizontal and vertical containers can express most
+@;{Although nested horizontal and vertical containers can express most
  layout patterns, a programmer can define a new type of container with
  an explicit layout procedure. A programmer defines a new type of
  container by deriving a class from @racket[panel%] or @racket[pane%]
@@ -704,32 +725,36 @@ Although nested horizontal and vertical containers can express most
  width and height of the container. The @method[area-container<%>
  place-children] method takes the container's size and a list of size
  specifications for each child, and returns a list of sizes and
- placements (in parallel to the original list).
+ placements (in parallel to the original list).}
+尽管嵌套的水平和垂直容器可以表示大多数布局模式，但是程序员可以使用显式布局过程定义一种新类型的容器。程序员通过从@racket[panel%]或@racket[pane%]派生类并重写@method[area-container<%> container-size]和@method[area-container<%> place-children]方法来定义新类型的容器。@method[area-container<%> container-size]方法获取每个子级的大小规范列表，并返回两个值：容器的最小宽度和高度。@method[area-container<%>
+ place-children]方法获取容器的大小和每个子容器的大小规范列表，并返回大小和位置列表（与原始列表并行）。
 
-An input size specification is a list of four values:
-
-@itemize[
- @item{the child's minimum width;}
- @item{the child's minimum height;}
- @item{the child's horizontal stretchability (@racket[#t] means stretchable, @racket[#f] means not stretchable); and}
- @item{the child's vertical stretchability.}
-]
-
-For @method[area-container<%> place-children], an output
- position and size specification is a list of four values:
+@;{An input size specification is a list of four values:}
+输入尺寸规格是由四个值组成的列表：
 
 @itemize[
- @item{the child's new horizontal position (relative to the parent);}
- @item{the child's new vertical position;}
- @item{the child's new actual width;}
- @item{the child's new actual height.}
+ @item{@;{the child's minimum width;}子级的最小宽度；}
+ @item{@;{the child's minimum height;}子级的最小高度；}
+ @item{@;{the child's horizontal stretchability (@racket[#t] means stretchable, @racket[#f] means not stretchable); and}子级的水平可伸展性（@racket[#t]表示可伸展，@racket[#f]表示不可伸展）；以及}
+ @item{@;{the child's vertical stretchability.}子级的垂直可伸展性。}
 ]
 
-The widths and heights for both the input and output include the
+@;{For @method[area-container<%> place-children], an output
+ position and size specification is a list of four values:}
+对于@method[area-container<%> place-children]，输出位置和尺寸规格是由四个值组成的列表：
+
+@itemize[
+ @item{@;{the child's new horizontal position (relative to the parent);}子级的新水平位置（相对于父级）；}
+ @item{@;{the child's new vertical position;}子级新的垂直位置；}
+ @item{@;{the child's new actual width;}子级的新实际宽度；}
+ @item{@;{the child's new actual height.}子级的实际高度。}
+]
+
+@;{The widths and heights for both the input and output include the
  children's margins. The returned position for each child is
  automatically incremented to account for the child's margin in
- placing the control.
-
+ placing the control.}
+输入和输出的宽度和高度包括子级的边距。每个子控件的返回位置将自动递增，以说明放置控件时子控件的边距。
 
 @;{@section[#:tag "mouseandkey"]{Mouse and Keyboard Events}}
 @section[#:tag "mouseandkey"]{鼠标和键盘事件}
@@ -830,11 +855,12 @@ The widths and heights for both the input and output include the
 
 @; ------------------------------------------------------------------------
 
-@section[#:tag "eventspaceinfo"]{Event Dispatching and Eventspaces}
+@;{@section[#:tag "eventspaceinfo"]{Event Dispatching and Eventspaces}}
+@section[#:tag "eventspaceinfo"]{事件调度和事件空间}
 
 @section-index["events" "dispatching"]
 
-A graphical user interface is an inherently multi-threaded system: one
+@;{A graphical user interface is an inherently multi-threaded system: one
  thread is the program managing windows on the screen, and the other
  thread is the user moving the mouse and typing at the keyboard. GUI
  programs typically use an @deftech{event queue} to translate this
@@ -843,15 +869,17 @@ A graphical user interface is an inherently multi-threaded system: one
  time, ignoring further user actions until the previous one is
  completely handled. The conversion from a multi-threaded process to a
  single-threaded one greatly simplifies the implementation of GUI
- programs.
+ programs.}
+图形用户界面是一个固有的多线程系统：一个线程是屏幕上管理窗口的程序，另一个线程是用户移动鼠标并在键盘上键入。GUI程序通常使用一个@deftech{事件队列（event queue）}将这个多线程系统转换成一个连续的系统，至少从程序员的角度来看是这样的。每个用户操作一次处理一个，忽略其他用户操作，直到前一个操作被完全处理。从多线程进程到单线程进程的转换大大简化了GUI程序的实现。
 
-Despite the programming convenience provided by a purely sequential
+@;{Despite the programming convenience provided by a purely sequential
  event queue, certain situations require a less rigid dialog with
- the user:
+ the user:}
+尽管纯顺序事件队列提供了编程便利性，但某些情况下需要与用户进行较不严格的对话：
 
 @itemize[
 
- @item{@italic{Nested event handling:} In the process of handling an
+ @item{@;{@italic{Nested event handling:} In the process of handling an
  event, it may be necessary to obtain further information from the
  user. Usually, such information is obtained via a modal dialog; in
  whatever fashion the input is obtained, more user events must be
@@ -860,8 +888,9 @@ Despite the programming convenience provided by a purely sequential
  the original event must explicitly @deftech{yield} to the
  system. Yielding causes events to be handled in a nested manner,
  rather than in a purely sequential manner.}
+@italic{嵌套事件处理：}在处理事件的过程中，可能需要从用户那里获得进一步的信息。通常，这些信息是通过模式对话框获得的；无论以何种方式获得输入，在完全处理原始事件之前，必须接收和处理更多的用户事件。为了进一步处理事件，原始事件的处理程序必须显式地向系统@deftech{让步（yield）}。让步导致事件以嵌套的方式处理，而不是以纯粹的顺序方式处理。}
 
- @item{@italic{Asynchronous event handling:} An application may
+ @item{@;{@italic{Asynchronous event handling:} An application may
  consist of windows that represent independent dialogs with the
  user. For example, a drawing program might support multiple drawing
  windows, and a particularly time-consuming task in one window (e.g.,
@@ -871,10 +900,11 @@ Despite the programming convenience provided by a purely sequential
  (potentially parallel) event handling across windows. In other words,
  the application needs a separate event queue for each window, and a
  separate event-handling thread for each event queue.}
+@italic{异步事件处理：}应用程序可能由表示与用户独立对话的窗口组成。例如，绘图程序可能支持多个绘图窗口，并且一个窗口中特别耗时的任务（例如，对图像的特殊过滤效果）不应阻止用户在不同的窗口中工作。这样的应用程序需要对每个单独的窗口进行连续的事件处理，但需要跨窗口进行异步（可能是并行的）事件处理。换句话说，应用程序需要为每个窗口分别设置一个事件队列，为每个事件队列分别设置一个事件处理线程。}
 
 ]
 
-An @deftech{eventspace} is a context for processing GUI
+@;{An @deftech{eventspace} is a context for processing GUI
  events. Each eventspace maintains its own queue of events, and events
  in a single eventspace are dispatched sequentially by a designated
  @deftech{handler thread}. An event-handling procedure running in this
@@ -882,9 +912,10 @@ An @deftech{eventspace} is a context for processing GUI
  which case other event-handling procedures may be called in a nested
  (but single-threaded) manner within the same handler thread. Events
  from different eventspaces are dispatched asynchronously by separate
- handler threads.
+ handler threads.}
+@deftech{事件空间（eventspace）}是用于处理GUI事件的上下文。每个事件空间维护自己的事件队列，单个事件空间中的事件由指定的@deftech{处理程序线程（handler thread）}按顺序调度。在此处理程序线程中运行的事件处理过程可以通过调用@racket[yield]来向系统让步，在这种情况下，可以在同一处理程序线程内以嵌套（但单线程）方式调用其他事件处理过程。来自不同事件空间的事件由不同的处理程序线程异步调度。
 
-@index['("dialogs" "modal")]{When} a frame or dialog is created
+@;{@index['("dialogs" "modal")]{When} a frame or dialog is created
  without a parent, it is associated with the @tech{current eventspace}
  as described in @secref["currenteventspace"].  Events for a
  top-level window and its descendants are always dispatched in the
@@ -897,93 +928,109 @@ An @deftech{eventspace} is a context for processing GUI
  windows in the dialog's eventspace, but
  windows in other eventspaces are unaffected by the modal dialog.
  (Mouse motion, enter, and leave events are still delivered to
- all windows when a modal dialog is shown.)
+ all windows when a modal dialog is shown.)}
+@index['("dialogs" "modal")]{创建}没有父级的框架或对话框时，它将与 @tech{当前事件空间（current eventspace）}关联，如《创建和设置事件空间（Creating and Setting the Eventspace）@secref["currenteventspace"]》中所述。顶级窗口及其子窗口的事件始终在窗口的事件空间中调度。每个对话框都是模态的；对话框的@method[dialog% show]方法在显示对话框时隐式调用@racket[yield]来处理事件。（有关线程和模式对话框的信息，请参见《事件空间和线程（Eventspaces and Threads）@secref["espacethreads"]》。）此外，当显示模式对话框时，系统将禁用键和鼠标按下/释放事件到对话框事件空间中的其他顶级窗口，但其他事件空间中的窗口不受模式对话框的影响。（显示模式对话框时，鼠标移动、输入和离开事件仍会传递到所有窗口。）
 
-
-@subsection{Event Types and Priorities}
+@;{@subsection{Event Types and Priorities}}}
+@subsection{事件类型和优先级}
 
 @section-index["events" "timer"]
 @section-index["events" "explicitly queued"]
 
-In addition to events corresponding to user and windowing actions,
+@;{In addition to events corresponding to user and windowing actions,
  such as button clicks, key presses, and updates, the system
  dispatches two kinds of internal events: @tech{timer events} and
- @tech{explicitly queued events}.
+ @tech{explicitly queued events}.}
+除了与用户和窗口操作（如按钮单击、按键和更新）对应的事件外，系统还发送两种内部事件：计时器事件和显式排队事件。
 
-@deftech{Timer events} are created by instances of @racket[timer%]. When
+@;{@deftech{Timer events} are created by instances of @racket[timer%]. When
  a timer is started and then expires, the timer queues an event to
  call the timer's @method[timer% notify] method. Like a top-level
  window, each timer is associated with a particular eventspace (the
  @tech{current eventspace} as described in
  @secref["currenteventspace"]) when it is created, and the timer
- queues the event in its eventspace.
+ queues the event in its eventspace.}
+@deftech{计时器事件（timer events）}由@racket[timer%]的实例创建。当计时器启动然后到期时，计时器将事件排队以调用计时器的@method[timer% notify]方法。与顶级窗口一样，每个计时器在创建时都与特定的事件空间（《创建和设置事件空间（Creating and Setting the Eventspace）@secref["currenteventspace"]》中描述的@tech{当前事件空间（current eventspace）}）相关联，并且计时器在其事件空间中对事件进行排队。
 
-@deftech{Explicitly queued events} are created with
+@;{@deftech{Explicitly queued events} are created with
  @racket[queue-callback], which accepts a callback procedure to handle
  the event. The event is enqueued in the current eventspace at the
  time of the call to @racket[queue-callback], with either a high or
  low priority as specified by the (optional) second argument to
- @racket[queue-callback].
+ @racket[queue-callback].}
+@deftech{显式排队事件（explicitly queued events）}是通过@racket[queue-callback]创建的，队列回调接受回调过程来处理事件。调用@racket[queue-callback]时，该事件已在当前事件空间中排队，优先级高或低，由@racket[queue-callback]的第二个参数（可选）指定。
 
-An eventspace's event queue is actually a priority queue with events
+@;{An eventspace's event queue is actually a priority queue with events
  sorted according to their kind, from highest-priority (dispatched
- first) to lowest-priority (dispatched last):
+ first) to lowest-priority (dispatched last):}
+事件空间的事件队列实际上是一个优先级队列，其中事件按其类型排序，从最高优先级（先调度）到最低优先级（后调度）：
 
 @itemize[
 
- @item{High-priority events installed with @racket[queue-callback]
+ @item{@;{High-priority events installed with @racket[queue-callback]
        have the highest priority.}
+  使用@racket[queue-callback]安装的高优先级事件具有最高优先级。}
 
- @item{Timer events via @racket[timer%] have the second-highest priority.}
+ @item{@;{Timer events via @racket[timer%] have the second-highest priority.}
+ 通过@racket[timer%]的计时器事件具有第二高优先级。}
 
- @item{Window-refresh events have the third-highest priority.}
+ @item{@;{Window-refresh events have the third-highest priority.}
+ 窗口刷新事件具有第三高优先级。}
 
- @item{Input events, such as mouse clicks or key presses, have
+ @item{@;{Input events, such as mouse clicks or key presses, have
        the second-lowest priority.}
+ 输入事件（如鼠标单击或按键）的优先级第二低。}
 
- @item{Low-priority events installed with @racket[queue-callback]
+ @item{@;{Low-priority events installed with @racket[queue-callback]
        have the lowest priority.}
+ 使用@racket[queue-callback]安装的低优先级事件具有最低优先级。}
 
 ]
 
-Although a programmer has no direct control over the order in which
+@;{Although a programmer has no direct control over the order in which
  events are dispatched, a programmer can control the timing of
  dispatches by setting the @deftech{event dispatch handler} via the
  @racket[event-dispatch-handler] parameter. This parameter and other
  eventspace procedures are described in more detail in
- @secref["eventspace-funcs"].
+ @secref["eventspace-funcs"].}
+尽管程序员不能直接控制事件的调度顺序，但是程序员可以通过@racket[event-dispatch-handler]参数设置@deftech{事件调度处理程序（event dispatch handler）}来控制调度的时间。这个参数和其他事件空间过程在《事件空间（Eventspaces）@secref["eventspace-funcs"]》中有更详细的描述。
 
+@;{@subsection[#:tag "espacethreads"]{Eventspaces and Threads}}
+@subsection[#:tag "espacethreads"]{事件空间和线程}
 
-@subsection[#:tag "espacethreads"]{Eventspaces and Threads}
-
-When a new eventspace is created, a corresponding @tech{handler
+@;{When a new eventspace is created, a corresponding @tech{handler
  thread} is created for the eventspace. When the system dispatches an
  event for an eventspace, it always does so in the eventspace's
  handler thread. A handler procedure can create new threads that run
  indefinitely, but as long as the handler thread is running a handler
  procedure, no new events can be dispatched for the corresponding
- eventspace.
+ eventspace.}
+创建新的事件空间时，将为该事件空间创建相应的处理程序线程。当系统为一个事件空间分派一个事件时，它总是在事件空间的处理程序线程中这样做。处理程序过程可以创建无限期运行的新线程，但只要处理程序线程运行处理程序过程，就不能为相应的事件空间调度任何新事件。
 
-When a handler thread shows a dialog, the dialog's @method[dialog%
+@;{When a handler thread shows a dialog, the dialog's @method[dialog%
  show] method implicitly calls @racket[yield] for as long as the
  dialog is shown. When a non-handler thread shows a dialog, the
  non-handler thread simply blocks until the dialog is
  dismissed. Calling @racket[yield] with no arguments from a
  non-handler thread has no effect. Calling @racket[yield] with a
  semaphore from a non-handler thread is equivalent to calling
- @racket[semaphore-wait].
+ @racket[semaphore-wait].}
+当一个处理程序线程显示一个对话框时，只要显示该对话框，对话框的@method[dialog%
+ show]方法就会隐式调用@racket[yield]。当一个非处理程序线程显示一个对话框时，该非处理程序线程会一直阻塞，直到该对话框被取消。在没有来自非处理程序线程的参数的情况下调用@racket[yield]无效。从非处理程序线程使用信号量调用@racket[yield]等同于调用@racket[semaphore-wait]。
 
+@;{@subsection[#:tag "currenteventspace"]{Creating and Setting the Eventspace}}
+@subsection[#:tag "currenteventspace"]{创建和设置事件空间}
 
-@subsection[#:tag "currenteventspace"]{Creating and Setting the Eventspace}
-
-Whenever a frame, dialog, or timer is created, it is associated with
+@;{Whenever a frame, dialog, or timer is created, it is associated with
  the @deftech{current eventspace} as determined by the
- @racket[current-eventspace] parameter @|SeeMzParam|.
+ @racket[current-eventspace] parameter @|SeeMzParam|.}
+无论何时创建框架、对话框或计时器，它都与 current-eventspace参数确定的@deftech{当前事件空间（current eventspace）}关联（请参见《参数（ Parameters）@|SeeMzParam|》）。
 
-The @racket[make-eventspace] procedure creates a new
+@;{The @racket[make-eventspace] procedure creates a new
  eventspace. The following example creates a new eventspace and a new
  frame in the eventspace (the @racket[parameterize] syntactic form
- temporary sets a parameter value):
+ temporary sets a parameter value):}
+@racket[make-eventspace]过程创建新的事件空间。下面的示例在事件空间中创建一个新的事件空间和一个新的框架（@racket[parameterize]语法表暂时地设置一个参数值）：
 
 @racketblock[
 (let ([new-es (make-eventspace)])
@@ -991,7 +1038,7 @@ The @racket[make-eventspace] procedure creates a new
     (new frame% [label "Example"])))
 ]
 
-When an eventspace is created, it is placed under the management of
+@;{When an eventspace is created, it is placed under the management of
  the @tech[#:doc reference-doc]{current custodian}. When a custodian
  shuts down an eventspace, all frames and dialogs associated with the
  eventspace are destroyed (without calling @method[top-level-window<%>
@@ -999,50 +1046,60 @@ When an eventspace is created, it is placed under the management of
  in the eventspace are stopped, and all enqueued callbacks are
  removed.  Attempting to create a new window, timer, or explicitly
  queued event in a shut-down eventspace raises the @racket[exn:misc]
- exception.
+ exception.}
+创建事件空间时，它将置于@tech[#:doc reference-doc]{当前管理员（current custodian）}的管理之下。当管理员关闭事件空间时，与事件空间相关联的所有框架和对话框都将被销毁（不调用@method[top-level-window<%>
+ can-close?]或者@xmethod[top-level-window<%> on-close]），事件空间中的所有计时器都将停止，并且所有排队的回调都将被删除。尝试在关闭事件空间中创建新窗口、计时器或显式排队事件会引发@racket[exn:misc]异常。
 
-An eventspace is a @techlink[#:doc reference-doc]{synchronizable
+@;{An eventspace is a @techlink[#:doc reference-doc]{synchronizable
  event} (not to be confused with a GUI event), so it can be used with
  @racket[sync]. As a synchronizable event, an eventspace is in a
  blocking state when a frame is visible, a timer is active, a callback
  is queued, or a @racket[menu-bar%] is created with a @racket['root]
  parent. (Note that the blocking state of an eventspace is unrelated
- to whether an event is ready for dispatching.)
+ to whether an event is ready for dispatching.)}
+事件空间是一个@techlink[#:doc reference-doc]{可同步的事件（synchronizable
+ event）}（不要与GUI事件混淆），因此它可以与@racket[sync]一起使用。作为可同步事件，当框架可见、计时器处于活动状态、回调排队或使用@racket['root]父级创建@racket[menu-bar%]时，事件空间处于阻塞状态。（请注意，事件空间的阻塞状态与事件是否准备好进行调度无关。）
 
-@subsection[#:tag "evtcontjump"]{Continuations and Event Dispatch}
+@;{@subsection[#:tag "evtcontjump"]{Continuations and Event Dispatch}}
+@subsection[#:tag "evtcontjump"]{延续与事件调度}
 
-Whenever the system dispatches an event, the call to the handler is
+@;{Whenever the system dispatches an event, the call to the handler is
  wrapped with a @deftech{continuation prompt} (see
  @racket[call-with-continuation-prompt]) that delimits continuation
  aborts (such as when an exception is raised) and continuations
  captured by the handler. The delimited continuation prompt is
  installed outside the call to the @tech{event dispatch handler}, so
  any captured continuation includes the invocation of the @tech{event
- dispatch handler}.
+ dispatch handler}.}
+每当系统发送一个事件时，对处理程序的调用将被一个@deftech{延续提示（continuation prompt）}（请参阅《@racket[call-with-continuation-prompt]》）包装，该提示限定延续中止（例如引发异常时）并处理程序捕获的连续。分隔的延续提示安装在对 @tech{事件调度处理程序（event dispatch handler）}的调用之外，因此任何捕获的延续都包括对@tech{事件调度处理程序}的调用。
 
-For example, if a button callback raises an exception, then the abort
+@;{For example, if a button callback raises an exception, then the abort
  performed by the default exception handler returns to the event-dispatch
  point, rather than terminating the program or escaping past an enclosing 
  @racket[(yield)]. If @racket[with-handlers] wraps a @racket[(yield)] that
  leads to an exception raised by a button callback, however, the exception
- can be captured by the @racket[with-handlers].
+ can be captured by the @racket[with-handlers].}
+例如，如果按钮回调引发异常，则默认异常处理程序执行的中止将返回到事件调度点，而不是终止程序或从封闭的@racket[(yield)]中转义。但是，如果@racket[with-handlers]包装了导致按钮回调引发异常的@racket[(yield)]，则通过@racket[with-handlers]可以捕获该异常。
 
-Along similar lines, if a button callback captures a continuation
+@;{Along similar lines, if a button callback captures a continuation
  (using the default continuation prompt tag), then applying the
  continuation re-installs only the work to be done by the handler up
  until the point that it returns; the dispatch machinery to invoke the
  button callback is not included in the continuation. A continuation
  captured during a button callback is therefore potentially useful
- outside of the same callback.
+ outside of the same callback.}
+沿着类似的线路，如果按钮回调捕获了一个延续（使用默认的延续提示标记），那么应用延续只会重新安装处理程序要完成的工作，直到它返回为止；调用按钮回调的调度机制不包括在延续中。因此，在按钮回调期间捕获的延续在同一回调之外可能有用。
 
-@subsection{Logging}
+@;{@subsection{Logging}}
+@subsection{记录}
 
-The GUI system logs the timing of when events are handled and how
+@;{The GUI system logs the timing of when events are handled and how
 long they take to be handled. Each event that involves a callback
 into Racket code has two events logged, both of which use
-the @racket[gui-event] struct:
+the @racket[gui-event] struct:}
+GUI系统记录事件处理的时间和处理时间。涉及回调到racket代码的每个事件都记录了两个事件，这两个事件都使用gui-event结构：
 @racketblock[(struct gui-event (start end name) #:prefab)]
-The @racket[_start] field is the result of @racket[(current-inexact-milliseconds)]
+@;{The @racket[_start] field is the result of @racket[(current-inexact-milliseconds)]
 when the event handling starts. The @racket[_end] field is 
 @racket[#f] for the log message when the event handling starts,
 and the result of @racket[(current-inexact-milliseconds)] when
@@ -1050,18 +1107,21 @@ it finishes for the log message when an event finishes.
 The @racket[_name] field is
 the name of the function that handled the event; in the case of a
 @racket[queue-callback]-based event, it is the name of the thunk passed to
-@racket[queue-callback].
+@racket[queue-callback].}
+@racket[_start]字段是事件处理开始时@racket[(current-inexact-milliseconds)]的结果。事件处理开始时日志消息的@racket[_end]字段为@racket[#f]，事件结束时日志消息的结束结果@racket[(current-inexact-milliseconds)]。@racket[_name]字段是处理事件的函数的名称；对于基于@racket[queue-callback]的事件，它是底部（thunk）传递给@racket[queue-callback]的名称。
 
-@section[#:tag "animation"]{Animation in Canvases}
+@;{@section[#:tag "animation"]{Animation in Canvases}}
+@section[#:tag "animation"]{画布动画}
 
-The content of a canvas is buffered, so if a canvas must be redrawn,
+@;{The content of a canvas is buffered, so if a canvas must be redrawn,
 the @method[canvas% on-paint] method or @racket[paint-callback] function
 usually does not need to be called again. To further reduce flicker,
 while the @method[canvas% on-paint] method or @racket[paint-callback] function
 is called, the windowing system avoids flushing the canvas-content
-buffer to the screen.
+buffer to the screen.}
+画布的内容是缓冲的，因此，如果必须重新绘制画布，则通常不需要再次调用@method[canvas% on-paint]方法或@racket[paint-callback]函数。为了进一步减少闪烁，当调用了@method[canvas% on-paint]方法或@racket[paint-callback]函数时，窗口系统避免将画布内容缓冲区刷新到屏幕上。
 
-Canvas content can be updated at any time by drawing with the result
+@;{Canvas content can be updated at any time by drawing with the result
 of the canvas's @method[canvas<%> get-dc] method, and drawing is
 thread-safe. Changes to the canvas's content are flushed to the screen
 periodically (not necessarily on an event-handling boundary), but the
@@ -1069,9 +1129,11 @@ periodically (not necessarily on an event-handling boundary), but the
 long as flushing has not been suspended. The @method[canvas<%>
 suspend-flush] and @method[canvas<%> resume-flush] methods suspend and
 resume both automatic and explicit flushes, although on some
-platforms, automatic flushes are forced in rare cases.
+platforms, automatic flushes are forced in rare cases.}
+画布内容可以随时通过使用画布的@method[canvas<%> get-dc]方法的结果进行绘图来更新，并且绘图是线程安全的。对画布内容的更改会定期刷新到屏幕（不一定是在事件处理边界上），但只要刷新没有挂起，@method[canvas<%> flush]方法就会立即刷新到屏幕。@method[canvas<%>
+suspend-flush]方法挂起并恢复自动及显式刷新，尽管在某些平台上，在很少情况下强制执行自动刷新。
 
-For most animation purposes, @method[canvas<%> suspend-flush],
+@;{For most animation purposes, @method[canvas<%> suspend-flush],
 @method[canvas<%> resume-flush], and @method[canvas<%> flush] can be
 used to avoid flicker and the need for an additional drawing buffer
 for animations.  During an animation, bracket the construction of each
@@ -1082,19 +1144,22 @@ that canvas content is flushed when it is ready if a @method[canvas<%>
 suspend-flush] will soon follow, because the process of flushing to
 the screen can be starved if flushing is frequently suspended.  The
 method @xmethod[canvas% refresh-now] conveniently encapsulates this
-sequence.
+sequence.}
+对于大多数动画目的，可以使用@method[canvas<%> suspend-flush]、@method[canvas<%> resume-flush]和@method[canvas<%> flush]来避免闪烁以及需要为动画提供额外的绘图缓冲区。在动画期间，用@method[canvas<%> suspend-flush]和@method[canvas<%> resume-flush]将每个动画帧的构造括起来，以确保部分绘制的帧不会刷新到屏幕上。如果即将进行挂起刷新，请使用@method[canvas<%> flush]确保画布内容在准备就绪时被刷新，因为如果经常挂起刷新，则刷新到屏幕的过程可能会处于饥饿状态。方法@xmethod[canvas% refresh-now]方便地封装这个序列。
 
 @; ----------------------------------------
 
-@section[#:tag "display-resolution"]{Screen Resolution and Text Scaling}
+@;{@section[#:tag "display-resolution"]{Screen Resolution and Text Scaling}}
+@section[#:tag "display-resolution"]{屏幕分辨率和文本缩放}
 
-On Mac OS, screen sizes are described to users in terms of drawing
+@;{On Mac OS, screen sizes are described to users in terms of drawing
 units. A Retina display provides two pixels per drawing unit, while
 drawing units are used consistently for window sizes, child window
 positions, and canvas drawing. A ``point'' for font sizing is
-equivalent to a drawing unit.
+equivalent to a drawing unit.}
+在Mac OS上，屏幕尺寸是以绘图单位向用户描述的。视网膜显示器为每个绘图单元提供两个像素，而绘图单元始终用于窗口大小、子窗口位置和画布绘图。字体大小调整的“点”相当于绘图单位。
 
-On Windows and Unix, screen sizes are described to users in terms of pixels,
+@;{On Windows and Unix, screen sizes are described to users in terms of pixels,
 while a scale can be selected independently by the user to apply to
 text and other items. Typical text scales are 125%, 150%, and
 200%. The @racketmodname[racket/gui] library uses this scale for all
@@ -1104,15 +1169,17 @@ reported by @racket[get-display-size] will be half of the number of
 pixels in each dimension. Beware that round-off effects can cause the
 reported size of a window to be different than a size to which a
 window has just been set.  A ``point'' for font sizing is equivalent
-to @racket[(/ 96 72)] drawing units.
+to @racket[(/ 96 72)] drawing units.}
+在Windows和Unix上，屏幕大小是以像素为单位描述给用户的，而用户可以独立选择比例来应用于文本和其他项目。典型的文本比例为125%、150%和200%。@racketmodname[racket/gui]库将此比例用于所有GUI元素，包括屏幕、窗口、按钮和画布绘图。例如，如果比例为200%，则@racket[get-display-size]报告的屏幕大小将是每个维度中像素数的一半。注意，舍入效应会导致报告的窗口大小与刚设置的窗口大小不同。字体大小调整的“点”相当于@racket[(/ 96 72)]绘图单位。
 
-On Unix, if the @indexed-envvar{PLT_DISPLAY_BACKING_SCALE} environment
+@;{On Unix, if the @indexed-envvar{PLT_DISPLAY_BACKING_SCALE} environment
 variable is set to a positive real number, then it overrides certain
 system settings for @racketmodname[racket/gui] scaling. With GTK+ 3
 (see @secref["libs"]), the environment variable overrides system-wide
 text scaling; with GTK+ 2, the environment variable overrides both
 text and control scaling. Menus, control labels using the default
 label font, and non-label control parts will not use a scale specified
-through @envvar{PLT_DISPLAY_BACKING_SCALE}, however.
+through @envvar{PLT_DISPLAY_BACKING_SCALE}, however.}
+在Unix上，如果@indexed-envvar{PLT_DISPLAY_BACKING_SCALE}环境变量设置为实数，则它将覆盖@racketmodname[racket/gui]缩放的某些系统设置。使用GTK+ 3 （请参见《平台依赖项（Platform Dependencies）@secref["libs"]》），环境变量将覆盖系统范围的文本缩放；使用GTK+ 2，环境变量将覆盖文本和控件缩放。但是，使用默认标签字体的菜单、控制标签和非标签控制部件将不会使用通过@envvar{PLT_DISPLAY_BACKING_SCALE}指定的比例。
 
-@history[#:changed "1.14" @elem{Added support for scaling on Unix.}]
+@history[#:changed "1.14" @elem{@;{Added support for scaling on Unix.}增加了对在Unix上扩展的支持。}]
