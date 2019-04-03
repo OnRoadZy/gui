@@ -1,7 +1,8 @@
 #lang scribble/doc
 @(require "common.rkt")
 
-@title{Windowing Functions}
+@;{@title{Windowing Functions}}
+@title[#:tag "windowing-functions"]{窗口函数}
 
 @local-table-of-contents[]
 

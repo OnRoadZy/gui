@@ -2,14 +2,18 @@
 @(require "common.rkt"
           "widget-gallery.rkt")
 
-@title[#:style '(toc quiet)]{Widget Gallery}
+@;{@title[#:style '(toc quiet)]{Widget Gallery}}
+@title[#:style '(toc quiet)]{小部件库}
 
 @; Note: Instructions for taking widget screenshots are avaiable at:
 @;   collects/meta/images/taking-screenshots/instructions
+@;注：有关截图的说明，请访问：collects/meta/images/taking-screenshots/instructions
 
-This section shows the main widgets available in the Racket Graphical User
+@;{This section shows the main widgets available in the Racket Graphical User
 Interface Toolkit. Each image is a link to the documentation of the relevant
-widget.
+widget.}
+本节显示了Racket图形用户界面工具包（Racket Graphical User
+Interface Toolkit）中可用的主要小部件。每个图像都是相关小部件文档的链接。
 
 @(showcase-widget button%
 (define button (new button%
