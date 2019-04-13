@@ -135,7 +135,7 @@ administrator</span>, an instance of the <span class="RktSym"><a href="editor-ad
  parameterizes high-level display information that is common to all
  snip classes. This includes the font, color, and alignment for
  drawing the item. A single style is attached to each snip.</p><p>Styles are hierarchical: each style is defined in terms of another
- style. <a name="(idx._(gentag._153))"></a>There is a single <a name="(tech._root._style)"></a><span style="font-style: italic">root style</span>, named
+ style. <a name="(idx._(gentag._152))"></a>There is a single <a name="(tech._root._style)"></a><span style="font-style: italic">root style</span>, named
  <span class="RktVal">"Basic"</span>, from which all other styles in an editor are
  derived. The difference between a base style and each of its derived
  style is encoded in a <a name="(tech._style._delta)"></a><span style="font-style: italic">style delta</span> (or simply
@@ -144,7 +144,7 @@ administrator</span>, an instance of the <span class="RktSym"><a href="editor-ad
  <span class="RktSym"><a href="style-list_.html" class="RktValLink" data-pltdoc="x">style-list%</a></span> class. A style list manages the styles,
  servicing external requests to find a particular style, and it
  manages the hierarchical relationship between styles.  A global style
- list is available, <a name="(idx._(gentag._154))"></a><span class="RktSym"><a href="Editor_Functions.html#%28def._%28%28lib._mred%2Fmain..rkt%29._the-style-list%29%29" class="RktValLink" data-pltdoc="x">the-style-list</a></span>, but new style
+ list is available, <a name="(idx._(gentag._153))"></a><span class="RktSym"><a href="Editor_Functions.html#%28def._%28%28lib._mred%2Fmain..rkt%29._the-style-list%29%29" class="RktValLink" data-pltdoc="x">the-style-list</a></span>, but new style
  lists can be created for managing separate style hierarchies. For
  example, each editor will typically have its own style list.</p><p>Each new style is defined in one of two ways:</p><ul><li><p>A <a name="(tech._derived._style)"></a><span style="font-style: italic">derived style</span> is defined in terms of a base style
 and a delta. Every style (except for the root style) has a base
@@ -159,7 +159,7 @@ for the shift style. (This is analogous to multi-level
 styles, like the paragraph and character styles in FrameMaker. In
 this analogy, the paragraph style is the base style, and the
 character style is the shift style.  However, FrameMaker allows only
-those two levels; with join styles support any number of levels.)</p></li></ul><p><a name="(idx._(gentag._155))"></a>Usually, when text is inserted into a text editor, it
+those two levels; with join styles support any number of levels.)</p></li></ul><p><a name="(idx._(gentag._154))"></a>Usually, when text is inserted into a text editor, it
  inherits the style of the preceding snip. If text is inserted into an
  empty editor, the text is usually assigned a style called
  <span class="RktVal">"Standard"</span>. By default, the <span class="RktVal">"Standard"</span> style is
@@ -194,7 +194,7 @@ those two levels; with join styles support any number of levels.)</p></li></ul><
  it can be extended with new kinds of data. The editor file format can
  be extended in two ways: with snip- or content-specific data, and
  with editor-specific global data. These are described in the
- remainder of this section.</p><h5>5.2.1<tt>&nbsp;</tt><a name="(part._.Encoding_.Snips)"></a>Encoding Snips</h5><p><a name="(idx._(gentag._156))"></a><a name="(idx._(gentag._157))"></a>The
+ remainder of this section.</p><h5>5.2.1<tt>&nbsp;</tt><a name="(part._.Encoding_.Snips)"></a>Encoding Snips</h5><p><a name="(idx._(gentag._155))"></a><a name="(idx._(gentag._156))"></a>The
  generalized notion of a snip allows new snip types to be defined and
  immediately used in any editor class. Also, when two applications
  support the same kinds of snips, snip data can easily be cut and
@@ -355,10 +355,10 @@ to a linear sequence of characters.</p></li></ul><h4>5.6<tt>&nbsp;</tt><a name="
  away from the main editor, it will revoke caret ownership from the
  appropriate sub-editor.</p><p>When an editor or snip is drawn, an argument to the drawing method
  specifies whether the caret should be drawn with the data or whether
- a selection spans the data. This argument can be any of:</p><ul><li><p><a name="(idx._(gentag._158))"></a><span class="RktVal">'</span><span class="RktVal">no-caret</span> &#8212;<wbr></wbr> The caret should not be drawn at
-all.</p></li><li><p><a name="(idx._(gentag._159))"></a><span class="RktVal">'</span><span class="RktVal">show-inactive-caret</span> &#8212;<wbr></wbr> The caret should be drawn
+ a selection spans the data. This argument can be any of:</p><ul><li><p><a name="(idx._(gentag._157))"></a><span class="RktVal">'</span><span class="RktVal">no-caret</span> &#8212;<wbr></wbr> The caret should not be drawn at
+all.</p></li><li><p><a name="(idx._(gentag._158))"></a><span class="RktVal">'</span><span class="RktVal">show-inactive-caret</span> &#8212;<wbr></wbr> The caret should be drawn
 as inactive; items may be identified as the local current selection,
-but the keyboard focus is elsewhere.</p></li><li><p><a name="(idx._(gentag._160))"></a><span class="RktVal">'</span><span class="RktVal">show-caret</span> &#8212;<wbr></wbr> The caret should be drawn to show
+but the keyboard focus is elsewhere.</p></li><li><p><a name="(idx._(gentag._159))"></a><span class="RktVal">'</span><span class="RktVal">show-caret</span> &#8212;<wbr></wbr> The caret should be drawn to show
 keyboard focus ownership.</p></li><li><p><span class="RktPn">(</span><span class="RktSym"><span class="badlink"><span class="RktValLink">cons</span></span></span><span class="stt"> </span><span class="RktVar">start</span><span class="stt"> </span><span class="RktVar">end</span><span class="RktPn">)</span> &#8212;<wbr></wbr> The caret is owned by an
 enclosing region, and its selection spans the current editor or snip;
 in the case of the snip, the selection spans elements <span class="RktVar">start</span>
