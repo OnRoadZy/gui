@@ -3,6 +3,7 @@
 
 @definterface/title[area-container-window<%> (area-container<%> window<%>)]{
 
-Combines two interfaces.
+@;{Combines two interfaces.}
+  结合两个接口。
 
 }

@@ -50,13 +50,16 @@
 
   (define-syntax bitmaplabeluse
    (syntax-rules ()
-     [(_ id) @bitmapuseinfo["If" @racket[id] "a bitmap" " and" "the"]]))
+     @;{[(_ id) @bitmapuseinfo["If" @racket[id] "a bitmap" " and" "the"]]}
+     [(_ id) @bitmapuseinfo["如果" @racket[id] "一个位图" "和" "这个"]]))
   (define-syntax bitmaplabelusearray
    (syntax-rules ()
-     [(_ id) @bitmapuseinfo["If" @racket[id] "a list of bitmaps" " and" "a"]]))
+     @;{[(_ id) @bitmapuseinfo["If" @racket[id] "a list of bitmaps" " and" "a"]]}
+     [(_ id) @bitmapuseinfo["如果" @racket[id] "一个位图列表" "和" "一个"]]))
   (define-syntax bitmaplabeluseisbm
     (syntax-rules ()
-      [(_ id) @bitmapuseinfo["Since" @racket[id] "a bitmap" "" "the"]]))
+      @;{[(_ id) @bitmapuseinfo["Since" @racket[id] "a bitmap" "" "the"]]}
+      [(_ id) @bitmapuseinfo["因为" @racket[id] "一个位图" "" "这个"]]))
 
   (define bitmapiforiglabel
     @elem{@;{The bitmap label is installed only
@@ -117,8 +120,8 @@
 @|c|使用此方法可能会强制重新计算@techlink{本地}信息细节@|details|，即使编辑器当前已延迟刷新（参见@method[editor<%> refresh-delayed?]）。})
 
   (define FCA (FCAX "C" ""))
-  (define FCAMW (FCAX "C" " if a maximum width is set for the editor"))
-  (define (FCAME) (FCAX @elem{For @racket[text%] objects, c} " if a maximum width is set for the editor"))
+  (define FCAMW (FCAX "C" @;{" if a maximum width is set for the editor"}"如果为编辑器设置了最大宽度"))
+  (define (FCAME) (FCAX @;{@elem{For @racket[text%] objects, c} " if a maximum width is set for the editor"}@elem{对@racket[text%]对象,c}"如果为编辑器设置了最大宽度"))
   
   (define EVD
     @elem{@;{If the editor is not displayed and the editor has a
@@ -261,10 +264,10 @@
                    @elem{@;{selection}选择}))
 
   (define OnMoveNote
-    (MonitorMethod @elem{Snip @techlink{location}s in a pasteboard}
-                   @elem{the system in response to other method calls}
+    (MonitorMethod @elem{@;{Snip @techlink{location}s in a pasteboard}在粘贴板上截取@techlink{location}}
+                   @elem{@;{the system in response to other method calls}系统响应其他方法调用}
                    @elem{@method[pasteboard% on-move-to]}
-                   @elem{snip @techlink{position}}))
+                   @elem{@;{snip @techlink{position}}切断@techlink{position}}))
 
   (define (colorName name name2 r g b)
     (make-element #f
@@ -274,27 +277,27 @@
                         (bytes->string/latin-1 name))))
   
   (define (edsnipsize a b c)
-    @elem{An @racket[editor-snip%] normally stretches to wrap around the size
+    @elem{@;{An @racket[editor-snip%] normally stretches to wrap around the size
           of the editor it contains. This method @|a| of the snip
-          (and if the editor is @|b|, @|c|).})
+          (and if the editor is @|b|, @|c|).}@racket[editor-snip%]通常会拉伸以环绕它所包含的编辑器的大小。此方法@|a|的切断(如果编辑器是@|b|、@|c|)。})
   (define (edsnipmax n)
-    (edsnipsize @elem{limits the @|n|}
-                @elem{larger}
-                @elem{only part of the editor is displayed}))
+    (edsnipsize @elem{@;{limits the @|n|}限制@|n|}
+                @elem{@;{larger}更大}
+                @elem{@;{only part of the editor is displayed}只显示部分编辑器}))
   (define (edsnipmin a b)
-    (edsnipsize @elem{sets the minimum @|a|}
-                "smaller"
-                @elem{the editor is @|b|-aligned in the snip}))
+    (edsnipsize @elem{@;{sets the minimum @|a|}设置最小的@|a|}
+                @;{"smaller"}"更小的"
+                @elem{@;{the editor is @|b|-aligned in the snip}编辑器在截图中是@|b|对齐的}))
 
   (define (slant . s)
-    (make-element "slant" (decode-content s)))
+    (make-element @;{"slant"}"斜体" (decode-content s)))
 
   (define (Resource s)
     @elem{@to-element[`(quote ,(res-sym s))]
-          preference})
+          @;{preference}偏爱})
   (define (ResourceFirst s) ; fixme -- add index
     (let ([r (Resource s)])
-      (index* (list (format "~a preference" (res-sym s)))
+      (index* (list (format @;{"~a preference"}"~a 偏爱" (res-sym s)))
               (list r) 
               r)))
   
