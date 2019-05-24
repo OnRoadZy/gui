@@ -1,21 +1,26 @@
 #lang scribble/doc
 @(require "common.rkt" "diagrams.rkt")
 
-@title[#:style '(toc quiet)]{Windowing Classes}
+@;{@title[#:style '(toc quiet)]{Windowing Classes}}
+@title[#:tag "Windowing_Classes" #:style '(toc quiet)]{窗口类}
 
-Windows and controls:
+@;{Windows and controls:}
+窗口和控件：
 
 @diagram->table[windowing-diagram]
 
-Menus:
+@;{Menus:}
+菜单：
 
 @diagram->table[menu-diagram]
 
-Events and other:
+@;{Events and other:}
+事件及其他：
 
 @diagram->table[event-diagram]
 
-Alphabetical:
+@;{Alphabetical:}
+按字母顺序排列为：
 
 @local-table-of-contents[]
 

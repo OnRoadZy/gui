@@ -3,8 +3,9 @@
 
 @definterface/title[control<%> (subwindow<%>)]{
 
-The @racket[control<%>] interface is implemented by the built-in
- control window classes:
+@;{The @racket[control<%>] interface is implemented by the built-in
+ control window classes:}
+  @racket[control<%>]接口由内置的控件窗口类实现：
 @itemize[
 @item{@racket[message%]}
 @item{@racket[button%]}
@@ -22,8 +23,8 @@ The @racket[control<%>] interface is implemented by the built-in
 @defmethod[(command [event (is-a?/c control-event%)])
            void?]{
 
-Calls the control's callback function, passing on the given
- @racket[control-event%] object.
-
+@;{Calls the control's callback function, passing on the given
+ @racket[control-event%] object.}
+调用控件的回调函数，传递给定的@racket[control-event%]对象。
 }}
 
