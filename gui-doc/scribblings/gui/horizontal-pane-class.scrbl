@@ -3,8 +3,9 @@
 
 @defclass/title[horizontal-pane% pane% ()]{
 
-A horizontal pane arranges its subwindows in a single row. See also
- @racket[pane%].
+@;{A horizontal pane arranges its subwindows in a single row. See also
+ @racket[pane%].}
+  水平窗格将其子窗口排列成一行。也参见@racket[pane%]。
 
 @defconstructor[([parent (or/c (is-a?/c frame%) (is-a?/c dialog%) 
                                (is-a?/c panel%) (is-a?/c pane%))]

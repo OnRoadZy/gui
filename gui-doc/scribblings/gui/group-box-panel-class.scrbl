@@ -5,12 +5,14 @@
 
 @defclass/title[group-box-panel% vertical-panel% ()]{
 
-A group-box panel arranges its subwindows in a single column, but also
+@;{A group-box panel arranges its subwindows in a single column, but also
  draws an optional label at the top of the panel and a border around
- the panel content.
+ the panel content.}
+  分组框面板将其子窗口排列在一列中，但也会在面板顶部绘制可选标签，并在面板内容周围绘制边框。
 
-Unlike most panel classes, a group-box panel's horizontal and vertical
- margins default to @racket[2].
+@;{Unlike most panel classes, a group-box panel's horizontal and vertical
+ margins default to @racket[2].}
+  与大多数面板类不同，组框面板的水平和垂直边距默认为@racket[2]。
 
 
 @defconstructor[([label label-string?]
@@ -31,9 +33,11 @@ Unlike most panel classes, a group-box panel's horizontal and vertical
                  [stretchable-width any/c #t]
                  [stretchable-height any/c #t])]{
 
-Creates a group pane whose title is @racket[label].
+@;{Creates a group pane whose title is @racket[label].}
+  创建一个其标题为@racket[label]的组框面板。
 
-@DeletedStyleNote[@racket[style] @racket[parent]]{group panel}
+@DeletedStyleNote[@racket[style] @racket[parent]]{
+   @;{group panel}组框面板}
 
 @FontKWs[@racket[font]] @WindowKWs[@racket[enabled]] @SubareaKWs[] @AreaKWs[]
 
