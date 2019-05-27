@@ -3,11 +3,12 @@
 
 @defclass/title[keymap% object% ()]{
 
-A @racket[keymap%] object is used by @racket[editor<%>] objects to
+@;{A @racket[keymap%] object is used by @racket[editor<%>] objects to
  map keyboard and mouse sequences to arbitrary functions in an
  extensible way. Keymaps can be used without editors, as well.  A
- @racket[keymap%] object contains
-
+ @racket[keymap%] object contains}
+@racket[editor<%>]对象使用@racket[keymap%]对象以可扩展的方式将键盘和鼠标序列映射到任意函数。也可以在没有编辑器的情况下使用键映射。@racket[keymap%]对象包含
+  
 @itemize[
 
  @item{a mapping from function names to event-handling procedures; and}
