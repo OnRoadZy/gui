@@ -3,10 +3,8 @@
 
 @defclass/title[vertical-pane% pane% ()]{
 
-A vertical pane arranges its subwindows in a single column. See also @racket[pane%].
-
-
-
+@;{A vertical pane arranges its subwindows in a single column. See also @racket[pane%].}
+  垂直窗格将其子窗口排列在一列中。也参见@racket[pane%]。
 
 @defconstructor[([parent (or/c (is-a?/c frame%) (is-a?/c dialog%) 
                                (is-a?/c panel%) (is-a?/c pane%))]

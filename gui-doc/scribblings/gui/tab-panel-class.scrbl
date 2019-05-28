@@ -17,7 +17,6 @@
 选择新选项卡时，@racket[tab-panel%]类不实现面板内容的虚拟交换。相反，它只调用回调过程来指示用户更改了选项卡选择。
 
 
-
 @defconstructor[([choices (listof label-string?)]
                  [parent (or/c (is-a?/c frame%) (is-a?/c dialog%) 
                                (is-a?/c panel%) (is-a?/c pane%))]
