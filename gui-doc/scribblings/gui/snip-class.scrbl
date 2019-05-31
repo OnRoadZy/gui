@@ -3,15 +3,17 @@
 
 @defclass/title[snip% object% (equal<%>)]{
 
-A direct instance of @racket[snip%] is uninteresting. Useful snips are
+@;{A direct instance of @racket[snip%] is uninteresting. Useful snips are
  defined by instantiating derived subclasses, but the @racket[snip%] class defines
  the basic functionality. See @secref["snip-example"] for more information about
- deriving a new snip class.
+ deriving a new snip class.}
+  @racket[snip%]的直接实例是乏味的。有用的剪切是通过实例化派生子类来定义的，但是@racket[snip%]类定义了基本功能。有关派生新剪切类的更多信息，请参见@secref["snip-example"]。
 
 @defconstructor[()]{
 
-Creates a plain snip of length 1 with the @racket["Basic"] style of
- @racket[the-style-list].
+@;{Creates a plain snip of length 1 with the @racket["Basic"] style of
+ @racket[the-style-list].}
+  使用@racket[the-style-list]的@racket["Basic"]样式创建长度为1的简单截图。
 
 }
 
@@ -26,15 +28,18 @@ Creates a plain snip of length 1 with the @racket["Basic"] style of
 
 @methspec{
 
-Called to determine the cursor image used when the cursor is moved
+@;{Called to determine the cursor image used when the cursor is moved
  over the snip in an editor. If @racket[#f] is returned, a default
  cursor is selected by the editor. (See @xmethod[editor<%>
- adjust-cursor] for more information.)
+ adjust-cursor] for more information.)}
+  规范：调用以确定当光标移动到编辑器中的截图上时使用的光标图像。如果返回@racket[#f]，编辑器将选择默认光标。（有关详细信息，请参见@xmethod[editor<%>
+ adjust-cursor]）。
 
 }
 @methimpl{
 
-Returns @racket[#f].
+@;{Returns @racket[#f].}
+  默认实现：返回@racket[#f]。
 
 }}
 
@@ -44,12 +49,14 @@ Returns @racket[#f].
                         [y real?])
            void?]{
 
-Tells the snip to blink the selection caret. This method is called
+@;{Tells the snip to blink the selection caret. This method is called
  periodically when the snip's editor's @techlink{display} has the
- keyboard focus, and the snip has the editor-local focus.
+ keyboard focus, and the snip has the editor-local focus.}
+  告诉剪切闪烁选择插入符号。当剪切的编辑器@techlink{显示（display）}有键盘焦点，而剪切有编辑器本地焦点时，定期调用此方法。
 
-The drawing context and snip's @techlink{location}s in drawing context
- coordinates are provided.
+@;{The drawing context and snip's @techlink{location}s in drawing context
+ coordinates are provided.}
+  提供了绘图上下文和剪切在绘图上下文坐标中的@techlink{定位（location）}。
 
 }
 

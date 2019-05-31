@@ -578,60 +578,71 @@ implementation, see @secref["snip-example"].}
 ]
 
 
-@subsection[#:tag "globaleditordata"]{Global Data: Headers and Footers}
+@;{@subsection[#:tag "globaleditordata"]{Global Data: Headers and Footers}}
+    @subsection[#:tag "globaleditordata"]{全局数据：头和尾}
 
-The editor file format provides for adding extra global data in
+@;{The editor file format provides for adding extra global data in
  special header and footer sections. To save and load special header
- and/or footer records:
+ and/or footer records:}
+  编辑器文件格式用于在特殊的头和尾部分添加额外的全局数据。要保存和加载特殊的头和/或尾记录：
 
 @itemize[
 
- @item{Pick a name for each header/footer record. This name should not
+ @item{@;{Pick a name for each header/footer record. This name should not
  conflict with any other header/footer record name in use, and no one
  else should use these names. All names beginning with ``wx'' are
  reserved for internal use. By tagging extra header and footer records
  with a unique name, the file can be safely loaded in an installation that
  does not support the records.}
+         为每个头/尾记录选择一个名称。此名称不应与正在使用的任何其他头/尾记录名称冲突，其他任何人都不应使用这些名称。所有以“wx”开头的名称都保留供内部使用。通过用唯一的名称标记额外的头和尾记录，可以在不支持这些记录的安装中安全地加载文件。}
 
- @item{Derive a new class from the @racket[text%] or
+ @item{@;{Derive a new class from the @racket[text%] or
  @racket[pasteboard%] class, and override the @method[editor<%>
  write-headers-to-file], @method[editor<%> write-footers-to-file],
  @method[editor<%> read-header-from-file] and/or @method[editor<%>
  read-footer-from-file] methods.}
+         从@racket[text%]或@racket[pasteboard%]类派生新类，并重写@method[editor<%>
+ write-headers-to-file]、@method[editor<%> write-footers-to-file]、@method[editor<%> read-header-from-file]和/或@method[editor<%>
+ read-footer-from-file]。}
 
 ]
 
-When an editor is saved, the methods @method[editor<%>
+@;{When an editor is saved, the methods @method[editor<%>
  write-headers-to-file] and @method[editor<%> write-footers-to-file]
  are invoked; at this time, the derived @racket[text%] or
  @racket[pasteboard%] object has a chance to save records.  To write a
  header/footer record, first invoke the @method[editor<%>
  begin-write-header-footer-to-file] method, at which point the record
  name is provided. Once the record is written, call @method[editor<%>
- end-write-header-footer-to-file].
+ end-write-header-footer-to-file].}
+保存编辑器时，将调用方法@method[editor<%> write-headers-to-file]和@method[editor<%> write-footers-to-file]；此时，派生@racket[text%]或@racket[pasteboard%]对象有机会保存记录。要写入头/尾记录，首先调用@method[editor<%> begin-write-header-footer-to-file]方法，此时将提供记录名称。记录写入后，调用@method[editor<%> end-write-header-footer-to-file]。
 
-When an editor is loaded and a header/footer record is encountered,
+@;{When an editor is loaded and a header/footer record is encountered,
  the @method[editor<%> read-header-from-file] or @method[editor<%>
  read-footer-from-file] method is invoked, with the record name as the
  argument.  If the name matches a known record type, then the data can
- be loaded.
+ be loaded.}
+当加载编辑器并遇到头/尾记录时，将调用@method[editor<%> read-header-from-file]或@method[editor<%> read-footer-from-file]方法，并以记录名称作为参数。如果名称与已知记录类型匹配，则可以加载数据。
 
-See also @method[editor<%> write-headers-to-file] and
- @method[editor<%> read-header-from-file].
+@;{See also @method[editor<%> write-headers-to-file] and
+ @method[editor<%> read-header-from-file].}
+另请参见@method[editor<%> write-headers-to-file]和@method[editor<%> read-header-from-file]。
 
 
-@section[#:tag "editoreol"]{End of Line Ambiguity}
+@;{@section[#:tag "editoreol"]{End of Line Ambiguity}}
+@section[#:tag "editoreol"]{行尾歧义}
 
-Because an editor can force a line break even when there is no
+@;{Because an editor can force a line break even when there is no
  newline item, a @techlink{position} alone does not always
  specify a @techlink{location} for the caret. Consider the last
  @techlink{position} of a line that is soft-broken (i.e., no newline
  is present): there is no @techlink{item} between the last
  @techlink{item} of the line and the first @techlink{item} of the next
  line, so two @techlink{location}s (one end-of-line and one
- start-of-line) map to the same @techlink{position}.
+ start-of-line) map to the same @techlink{position}.}
+因为即使没有换行符项，编辑器也可以强制换行，所以单独的@techlink{位置（position）}并不总是为插入符号指定@techlink{定位（location）}。考虑软断开的行的最后一个@techlink{位置}（即，不存在换行）：行的最后一个@techlink{项目（item）}和下一行的第一个@techlink{项目}之间没有@techlink{项目}，因此两个@techlink{定位}（行的一端和行的开始）映射到同一@techlink{位置}。
 
-For this reason, @techlink{position}-setting and
+@;{For this reason, @techlink{position}-setting and
  @techlink{position}-getting methods often have an extra argument. In
  the case of a @techlink{position}-setting method, the argument
  specifies whether the caret should be drawn at the left or right side
@@ -640,30 +651,35 @@ For this reason, @techlink{position}-setting and
  right side. Similarly, methods which calculate a @techlink{position}
  from a @techlink{location} will take an extra boxed boolean; the box
  is filled with @racket[#t] if the position is ambiguous and it came
- from a right-side location, or @racket[#f] otherwise.
+ from a right-side location, or @racket[#f] otherwise.}
+因此，@techlink{位置（position）}设置和@techlink{位置}获取方法通常有一个额外的参数。在@techlink{位置}设置方法的情况下，参数指定插入符号应该绘制在页面的左侧还是右侧（在事件中@techlink{定位（location）}是双重定义的）；@racket[#t]表示插入符号应该绘制在右侧。类似地，从一个@techlink{定位}计算@techlink{位置}的方法将采用一个额外的装箱布尔值；如果位置不明确并且来自右侧位置，则框中填充@racket[#t]，否则填充@racket[#f]。
 
 
 @include-section["snip-example.scrbl"]
 
 
-@section[#:tag "editorflattened"]{Flattened Text}
+@;{@section[#:tag "editorflattened"]{Flattened Text}}
+@section[#:tag "editorflattened"]{扁平文本}
 
-In plain text editors, there is a simple correlation between
+@;{In plain text editors, there is a simple correlation between
  @techlink{position}s and characters. In an @racket[editor<%>] object,
  this is not true much of the time, but it is still sometimes useful
- to just ``get the text'' of an editor.
+ to just ``get the text'' of an editor.}
+在纯文本编辑器中，@techlink{位置（position）}和字符之间存在简单的相关性。在一个@racket[editor<%>]对象中，这在很多时候都不是真的，但是有时候仅仅编辑器的“获取文本”还是很有用的。
 
-Text can be extracted from an editor in either of two forms:
+@;{Text can be extracted from an editor in either of two forms:}
+文本可以从两种形式的编辑器中提取：
 
 @itemize[
 
- @item{@deftech{Simple text}, where there is one character per
+ @item{@;{@deftech{Simple text}, where there is one character per
  @techlink{item}. @techlink{Item}s that are characters are mapped to
  themselves, and all other @techlink{item}s are mapped to a
  period. Line breaks are represented by newline characters
  (ASCII 10).}
+         @deftech{简单文本}，其中每个@techlink{项（item）}有一个字符。属于字符的@techlink{项}映射到它们自己，而所有其他@techlink{项}映射到一个句点。换行符由换行符（ASCII 10）表示。}
 
- @item{@deftech{Flattened text}, where each @techlink{item} can map to
+ @item{@;{@deftech{Flattened text}, where each @techlink{item} can map to
  an arbitrary string.  @techlink{Item}s that are characters are still
  mapped to themselves, but more complicated @techlink{item}s can be
  represented with a useful string determined by the @techlink{item}'s
@@ -672,109 +688,125 @@ Text can be extracted from an editor in either of two forms:
  linefeed--carriage return on Windows). This form is called
  ``flattened'' because the editor's @techlink{item}s have been reduced
  to a linear sequence of characters.}
+         @deftech{扁平文本}，其中每个项都可以映射到任意字符串。属于字符的项仍然映射到它们自己，但更复杂的项可以用由项的snip确定的有用字符串表示。新行映射到特定于平台的字符序列（Unix和Mac OS上的linefeed，以及Windows上的linefeed–回车）。这种形式被称为“扁平化”，因为编辑器的项已缩减为线性字符序列。}
 
 ]
 
-@section[#:tag "drawcaretinfo"]{Caret Ownership}
+@;{@section[#:tag "drawcaretinfo"]{Caret Ownership}}
+@section[#:tag "drawcaretinfo"]{插入符号所有权}
 
-Within a frame, only one object can contain the keyboard focus. This
+@;{Within a frame, only one object can contain the keyboard focus. This
  property must be maintained when a frame contains multiple editors in
  multiple @techlink{display}s, and when a single editor contains other
- editors as @techlink{item}s.
+ editors as @techlink{item}s.}
+在一个框架中，只有一个对象可以包含键盘焦点。当一个框架在多个@techlink{显示（display）}中包含多个编辑器，并且单个编辑器将其他编辑器作为@techlink{项（item）}包含时，必须维护此属性。
 
-When an editor has the keyboard focus, it will usually display the
+@;{When an editor has the keyboard focus, it will usually display the
  current selection or a line indicating the insertion point; the line
- is called the @deftech{caret}.
+ is called the @deftech{caret}.}
+当编辑器具有键盘焦点时，它通常会显示当前选定内容或指示插入点的行；该行称为@deftech{（插入符号）caret}。
 
-When an editor contains other editors, it keeps track of caret
+@;{When an editor contains other editors, it keeps track of caret
  ownership among the contained sub-editors. When the caret is taken
  away from the main editor, it will revoke caret ownership from the
- appropriate sub-editor.
+ appropriate sub-editor.}
+当一个编辑器包含其他编辑器时，它会跟踪所包含的子编辑器之间的插入符号所有权。当插入符号从主编辑器中移除时，它将从相应的子编辑器中撤消插入符号的所有权。
 
-When an editor or snip is drawn, an argument to the drawing method
+@;{When an editor or snip is drawn, an argument to the drawing method
  specifies whether the caret should be drawn with the data or whether
- a selection spans the data. This argument can be any of:
+ a selection spans the data. This argument can be any of:}
+绘制编辑器或剪切时，绘制方法的参数指定是否应使用数据绘制插入符号，或者选择是否跨越数据。此参数可以是以下任意参数：
 
 @itemize[
 
- @item{@indexed-racket['no-caret] --- The caret should not be drawn at
- all.}
+ @item{@indexed-racket['no-caret]@;{ --- The caret should not be drawn at
+ all.}——不应绘制插入符号。}
 
- @item{@indexed-racket['show-inactive-caret] --- The caret should be drawn
+ @item{@indexed-racket['show-inactive-caret]@;{ --- The caret should be drawn
  as inactive; items may be identified as the local current selection,
- but the keyboard focus is elsewhere.}
+ but the keyboard focus is elsewhere.}——插入符号应绘制为非活动；项可以标识为本地当前选择，但键盘焦点在其他地方。}
 
- @item{@indexed-racket['show-caret] --- The caret should be drawn to show
- keyboard focus ownership.}
+ @item{@indexed-racket['show-caret]@;{ --- The caret should be drawn to show
+ keyboard focus ownership.}——应绘制插入符号以显示键盘焦点所有权。}
 
- @item{@racket[(cons _start _end)] --- The caret is owned by an
+ @item{@racket[(cons _start _end)]@;{ --- The caret is owned by an
  enclosing region, and its selection spans the current editor or snip;
  in the case of the snip, the selection spans elements @racket[_start]
- through @racket[_end] positions within the snip.}
+ through @racket[_end] positions within the snip.}——插入符号属于封闭区域，其选择跨越当前编辑器或剪切；如果是剪切，则选择跨越剪切内从结束位置开始的元素。}
 
 ]
 
-The @racket['show-inactive-caret] display mode is useful for showing
+@;{The @racket['show-inactive-caret] display mode is useful for showing
  selection ranges in text editors that do not have the focus. This
  @racket['show-inactive-caret] mode is distinct from @racket['no-caret]
  mode; when editors are embedded, only the locally active editor shows
- its selection.
+ its selection.}
+@racket['show-inactive-caret]显示模式对于在没有焦点的文本编辑器中显示选择范围很有用。此@racket['show-inactive-caret]模式与@racket['no-caret]模式不同；嵌入编辑器时，只有本地活动编辑器显示其选择。
 
+@;{@section[#:tag "editorcutandpastetime"]{Cut and Paste Time Stamps}}
+@section[#:tag "editorcutandpastetime"]{剪切和粘贴时间戳}
 
-@section[#:tag "editorcutandpastetime"]{Cut and Paste Time Stamps}
-
-Methods of @racket[editor<%>] that use the clipboard --- including
+@;{Methods of @racket[editor<%>] that use the clipboard --- including
  @method[editor<%> copy], @method[editor<%> cut], @method[editor<%>
  paste], and @method[editor<%> do-edit-operation] --- consume a time
  stamp argument. This time stamp is generally extracted from the
  @racket[mouse-event%] or @racket[key-event%] object that triggered
  the clipboard action. Unix uses the time stamp to synchronize clipboard
- operations among the clipboard clients.
+ operations among the clipboard clients.}
+使用剪贴板的@racket[editor<%>]方法——包括@method[editor<%> copy]、@method[editor<%> cut]、@method[editor<%> paste]和@method[editor<%> do-edit-operation]——使用时间戳参数。此时间戳通常从触发剪贴板操作的@racket[mouse-event%]或@racket[key-event%]对象中提取。Unix使用时间戳在剪贴板客户机之间同步剪贴板操作。
 
-All instances of @racket[event%] include a time stamp, which can be
- obtained using @method[event% get-time-stamp].
+@;{All instances of @racket[event%] include a time stamp, which can be
+ obtained using @method[event% get-time-stamp].}
+@racket[event%]的所有实例都包含一个时间戳，可以使用@method[event% get-time-stamp]获取该时间戳。
 
-If the time stamp is 0, it defaults to the current time. Using 0 as the
+@;{If the time stamp is 0, it defaults to the current time. Using 0 as the
  time stamp almost always works fine, but it is considered bad manners
- on Unix.
+ on Unix.}
+如果时间戳为0，则默认为当前时间。使用0作为时间戳几乎总是可以正常工作，但在UNIX上它被认为是不礼貌的行为。
 
+@;{@section[#:tag "editorclickback"]{Clickbacks}}
+@section[#:tag "editorclickback"]{单击返回}
 
-@section[#:tag "editorclickback"]{Clickbacks}
-
-@deftech{Clickbacks} in a @racket[text%] editor facilitate the
+@;{@deftech{Clickbacks} in a @racket[text%] editor facilitate the
  creation of simple interactive objects, such as hypertext. A
  clickback is defined by associating a callback function with a range
  of @techlink{item}s in the editor. When a user clicks on the
  @techlink{item}s in that range, the callback function is invoked. For
  example, a hypertext clickback would associate a range to a callback
- function that changes the selection range in the editor.
+ function that changes the selection range in the editor.}
+@racket[text%]编辑器中的@deftech{单击返回（clickback）}有助于创建简单的交互式对象，如超文本。单击返回是通过将回调函数与编辑器中的一系列@techlink{项（item）}关联来定义的。当用户单击该范围内的@techlink{项}时，将调用回调函数。例如，超文本单击返回会将一个范围与一个回调函数相关联，该函数会更改编辑器中的选择范围。
 
-By default, the callback function is invoked when the user releases
+@;{By default, the callback function is invoked when the user releases
  the mouse button. The @method[text% set-clickback] method accepts
  an optional argument that causes the callback function to be invoked
  on the button press, instead. This behavior is useful, for example,
- for a clickback that creates a popup menu.
+ for a clickback that creates a popup menu.}
+默认情况下，当用户释放鼠标按钮时调用回调函数。@method[text% set-clickback]方法接受一个可选参数，该参数导致在按按钮时调用回调函数。例如，对于创建弹出菜单的单击返回，此行为非常有用。
 
-Note that there is no attempt to save clickback information when a
+@;{Note that there is no attempt to save clickback information when a
  file is saved, since a clickback will have an arbitrary procedure
- associated with it.
+ associated with it.}
+请注意，在保存文件时不会尝试保存单击回信息，因为单击返回将具有与之关联的任意过程。
 
-@section[#:tag "lockinfo"]{Internal Editor Locks}
+@;{@section[#:tag "lockinfo"]{Internal Editor Locks}}
+@section[#:tag "lockinfo"]{内部编辑器锁定}
 
-Instances of @racket[editor<%>] have three levels of internal
- locking:
+@;{Instances of @racket[editor<%>] have three levels of internal
+ locking:}
+@racket[editor<%>]的实例有三个级别的内部锁定：
 
 @itemize[
 
- @item{write locking --- When an editor is internally locked for
+ @item{@;{write locking --- When an editor is internally locked for
  writing, the abstract content of the editor cannot be changed (e.g.,
  insertion attempts fail silently). However, snips in a text editor
  can still be split and merged, and the text editor can be changed in
  ways that affect the flow of lines. The
  @method[editor<%> locked-for-write?] method reports whether an
  editor is currently locked for writing.}
+         写锁定——当一个编辑器被内部锁定进行写操作时，该编辑器的抽象内容无法更改（例如，插入尝试会自动失败）。但是，文本编辑器中的剪切仍然可以拆分和合并，并且可以以影响行流的方式更改文本编辑器。@method[editor<%> locked-for-write?]方法报告编辑器当前是否被锁定进行写入。}
 
- @item{flow locking --- When a text editor is internally locked for
+ @item{@;{flow locking --- When a text editor is internally locked for
  reflowing, it is locked for writing, the snip content of the editor
  cannot change, the @techlink{location} of a snip cannot be computed if it
  is not already known (see
@@ -783,58 +815,67 @@ Instances of @racket[editor<%>] have three levels of internal
  information during a flow lock produces undefined results. The
  @method[editor<%> locked-for-flow?] method reports whether an
  editor is currently locked for flowing.}
+         流锁定——当文本编辑器因回流而被内部锁定时，它被锁定写入，编辑器的剪切内容无法更改，如果剪切的位置未知，则无法计算剪切的@techlink{位置（location）}（请参见@xmethod[editor<%> locations-computed?]）中，无法将编辑器绘制到@techlink{显示（display）}上。在流锁定期间请求未经计算的位置信息会产生未定义的结果。@method[editor<%> locked-for-flow?]方法报告编辑器当前是否为流而被锁定。}
 
- @item{read locking --- When an editor is internally locked for
+ @item{@;{read locking --- When an editor is internally locked for
  reading, no operations can be performed on the editor (e.g., a
  request for the current selection position returns an undefined
  value). This extreme state is used only during callbacks to its snips
  for setting the snip's administrator, splitting the snip, or merging
  snips.  The @method[editor<%> locked-for-read?]  method reports
  whether an editor is currently locked for reading.}
+         读取锁定——当编辑器内部锁定进行读取时，不能在编辑器上执行任何操作（例如，对当前选择位置的请求返回未定义的值）。这种极端状态只在对剪切进行回调时使用，以设置剪切的管理员、拆分剪切或合并剪切。@method[editor<%> locked-for-read?]方法报告编辑器当前是否锁定以供读取。}
 
 ]
 
-The internal lock for an editor is @italic{not} affected by calls to
- @method[editor<%> lock].
+@;{The internal lock for an editor is @italic{not} affected by calls to
+ @method[editor<%> lock].}
+编辑器的内部锁@italic{不}受@method[editor<%> lock]调用的影响。
 
-Methods that report @techlink{location}-independent information about an
+@;{Methods that report @techlink{location}-independent information about an
  editor never trigger a lock. A method that reports @techlink{location}
  information may trigger a flow lock or write lock if the relevant
  information has not been computed since the last modification to the
  editor (see @xmethod[editor<%> locations-computed?]). A method
  that modifies the editor in any way, even setting the selection
- position, can trigger a read lock, flow lock, or write lock.
+ position, can trigger a read lock, flow lock, or write lock.}
+报告编辑器@techlink{定位（location）}无关信息的方法从不触发锁。如果自上次修改编辑器后尚未计算相关信息，则报告@techlink{定位（location）}信息的方法可能会触发流锁或写锁（请参见@xmethod[editor<%> locations-computed?]）。以任何方式修改编辑器的方法，甚至设置选择位置，都可以触发读锁、流锁或写锁。
 
-@section[#:tag "editorthreads"]{Editors and Threads}
+@;{@section[#:tag "editorthreads"]{Editors and Threads}}
+@section[#:tag "editorthreads"]{编辑器和线程}
 
-An editor is not tied to any particular thread or eventspace, except
+@;{An editor is not tied to any particular thread or eventspace, except
  to the degree that it is displayed in a canvas (which has an
  eventspace). Concurrent access of an editor is always safe in the
  weak sense that the editor will not become corrupted. However, because
  editor access can trigger locks, concurrent access can produce 
- contract failures or unexpected results.
+ contract failures or unexpected results.}
+编辑器不绑定到任何特定的线程或事件空间，除非它显示在画布（具有事件空间）中。在编辑器不会被破坏的微弱意义上，并发访问编辑器总是安全的。但是，由于编辑器访问可以触发锁，并发访问可能会导致合约失败或意外结果。
 
-An editor supports certain concurrent patterns
+@;{An editor supports certain concurrent patterns
  reliably. One relevant pattern is updating an editor in one thread
  while the editor is displayed in a canvas that is managed by a
  different (handler) thread. To ensure that canvas refreshes are not
  performed while the editor is locked for flowing, and to ensure that
  refreshes do not prevent editor modifications, the following are
- guaranteed:
+ guaranteed:}
+编辑器可靠地支持某些并发模式。一个相关的模式是在一个线程中更新一个编辑器，而该编辑器显示在一个由不同的（处理程序）线程管理的画布中。为确保在编辑器锁定为流时不执行画布刷新，并确保刷新不会阻止编辑器修改，请确保以下内容：
 
 @itemize[
 
- @item{When an editor's @method[editor<%> refresh] method is
+ @item{@;{When an editor's @method[editor<%> refresh] method is
  called during an @deftech{edit sequence} (which is started by
  @method[editor<%> begin-edit-sequence] and ended with
  @method[editor<%> end-edit-sequence]), the requested refresh
  region is recorded, but the refresh is not performed. Instead, the
  refresh is delayed until the end of the edit sequence.}
+         当在@deftech{编辑序列（edit sequence）}期间调用编辑器的@method[editor<%> refresh]方法（由@method[editor<%> begin-edit-sequence]启动并以@method[editor<%> end-edit-sequence]结束）时，将记录请求的刷新区域，但不会执行刷新。相反，刷新会延迟到编辑序列结束。}
 
- @item{Attempting to start an edit sequence while a refresh is in
+ @item{@;{Attempting to start an edit sequence while a refresh is in
  progress blocks until the refresh is complete.}
+         在刷新过程中尝试启动编辑序列将阻止，直到刷新完成。}
 
- @item{The @method[editor<%> on-display-size-when-ready] method
+ @item{@;{The @method[editor<%> on-display-size-when-ready] method
  calls @method[editor<%> on-display-size] only when the editor
  is not being refreshed and only when an edit sequence is not in
  progress. In the first case, the
@@ -843,21 +884,24 @@ An editor supports certain concurrent patterns
  second case, the @method[editor<%> on-display-size] call is
  delegated to the edit-sequence thread, to be called when the edit
  sequence is complete.}
+         @method[editor<%> on-display-size-when-ready]方法仅在未刷新编辑器和未进行编辑序列时调用@method[editor<%> on-display-size]。在第一种情况下，@method[editor<%> on-display-size]调用被委托给刷新完成后要调用的刷新线程。在第二种情况下，@method[editor<%> on-display-size]调用被委托给编辑序列线程，在编辑序列完成时调用。}
 
 ]
 
-Thus, disabling an @racket[editor-canvas%] object (using
+@;{Thus, disabling an @racket[editor-canvas%] object (using
  @method[window<%> enable]) is sufficient to ensure that a
  background thread can modify an editor displayed by the canvas, as
  long as all modifications are in edit sequences. The background
  modifications will impair canvas refreshes minimally and temporarily,
- and refreshes will not impair modifications in the background thread.
+ and refreshes will not impair modifications in the background thread.}
+因此，禁用@racket[editor-canvas%]对象（使用@method[window<%> enable]）就足以确保后台线程可以修改画布显示的编辑器，只要所有修改都在编辑序列中。背景修改将对画布刷新造成最小和暂时的影响，刷新不会对背景线程中的修改造成影响。
 
-A second supported pattern is reading an editor in a background thread
+@;{A second supported pattern is reading an editor in a background thread
  while the editor may be manipulated in other threads. Since no
  @techlink{location}-independent reads introduce locks, the such reads in
  the background thread will not impair other threads. However, other
  threads may interfere with the background thread, causing it to
  receive erroneous or out-of-date content information. This one-sided
  guarantee is useful if the background thread's work can be discarded
- when the editor is modified.
+ when the editor is modified.}
+第二个受支持的模式是在后台线程中读取编辑器，而该编辑器可以在其他线程中操作。由于没有@techlink{定位（location）}独立的读取引入锁，因此后台线程中的这种读取不会损害其他线程。但是，其他线程可能会干扰后台线程，导致其接收错误或过期的内容信息。如果修改编辑器时后台线程的工作可以被丢弃，那么这种单方面保证非常有用。

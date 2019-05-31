@@ -1,30 +1,37 @@
 #lang scribble/doc
 @(require "common.rkt" "diagrams.rkt")
 
-@title[#:style '(toc quiet)]{Snip and Style Classes}
+@;{@title[#:style '(toc quiet)]{Snip and Style Classes}}
+@title[#:tag "Snip_and_Style_Classes" #:style '(toc quiet)]{剪贴和样式类}
+
 
 @declare-exporting[racket/snip racket/gui/base racket/gui]
 @defmodule*/no-declare[(racket/snip)]
 
-The @racketmodname[racket/snip] collection provides the core
+@;{The @racketmodname[racket/snip] collection provides the core
 @tech{snip} and @tech{style} classes @emph{without} depending on
 @racketmodname[racket/gui/base]. This separation enables
 libraries that can cooperate with an editor while also working in
-contexts that do not have a GUI.
+contexts that do not have a GUI.}
+@racketmodname[racket/snip]集合提供核心@tech{剪切（snip）}和@tech{样式（style）}类，而@emph{不}依赖@racketmodname[racket/gui/base]。这种分离使库能够与编辑器协作，同时也可以在没有GUI的上下文中工作。
 
-Snips and Administrators:
+@;{Snips and Administrators:}
+剪切和管理员：
 
 @diagram->table[snip-diagram]
 
-Snip Lists:
+@;{Snip Lists:}
+剪切列表：
 
 @diagram->table[snip-list-diagram]
 
-Styles:
+@;{Styles:}
+样式：
 
 @diagram->table[style-diagram]
 
-Alphabetical:
+@;{Alphabetical:}
+按字母顺序排列的：
 
 @local-table-of-contents[]
 

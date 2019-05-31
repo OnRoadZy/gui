@@ -25,6 +25,8 @@
       ;; construct a syntax object holding a 3d value that
       ;; is a circle from the pict library with an appropriate
       ;; source location
+      ;;构造一个语法对象，该对象包含一个三维值，
+      ;;该值是来自pict库的一个具有适当源位置的圆。
       (datum->syntax #f
                      (circle size)
                      (vector source line column position 1)
