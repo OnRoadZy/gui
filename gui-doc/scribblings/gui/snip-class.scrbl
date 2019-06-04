@@ -697,19 +697,24 @@ as @method[snip% on-event].}
            void?]{
 @methspec{
 
-Notifies the snip that it is or is not allowed to display the caret
+@;{Notifies the snip that it is or is not allowed to display the caret
  (indicating ownership of keyboard focus) in some
  @techlink{display}. This method is @italic{not} called to request
  that the caret is actually shown or hidden; the @method[snip% draw]
- method is called for all display requests.
+ method is called for all display requests.}
+  规范：通知剪切允许或不允许在某些@techlink{显示}中显示插入符号（指示键盘焦点的所有权）。@italic{不}调用此方法请求实际显示或隐藏插入符号；对所有显示请求调用@method[snip% draw]方法。
 
-The @racket[own-it?] argument is @racket[#t] if the snip owns the
- keyboard focus or @racket[#f] otherwise.
+
+
+@;{The @racket[own-it?] argument is @racket[#t] if the snip owns the
+ keyboard focus or @racket[#f] otherwise.}
+  如果剪切拥有键盘焦点，则@racket[own-it?]参数为@racket[#t]，否则参数为@racket[#f]。
 
 }
 @methimpl{
 
-Does nothing.
+@;{Does nothing.}
+ 默认实现：不执行任何操作。 
 
 }}
 
@@ -721,18 +726,21 @@ Does nothing.
            real?]{
 @methspec{
 
-Calculates a partial width for the snip, starting from the first snip
+@;{Calculates a partial width for the snip, starting from the first snip
  @techlink{item} and continuing for @racket[len] @techlink{item}s. The
  drawing context and snip's @techlink{location}s in editor coordinates
- are provided. See also @method[snip% get-extent].
+ are provided. See also @method[snip% get-extent].}
+  规范：从第一个剪切@techlink{项}开始，然后继续为@racket[len] @techlink{项}计算剪切的部分宽度。提供了绘图上下文和剪切在编辑器坐标中的@techlink{定位}。另请参见@method[snip% get-extent]。
 
-The snip's editor is usually internally locked for writing and
- reflowing when this method is called (see also @|lockdiscuss|).
+@;{The snip's editor is usually internally locked for writing and
+ reflowing when this method is called (see also @|lockdiscuss|).}
+  当调用此方法时，剪切的编辑器通常在内部锁定以进行写入和回流（另请参见@|lockdiscuss|）。
 
 }
 @methimpl{
 
-Returns @racket[0.0].
+@;{Returns @racket[0.0].}
+  默认实现：返回@racket[0.0]。
 
 }}
 
@@ -740,8 +748,9 @@ Returns @racket[0.0].
 @defmethod[(previous)
            (or/c (is-a?/c snip%) #f)]{
 
-Returns the previous snip in the editor owning this snip, or @racket[#f] if this
- is the first snip.
+@;{Returns the previous snip in the editor owning this snip, or @racket[#f] if this
+ is the first snip.}
+  返回拥有此剪切的编辑器中的前一个剪切，如果这是第一个剪切，则返回@racket[#f]。
 
 }
 
@@ -750,20 +759,23 @@ Returns the previous snip in the editor owning this snip, or @racket[#f] if this
            boolean?]{
 @methspec{
 
-Asks the snip to try to release itself from its owner. If the snip is
+@;{Asks the snip to try to release itself from its owner. If the snip is
  not owned or the release is successful, then @racket[#t] is
  returned. Otherwise, @racket[#f] is returned and the snip remains
- owned.  See also @method[snip% is-owned?].
+ owned.  See also @method[snip% is-owned?].}
+  规格：要求剪切尝试从它的所有者那里释放自己。如果剪切未被拥有或发布成功，则返回@racket[#t]。否则，@racket[#f]将被退回，而剪切仍归其所有。也参见@method[snip% is-owned?]。
 
-Use this method for moving a snip from one editor to another. This
+@;{Use this method for moving a snip from one editor to another. This
  method notifies the snip's owning editor that someone else really
  wants control of the snip. It is not necessary to use this method for
- "cleaning up" a snip when it is deleted from an editor.
+ "cleaning up" a snip when it is deleted from an editor.}
+  使用此方法将剪切从一个编辑器移动到另一个编辑器。此方法通知剪切拥有的编辑器，其他人真的想要控制剪切。从编辑器中删除剪切时，不必使用此方法“清理”剪切。
 
 }
 @methimpl{
 
-Requests a low-level release from the snip's owning administrator.
+@;{Requests a low-level release from the snip's owning administrator.}
+  默认实现：请求剪切拥有的管理员进行低级发布。
 
 }}
 
@@ -773,17 +785,20 @@ Requests a low-level release from the snip's owning administrator.
            boolean?]{
 @methspec{
 
-Resizes the snip. The snip can refuse to be resized by returning
+@;{Resizes the snip. The snip can refuse to be resized by returning
  @racket[#f]. Otherwise, the snip will resize (it must call its
  administrator's @method[snip-admin% resized] method) and return
- @racket[#t].
+ @racket[#t].}
+规格：调整剪切的大小。剪切可以通过返回@racket[#f]拒绝调整大小。否则，剪切将调整大小（必须调用其管理员的@method[snip-admin% resized]方法）并返回@racket[#t]。
 
-See also @xmethod[pasteboard% on-interactive-resize].
+@;{See also @xmethod[pasteboard% on-interactive-resize].}
+  另请参见@xmethod[pasteboard% on-interactive-resize]。
 
 }
 @methimpl{
 
-Returns @racket[#f].
+@;{Returns @racket[#f].}
+  默认实现：返回@racket[#f]。
 
 }}
 
@@ -791,10 +806,11 @@ Returns @racket[#f].
 @defmethod[(set-admin [admin (or/c (is-a?/c snip-admin%) #f)])
            void?]{
 
-Sets the snip's administrator. Only an administrator should call this
- method.
+@;{Sets the snip's administrator. Only an administrator should call this
+ method.}
+  设置剪切的管理员。只有管理员才能调用此方法。
 
-The default method sets the internal state of a snip to record its
+@;{The default method sets the internal state of a snip to record its
  administrator. It will not modify this state if the snip is already
  owned by an administrator and the administrator has not blessed the
  transition. If the administrator state of a snip is not modified as
@@ -802,10 +818,12 @@ The default method sets the internal state of a snip to record its
  @racket[text%] or @racket[pasteboard%], the
  internal state may be forcibly modified (if the new administrator was
  @racket[#f]) or a surrogate snip may be created (if the snip was
- expected to receive a new administrator).
+ expected to receive a new administrator).}
+  默认方法将剪切的内部状态设置为记录其管理员。如果剪切已经由管理员拥有，并且管理员没有为转换祝福，则不会修改此状态。如果在@racket[text%]或@racket[pasteboard%]的实例对该方法进行敏感调用期间未按预期修改剪切的管理员状态，则可以强制修改内部状态（如果新管理员是@racket[#f]），或者可以创建代理剪切（如果剪切预期将接收新管理员）。
 
-The snip's (new) editor is usually internally locked for reading when
- this method is called (see also @|lockdiscuss|).
+@;{The snip's (new) editor is usually internally locked for reading when
+ this method is called (see also @|lockdiscuss|).}
+  调用此方法时，剪切（新）编辑器通常在内部锁定以供读取（另请参见@|lockdiscuss|）。
 
 }
 
@@ -814,18 +832,20 @@ The snip's (new) editor is usually internally locked for reading when
            void?]{
 @methspec{
 
-Sets the snip's @techlink{count} (i.e., the number of @techlink{item}s
- within the snip).
+@;{Sets the snip's @techlink{count} (i.e., the number of @techlink{item}s
+ within the snip).}
+  规格：设置剪切的@techlink{计数}（即剪切中的@techlink{项目}数）。
 
-The snip's @techlink{count} may be changed by the system (in extreme cases to
- maintain consistency) without calling this method.
+@;{The snip's @techlink{count} may be changed by the system (in extreme cases to
+ maintain consistency) without calling this method.}
+  系统可以更改剪切的@techlink{计数}（在极端情况下，为了保持一致性），而不调用此方法。
 
 }
 @methimpl{
 
-Sets the snip's @techlink{count} and notifies the snip's administrator
- that the snip's size has changed.
-
+@;{Sets the snip's @techlink{count} and notifies the snip's administrator
+ that the snip's size has changed.}
+  默认实现：设置剪切的@techlink{计数}并通知剪切的管理员剪切的大小已更改。
 }}
 
 
@@ -833,13 +853,15 @@ Sets the snip's @techlink{count} and notifies the snip's administrator
            void?]{
 @methspec{
 
-Sets the snip's flags. See @method[snip% get-flags].
+@;{Sets the snip's flags. See @method[snip% get-flags].}
+  规格：设置剪切的标志。请参阅@method[snip% get-flags]。
 
 }
 @methimpl{
 
-Sets the snip flags and notifies the snip's editor that its flags have
-changed. 
+@;{Sets the snip flags and notifies the snip's editor that its flags have
+changed. }
+  默认实现：设置剪切标志并通知剪切的编辑器其标志已更改。
 
 }}
 
@@ -847,11 +869,14 @@ changed.
 @defmethod[(set-snipclass [class (is-a?/c snip-class%)])
            void?]{
 
-Sets the snip's class, used for file saving and cut-and-paste.
+@;{Sets the snip's class, used for file saving and cut-and-paste.}
+  设置剪切的类，用于文件保存、剪切和粘贴。
 
-This method stores the snip class internally; other editor objects may
+@;{This method stores the snip class internally; other editor objects may
  access the snip class directly, instead of through the @method[snip%
- get-snipclass] method.
+ get-snipclass] method.}
+  此方法在内部存储剪切类；其他编辑器对象可以直接访问剪切类，而不是通过@method[snip%
+ get-snipclass]方法。
 
 }
 
@@ -859,10 +884,12 @@ This method stores the snip class internally; other editor objects may
 @defmethod[(set-style [style (is-a?/c style<%>)])
            void?]{
 
-Sets the snip's style if it is not owned by any editor.  See also
- @method[snip% get-style] and @method[snip% is-owned?].
+@;{Sets the snip's style if it is not owned by any editor.  See also
+ @method[snip% get-style] and @method[snip% is-owned?].}
+  如果剪切不属于任何编辑器，则设置其样式。另请参见@method[snip% get-style]和@method[snip% is-owned?]。
 
-The snip's style may be changed by the system without calling this method.
+@;{The snip's style may be changed by the system without calling this method.}
+  剪切的样式可以在不调用此方法的情况下由系统更改。
 
 }
 
@@ -871,17 +898,19 @@ The snip's style may be changed by the system without calling this method.
            void?]{
 @methspec{
 
-Called by the snip's administrator to notify the snip that its changed
+@;{Called by the snip's administrator to notify the snip that its changed
  have been saved. The next time snip's internal state is modified by
  the user, it should call @method[snip-admin% modified] to report the
  state change (but only on the first change after this method is
  called, or the first change after the snip acquires a new
- administrator).
+ administrator).}
+  规范：由剪切的管理员调用，通知剪切其更改已保存。下次用户修改剪切的内部状态时，它应该调用@method[snip-admin% modified]来报告状态更改（但只在调用此方法后的第一个更改上，或剪切获得新管理员后的第一个更改上）。
 
 }
 @methimpl{
 
-Does nothing.
+@;{Does nothing.}
+  默认实现：不执行任何操作。
 
 }}
 
@@ -891,18 +920,21 @@ Does nothing.
 
 @methspec{
 
-Called to notify the snip that it may need to recalculate its display
+@;{Called to notify the snip that it may need to recalculate its display
  arguments (width, height, etc.) when it is next asked, because the
- style or @techlink{location} of the snip has changed.
+ style or @techlink{location} of the snip has changed.}
+  规范：调用以通知剪切，因为剪切的样式或@techlink{定位}已更改，下次询问时可能需要重新计算其显示参数（宽度、高度等）。
 
-The snip's (new) editor is usually internally locked for reflowing
- when this method is called (see also @|lockdiscuss|).
+@;{The snip's (new) editor is usually internally locked for reflowing
+ when this method is called (see also @|lockdiscuss|).}
+  当调用此方法时，剪切的（新）编辑器通常在内部锁定以进行回流（另请参见@|lockdiscuss|）。
 
 }
 
 @methimpl{
 
-Does nothing.
+@;{Does nothing.}
+  默认实现：不执行任何操作。
 
 }}
 
@@ -913,40 +945,47 @@ Does nothing.
            void?]{
 
 @methspec{
-Splits the snip into two snips. This is called when a snip has more
+@;{Splits the snip into two snips. This is called when a snip has more
  than one @techlink{item} and something is inserted between two
- @techlink{item}s.
+ @techlink{item}s.}
+  规格：把剪切分成两个剪切。当一个剪切有多个@techlink{项目}，并且在两个@techlink{项目}之间插入了一些东西时，就调用这个函数。
 
-The arguments are a relative @techlink{position} integer and two
+@;{The arguments are a relative @techlink{position} integer and two
  boxes. The @techlink{position} integer specifies how many
  @techlink{item}s should be given to the new first snip; the rest go
  to the new second snip. The two boxes must be filled with two new
  snips. (The old snip is no longer used, so it can be recycled as a
- new snip.)
+ new snip.)}
+  参数是相对@techlink{位置}整数和两个框。@techlink{位置}整数指定应为新的第一个剪切指定多少项；其余项转到新的第二个剪切。这两个箱子必须装上两个新的剪切。（旧的剪切不再使用，因此可以作为新的剪切回收。）
 
-If the returned snips do not have the expected @techlink{count}s, their
+@;{If the returned snips do not have the expected @techlink{count}s, their
  @techlink{count}s are forcibly modified. If either returned snip is already
- owned by another administrator, a surrogate snip is created.
+ owned by another administrator, a surrogate snip is created.}
+  如果返回的剪切没有预期的@techlink{计数}，则强制修改它们的@techlink{计数}。如果返回的剪切已经由另一个管理员拥有，则会创建一个代理剪切。
 
-The snip's editor is usually internally locked for reading when this
- method is called (see also @|lockdiscuss|).
+@;{The snip's editor is usually internally locked for reading when this
+ method is called (see also @|lockdiscuss|).}
+  调用此方法时，剪切的编辑器通常在内部锁定以供读取（另请参见@|lockdiscuss|）。
+
+
 }
 
 @methimpl{
 
-Creates a new @racket[snip%] instance with @racket[position]
+@;{Creates a new @racket[snip%] instance with @racket[position]
 elements, and modifies @this-obj[] to decrement its count by
 @racket[position]. The nest snip is installed into @racket[first] and
-@this-obj[] is installed into @racket[second].
-
+@this-obj[] is installed into @racket[second].}
+默认实现：用@racket[position]元素创建一个新的@racket[snip%]实例，并修改@this-obj[]以按@racket[position]减少其计数。将嵌套剪切安装到@racket[first]，将@this-obj[]安装到@racket[second]。
 }}
 
 
 @defmethod[(write [f (is-a?/c editor-stream-out%)])
            void?]{
 
-Writes the snip to the given stream. (Snip reading is handled by the
+@;{Writes the snip to the given stream. (Snip reading is handled by the
  snip class.) Style information about the snip (i.e., the content of
- @method[snip% get-style]) will be saved and restored automatically.
+ @method[snip% get-style]) will be saved and restored automatically.}
+  将剪切写入给定的流。（剪切读取由剪切类处理）剪切的样式信息（即@method[snip% get-style]的内容）将自动保存和恢复。
 
 }}
