@@ -1,25 +1,31 @@
 #lang scribble/doc
 @(require "common.rkt" "diagrams.rkt")
 
-@title[#:style '(toc quiet)]{Editor Classes}
+@;{@title[#:style '(toc quiet)]{Editor Classes}}
+@title[#:tag "Editor_Classes" #:style '(toc quiet)]{编辑器类}
 
-Editors:
+@;{Editors:}
+编辑器：
 
 @diagram->table[editor-diagram]
 
-Editor Snips:
+@;{Editor Snips:}
+编辑器剪切：
 
 @diagram->table[editor-snip-diagram]
 
-Displays, Administrators, and Mappings:
+@;{Displays, Administrators, and Mappings:}
+显示、管理员和映射：
 
 @diagram->table[editor-admin-diagram]
 
-Streams for Saving and Cut-and-Paste:
+@;{Streams for Saving and Cut-and-Paste:}
+用于保存、剪切和粘贴的流：
 
 @diagram->table[stream-diagram]
 
-Alphabetical:
+@;{Alphabetical:}
+按字母顺序排列的：
 
 @local-table-of-contents[]
 
