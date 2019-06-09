@@ -21,7 +21,7 @@
 @;{Normally, this method is called only by @xmethod[editor-canvas%
  set-editor].}
   通常，此方法只能由@xmethod[editor-canvas%
- set-editor]调用设置编辑器]。
+ set-editor]调用设置编辑器。
 
 }
 
@@ -2116,17 +2116,19 @@ The @racket[as-eps?] argument is used for PostScript and PDF printing, and is
                         [page-number exact-integer? -1])
            void?]{
 
-Prints the editor into the given drawing context. See also
- @method[editor<%> print].
+@;{Prints the editor into the given drawing context. See also
+ @method[editor<%> print].}
+  将编辑器打印到给定的绘图上下文中。另请参见@method[editor<%> print]。
 
-If @racket[page-number] is a positive integer, then just the
+@;{If @racket[page-number] is a positive integer, then just the
 indicated page is printed, where pages are numbered from
 @racket[1]. If @racket[page-number] is @racket[0], then the
 entire content of the editor is printed on a single page.
 When @racket[page-number] is negative, then the editor content is
 split across pages as needed to fit, and the
 @method[dc<%> start-page] and @method[dc<%> end-page] methods of @racket[dc<%>] are
-called for each page.
+called for each page.}
+  如果@racket[page-number]为正整数，则只打印指示的页面，其中页面的编号从@racket[1]开始。如果@racket[page-number]为@racket[0]，则编辑器的整个内容将打印在一页上。当@racket[page-number]为负数时，根据需要将编辑器内容拆分为多个页面，并为每个页面调用@racket[dc<%>]的@method[dc<%> start-page]和@method[dc<%> end-page]方法。
 
 }
 
@@ -2136,22 +2138,26 @@ called for each page.
            (or/c path-string? #f)]{
 @methspec{
 
-Called when the user must be queried for a filename to save an
+@;{Called when the user must be queried for a filename to save an
  editor. Starting-directory and default-name paths are passed in,
  but either may be @racket[#f] to indicate that any directory is fine or
- there is no default name.
+ there is no default name.}
+  规范：当必须查询用户的文件名以保存编辑器时调用。传入了起始目录和默认名称路径，但可以是@racket[#f]以指示任何目录都正常，或者没有默认名称。
 
-Note that the @racket[directory] and @racket[filename] arguments
- cannot be strings; each must be a path value.
+@;{Note that the @racket[directory] and @racket[filename] arguments
+ cannot be strings; each must be a path value.}
+  请注意，@racket[directory]和@racket[filename]参数不能是字符串；每个参数都必须是路径值。
 
 }
 @methimpl{
 
-Calls the global @racket[put-file] procedure.
+@;{Calls the global @racket[put-file] procedure.}
+  默认实现：调用全局@racket[put-file]过程。
 
-If the editor is displayed in a single canvas, then the canvas's
+@;{If the editor is displayed in a single canvas, then the canvas's
  top-level frame is used as the parent for the file dialog. Otherwise,
- the file dialog will have no parent.
+ the file dialog will have no parent.}
+  如果编辑器显示在单个画布中，则画布的顶级框架将用作文件对话框的父级。否则，文件对话框将没有父级。
 
 }}
 
@@ -2160,7 +2166,8 @@ If the editor is displayed in a single canvas, then the canvas's
                                   [name string?])
            boolean?]{
 
-See @method[editor<%> read-header-from-file].
+@;{See @method[editor<%> read-header-from-file].}
+  参见@method[editor<%> read-header-from-file]。
 
 }
 
@@ -2169,26 +2176,31 @@ See @method[editor<%> read-header-from-file].
                            [overwrite-styles? any/c #f])
            boolean?]{
 
-Reads new contents for the editor from a stream. The return value is
+@;{Reads new contents for the editor from a stream. The return value is
  @racket[#t] if there are no errors, @racket[#f] otherwise. See also
- @|filediscuss|.
+ @|filediscuss|.}
+  从流中读取编辑器的新内容。如果没有错误，返回值为@racket[#t]，否则返回值为@racket[#f]。另见@|filediscuss|。
 
-The stream provides either new mappings for names in the editor's
+@;{The stream provides either new mappings for names in the editor's
  style list, or it indicates that the editor should share a
  previously-read style list (depending on how style lists were shared
  when the editor was written to the stream; see also @method[editor<%>
- write-to-file]).
+ write-to-file]).}
+  流为编辑器样式列表中的名称提供新的映射，或者指示编辑器应共享以前读取的样式列表（取决于编辑器写入流时样式列表的共享方式；另请参见@method[editor<%>
+ write-to-file]）。
 
 @itemize[
 
- @item{In the former case, if the @racket[overwrite-styles?] argument
+ @item{@;{In the former case, if the @racket[overwrite-styles?] argument
  is @racket[#f], then each style name in the loaded file that is already
  in the current style list keeps its current style. Otherwise,
  existing named styles are overwritten with specifications from the
  loaded file.}
+         在前一种情况下，如果racket[overwrite-styles?]参数为@racket[#f]，则加载文件中已存在于当前样式列表中的每个样式名都保留其当前样式。否则，现有命名样式将被加载文件中的规范覆盖。}
 
- @item{In the latter case, the editor's style list will be changed to
+ @item{@;{In the latter case, the editor's style list will be changed to
  the previously-read list.}
+         在后一种情况下，编辑器的样式列表将更改为以前读取的列表。}
 
 ]
 }
@@ -2198,31 +2210,37 @@ The stream provides either new mappings for names in the editor's
                                   [name string?])
            boolean?]{
 
-Called to handle a named header that is found when reading editor data
+@;{Called to handle a named header that is found when reading editor data
  from a stream. The return value is @racket[#t] if there are no errors,
- @racket[#f] otherwise.
+ @racket[#f] otherwise.}
+  调用以处理从流中读取编辑器数据时找到的命名头。如果没有错误，返回值为@racket[#t]，否则返回值为@racket[#f]。
 
-Override this method only to embellish the file format with new header
+@;{Override this method only to embellish the file format with new header
  information. Always call the inherited method if the derived reader
- does not recognize the header.
+ does not recognize the header.}
+  重写此方法只会使用新的头信息来修饰文件格式。如果派生读取器无法识别头，则始终调用继承的方法。
 
-See also @|filediscuss|.
+@;{See also @|filediscuss|.}
+  另见@|filediscuss|。
 }
 
 
 @defmethod[(redo)
            void?]{
 
-Undoes the last undo, if no other changes have been made since. See
+@;{Undoes the last undo, if no other changes have been made since. See
  @method[editor<%> undo] for information about Emacs-style undo.  If
  the editor is currently performing an undo or redo, the method call
- is ignored.
+ is ignored.}
+  如果此后没有进行其他更改，则撤消上一次撤消。有关Emacs样式撤消的信息，请参见@method[editor<%> undo]。如果编辑器当前正在执行撤消或重做，则方法调用将被忽略。
 
-The system may perform a redo without calling this method in response
+@;{The system may perform a redo without calling this method in response
  to other method calls. Use methods such as
- @method[editor<%> on-change] to monitor editor content changes.
+ @method[editor<%> on-change] to monitor editor content changes.}
+  系统可以在不调用此方法以响应其他方法调用的情况下执行重做。使用@method[editor<%> on-change]等方法监视编辑器内容更改。
 
-See also @method[editor<%> add-undo].
+@;{See also @method[editor<%> add-undo].}
+  另请参见@method[editor<%> add-undo]。
 
 }
 
@@ -2237,23 +2255,27 @@ See also @method[editor<%> add-undo].
                     [background (or/c (is-a?/c color%) #f)])
            void?]{
 
-Repaints a region of the editor, generally called by an editor
+@;{Repaints a region of the editor, generally called by an editor
  administrator. The @racket[x], @racket[y], @racket[width], and
  @racket[height] arguments specify the area that needs repainting in
  editor coordinates. The @method[editor-admin% get-dc] method of the
  editor's administrator (as returned by @method[editor<%> get-admin])
- supplies the target @racket[dc<%>] object and offset for drawing.
+ supplies the target @racket[dc<%>] object and offset for drawing.}
+  重新绘制编辑器的一个区域，通常由编辑器管理员调用。@racket[x]、@racket[y]、@racket[width]和@racket[height]参数指定需要在编辑器坐标中重新绘制的区域。编辑器管理员的@method[editor-admin% get-dc]方法（由@method[editor<%> get-admin]返回）为绘图提供目标@racket[dc<%>]对象和偏移量。
 
-See @|drawcaretdiscuss| for information about @racket[draw-caret].
+@;{See @|drawcaretdiscuss| for information about @racket[draw-caret].}
+  有关@racket[draw-caret]的信息，请参见@|drawcaretdiscuss|。
 
-The @racket[background] color corresponds to the background of the
+@;{The @racket[background] color corresponds to the background of the
  @techlink{display}; if it is @racket[#f], then the display is transparent.
  An editor should use the given background color as its own
  background (or not paint the background of @racket[background] is
- @racket[#f]).
+ @racket[#f]).}
+  @racket[background]色对应于@techlink{显示}的背景；如果是@racket[#f]，则显示是透明的。编辑器应使用给定的背景色作为自己的背景（或不绘制@racket[background]的背景是@racket[#f]）。
 
-See @secref["editorthreads"] for information about edit sequences and
- refresh requests.
+@;{See @secref["editorthreads"] for information about edit sequences and
+ refresh requests.}
+  有关编辑序列和刷新请求的信息，请参见@secref["editorthreads"]。
 
 }
 
@@ -2261,28 +2283,31 @@ See @secref["editorthreads"] for information about edit sequences and
 @defmethod[(refresh-delayed?)
            boolean?]{
 
-Returns @racket[#t] if updating on this editor is currently
+@;{Returns @racket[#t] if updating on this editor is currently
  delayed. Updating may be delayed because @method[editor<%>
  begin-edit-sequence] has been called for this editor, or because the
  editor has no administrator, or because the editor's administrator
  returns @racket[#t] from its @method[editor-admin% refresh-delayed?]
  method. (The administrator might return @racket[#t] because an
- enclosing editor's refresh is delayed.)
+ enclosing editor's refresh is delayed.)}
+  如果此编辑器上的更新当前被延迟，则返回@racket[#t]。更新可能会延迟，因为已经为此编辑器调用了@method[editor<%> begin-edit-sequence]，或者因为编辑器没有管理员，或者因为编辑器的管理员从其@method[editor-admin% refresh-delayed?]方法返回@racket[#t]。（由于封闭编辑器的刷新被延迟，管理员可能会返回@racket[#t]。）
 
-See also @method[editor<%> in-edit-sequence?].
-
+@;{See also @method[editor<%> in-edit-sequence?].}
+另请参见@method[editor<%> in-edit-sequence?]。
 }
 
 
 @defmethod[(release-snip [snip (is-a?/c snip%)])
            boolean?]{
 
-Requests that the specified snip be deleted and released from the
+@;{Requests that the specified snip be deleted and released from the
  editor. If this editor is not the snip's owner or if the snip cannot
  be released, then @racket[#f] is returned. Otherwise, @racket[#t] is
- returned and the snip is no longer owned.
+ returned and the snip is no longer owned.}
+  请求从编辑器中删除并释放指定的剪切。如果此编辑器不是剪切的所有者，或者剪切无法释放，则返回@racket[#f]。否则，返回@racket[#t]，而剪切将不再拥有。
 
-See also @xmethod[snip-admin% release-snip] .
+@;{See also @xmethod[snip-admin% release-snip] .}
+  另请参见@xmethod[snip-admin% release-snip]。
 
 }
 
@@ -2290,11 +2315,14 @@ See also @xmethod[snip-admin% release-snip] .
 @defmethod[(remove-canvas [canvas (is-a?/c editor-canvas%)])
            void?]{
 
-Removes a canvas from this editor's list of displaying canvases. (See
- @method[editor<%> get-canvases].)
+@;{Removes a canvas from this editor's list of displaying canvases. (See
+ @method[editor<%> get-canvases].)}
+  从此编辑器的显示画布列表中删除画布。（请参见@method[editor<%> get-canvases]。）
 
-Normally, this method is called only by @xmethod[editor-canvas%
- set-editor].
+@;{Normally, this method is called only by @xmethod[editor-canvas%
+ set-editor].}
+ 通常，此方法仅由@xmethod[editor-canvas%
+ set-editor]调用。 
 
 }
 
@@ -2303,13 +2331,16 @@ Normally, this method is called only by @xmethod[editor-canvas%
                     [redraw-now? any/c])
            void?]{
 
-Called (indirectly) by snips within the editor: it forces a
+@;{Called (indirectly) by snips within the editor: it forces a
  recalculation of the display information in which the specified snip
- has changed its size.
+ has changed its size.}
+  由编辑器中的剪切（间接）调用：它强制重新计算显示信息，其中指定的剪切更改了其大小。
 
-If @racket[redraw-now?] is @racket[#f], the editor will require
+@;{If @racket[redraw-now?] is @racket[#f], the editor will require
  another message to repaint itself. (See also @method[editor<%>
- needs-update].)
+ needs-update].)}
+如果@racket[redraw-now?]是@racket[#f]，编辑器将需要另一条消息来重新绘制自身。（另请参见@method[editor<%>
+ needs-update]。）  
 
 }
 
@@ -2320,32 +2351,40 @@ If @racket[redraw-now?] is @racket[#f], the editor will require
                       [show-errors? any/c #t])
            boolean?]{
 
-Saves the editor into a file and returns @racket[#t].  If an error
- occurs, an exception is raised.
+@;{Saves the editor into a file and returns @racket[#t].  If an error
+ occurs, an exception is raised.}
+  将编辑器保存到文件中并返回@racket[#t]。如果发生错误，将引发异常。
 
-If @racket[filename] is @racket[#f], then the internally stored filename
+@;{If @racket[filename] is @racket[#f], then the internally stored filename
  will be used; if @racket[filename] is @racket[""] or if the internal name
  is unset or temporary, then the user will be prompted for a name.
  The possible values for @racket[format] are described at
-@method[editor<%> load-file].
+@method[editor<%> load-file].}
+如果@racket[filename]为@racket[#f]，则使用内部存储的文件名；如果@racket[filename]为@racket[""]，或者如果内部名称未设置或临时，则提示用户输入名称。在@method[editor<%> load-file]中描述了@racket[format]的可能值。
 
-The filename and format used to save the file can be retrieved with
+@;{The filename and format used to save the file can be retrieved with
  @method[editor<%> get-filename] unless the @racket[format] is
  @racket['copy] -- see also @method[editor<%> load-file] for more information
- on the @racket[format] argument.
+ on the @racket[format] argument.}
+  用于保存文件的文件名和格式可以使用@method[editor<%> get-filename]检索，除非@racket[format]为@racket['copy]——有关@racket[format]参数的详细信息，请参见@method[editor<%> load-file]。
  
- In a @racket[text%] instance, the format can be retrieved 
- with @method[text% get-file-format].
+ @;{In a @racket[text%] instance, the format can be retrieved 
+ with @method[text% get-file-format].}
+   在@racket[text%]实例中，可以使用@method[text% get-file-format]检索格式。
 
-See also @method[editor<%> on-save-file], @method[editor<%>
- after-save-file], and @method[editor<%> can-save-file?].
+@;{See also @method[editor<%> on-save-file], @method[editor<%>
+ after-save-file], and @method[editor<%> can-save-file?].}
+  另请参见@method[editor<%> on-save-file]、@method[editor<%>
+ after-save-file]和@method[editor<%> can-save-file?]。
 
-On Mac OS, the file's type signature is set to @racket["TEXT"]
+@;{On Mac OS, the file's type signature is set to @racket["TEXT"]
  for a text-format file or @racket["WXME"] for a standard-format
- (binary) file.
+ (binary) file.}
+  在Mac OS上，文本格式文件的类型签名设置为@racket["TEXT"]，或者标准格式（二进制）文件的类型签名设置为@racket["WXME"]。
 
-The @racket[show-errors?] argument is no longer used.
-
+@;{The @racket[show-errors?] argument is no longer used.}
+@racket[show-errors?]参数不再使用。
+  
 }
 
 
@@ -2355,13 +2394,16 @@ The @racket[show-errors?] argument is no longer used.
                       [show-errors? any/c #t])
            boolean?]{
 
-Saves the editor into a port and returns @racket[#t].  If an error
- occurs, an exception is raised.
+@;{Saves the editor into a port and returns @racket[#t].  If an error
+ occurs, an exception is raised.}
+  将编辑器保存到端口中并返回@racket[#t]。如果发生错误，将引发异常。
 
-The possible values for @racket[format] are described at
-@method[editor<%> load-file]. 
+@;{The possible values for @racket[format] are described at
+@method[editor<%> load-file]. }
+  在@method[editor<%> load-file]中描述了@racket[format]的可能值。
 
-The @racket[show-errors?] argument is no longer used.
+@;{The @racket[show-errors?] argument is no longer used.}
+  @racket[show-errors?]参数不再使用。
 
 }
 
@@ -2374,21 +2416,25 @@ The @racket[show-errors?] argument is no longer used.
                              [bias (or/c 'start 'end 'none)])
            boolean?]{
 
-Causes the editor to be scrolled so that a given @techlink{location}
+@;{Causes the editor to be scrolled so that a given @techlink{location}
  is visible. If the editor is scrolled, @racket[#t] is returned,
- otherwise @racket[#f] is returned.
+ otherwise @racket[#f] is returned.}
+  使编辑器滚动以使给定@techlink{定位（location）}可见。如果滚动编辑器，则返回@racket[#t]，否则返回@racket[#f]。
 
-This method is normally called indirectly by @method[editor<%>
+@;{This method is normally called indirectly by @method[editor<%>
  scroll-to] or @xmethod[text% scroll-to-position] to implement
- scrolling.
+ scrolling.}
+  通常通过@method[editor<%>
+ scroll-to]或@xmethod[text% scroll-to-position]来间接调用此方法以实现滚动。
 
-The default implementation forwards the request to the
+@;{The default implementation forwards the request to the
 @method[editor-admin% scroll-to] method of the current administrator,
 if any (see @method[editor<%> get-admin]). If a text editor has
 padding (see @method[text% set-padding]), then the padding is added to
 the given @techlink{location} before forwarding to the
 administrator. If the editor has no administrator, @racket[#f] is
-returned.
+returned.}
+  默认实现将请求转发到当前管理员的@method[editor-admin% scroll-to]方法（如果有）（请参见@method[editor<%> get-admin]）。如果文本编辑器有填充（请参见@method[text% set-padding]），则在转发给管理员之前，填充将添加到给定@techlink{定位（location）}。如果编辑器没有管理员，则返回@racket[#f]。
 
 }
 
@@ -2396,10 +2442,12 @@ returned.
 @defmethod[(scroll-line-location [pos exact-nonnegative-integer?])
            (and/c real? (not/c negative?))]{
 
-Maps a vertical scroll position to a vertical @techlink{location}
- within the editor.
+@;{Maps a vertical scroll position to a vertical @techlink{location}
+ within the editor.}
+  将垂直滚动位置映射到编辑器中的垂直@techlink{定位（location）}。
 
-For @racket[text%] objects: @|FCA| @|EVD|
+@;{For @racket[text%] objects: @|FCA| @|EVD|}
+  对于@racket[text%]对象：@|FCA| @|EVD|
 
 }
 
@@ -2413,26 +2461,30 @@ For @racket[text%] objects: @|FCA| @|EVD|
                       [bias (or/c 'start 'end 'none) 'none])
            boolean?]{
 
-Called (indirectly) by snips within the editor: it causes the editor
+@;{Called (indirectly) by snips within the editor: it causes the editor
  to be scrolled so that a given @techlink{location} range within a
  given snip is visible. If the editor is scrolled immediately,
- @racket[#t] is returned, otherwise @racket[#f] is returned.
+ @racket[#t] is returned, otherwise @racket[#f] is returned.}
+  通过编辑器中的剪切（间接）调用：它使编辑器滚动，以便在给定剪切中看到给定的@techlink{定位（location）}范围。如果立即滚动编辑器，则返回@racket[#t]，否则返回@racket[#f]。
 
-If refreshing is delayed (see @method[editor<%> refresh-delayed?]),
+@;{If refreshing is delayed (see @method[editor<%> refresh-delayed?]),
  then the scroll request is saved until the delay has ended. The
  scroll is performed (immediately or later) by calling
- @method[editor<%> scroll-editor-to].
+ @method[editor<%> scroll-editor-to].}
+  如果刷新延迟（请参见@method[editor<%> refresh-delayed?]），然后保存滚动请求，直到延迟结束。通过调用@method[editor<%> scroll-editor-to]来执行滚动（立即或稍后）。
 
-The @racket[localx], @racket[localy], @racket[width], and @racket[height]
+@;{The @racket[localx], @racket[localy], @racket[width], and @racket[height]
  arguments specify the area that needs to be visible in @racket[snip]'s
- coordinate system.
+ coordinate system.}
+  @racket[localx]、@racket[localy]、@racket[width]和@racket[height]参数指定需要在剪切坐标系中可见的区域。
 
-When the specified region cannot fit in the visible area, @racket[bias]
+@;{When the specified region cannot fit in the visible area, @racket[bias]
  indicates which end of the region to display. When @racket[bias] is
  @racket['start], then the top-left of the region is
  displayed. When @racket[bias] is @racket['end], then the
  bottom-right of the region is displayed. Otherwise, @racket[bias] must
- be @racket['none].
+ be @racket['none].}
+  当指定区域不能适应可见区域时，@racket[bias]指示要显示区域的哪一端。当@racket[bias]为@racket['start]时，将显示区域的左上角。当@racket[bias]为@racket['end]时，将显示区域的右下角。否则，@racket[bias]必须为@racket['none]。
 
 }
 
@@ -2440,29 +2492,37 @@ When the specified region cannot fit in the visible area, @racket[bias]
 @defmethod[(select-all)
            void?]{
 
-Selects all data in the editor
+@;{Selects all data in the editor}
+  选择编辑器中的所有数据。
 
 }
 
 @defmethod[(set-active-canvas [canvas (is-a?/c editor-canvas%)])
            void?]{
 
-Sets the active canvas for this editor. (See @method[editor<%>
- get-active-canvas].)
+@;{Sets the active canvas for this editor. (See @method[editor<%>
+ get-active-canvas].)}
+  设置此编辑器的活动画布。（请参见@method[editor<%>
+ get-active-canvas]。）
 
-Normally, this method is called only by @xmethod[editor-canvas%
- on-focus] in an editor canvas that is displaying an editor.
+@;{Normally, this method is called only by @xmethod[editor-canvas%
+ on-focus] in an editor canvas that is displaying an editor.}
+  通常，在显示编辑器的编辑器画布中，只有@xmethod[editor-canvas%
+ on-focus]调用此方法。
 
 }
 
 @defmethod[(set-admin [admin (or/c (is-a?/c editor-admin%) #f)])
            void?]{
 
-Sets the editor's administrator. This method is only called by an
- administrator.
+@;{Sets the editor's administrator. This method is only called by an
+ administrator.}
+  设置编辑器的管理员。此方法仅由管理员调用。
 
-@Unmonitored[@elem{The administrator of an editor} @elem{by the
+@;{@Unmonitored[@elem{The administrator of an editor} @elem{by the
 system} @elem{the administrator changes} @elem{@method[editor<%>
+get-admin]}]}
+  @Unmonitored[@elem{编辑器的管理员} @elem{被系统} @elem{管理员改变} @elem{@method[editor<%>
 get-admin]}]
 
 }
@@ -2472,39 +2532,47 @@ get-admin]}]
                             [domain (or/c 'immediate 'display 'global) 'immediate])
            void?]{
 
-Attempts to give the keyboard focus to @racket[snip].  If @racket[snip] is
+@;{Attempts to give the keyboard focus to @racket[snip].  If @racket[snip] is
  @racket[#f], then the caret is taken away from any snip in the editor
- that currently has the caret and restored to this editor.
+ that currently has the caret and restored to this editor.}
+  尝试将键盘焦点设置为@racket[snip]。如果@racket[snip]为@racket[#f]，则插入符号将从当前具有插入符号的编辑器中的任何剪切中删除，并还原到此编辑器。
 
-If the keyboard focus is moved to @racket[snip] and the editor has the
+@;{If the keyboard focus is moved to @racket[snip] and the editor has the
  real keyboard focus, the @method[snip% own-caret] method of the snip
- will be called.
+ will be called.}
+  如果将键盘焦点移动到@racket[snip]，并且编辑器具有真正的键盘焦点，则将调用剪切的@method[snip% own-caret]方法。
 
-If @racket[#f] is provided as the new owner, then the local focus is
+@;{If @racket[#f] is provided as the new owner, then the local focus is
  moved to the editor itself. Otherwise, the local focus is moved to
- the specified snip.
+ the specified snip.}
+  如果@racket[#f]作为新所有者提供，那么本地焦点将移动到编辑器本身。否则，本地焦点移动到指定的剪切。
 
-The domain of focus-setting is one of:
+@;{The domain of focus-setting is one of:}
+  焦点设置的域是：
 
 @itemize[
 
- @item{@racket['immediate] --- only set the focus owner within the
+ @item{@racket['immediate]@;{ --- only set the focus owner within the
  editor}
+        ——仅在编辑器中设置焦点所有者}
 
- @item{@racket['display] --- make this editor or the new focus
+ @item{@racket['display]@;{ --- make this editor or the new focus
  owner get the keyboard focus among the editors in this editor's
  @techlink{display} (if this is an embedded editor)}
+        ——使此编辑器或新焦点所有者在此编辑器@techlink{显示}中的编辑器中获得键盘焦点（如果这是嵌入的编辑器）}
 
- @item{@racket['global] --- make this editor or the new focus
+ @item{@racket['global]@;{ --- make this editor or the new focus
  owner get the keyboard focus among all elements in the editor's frame}
+        ——使此编辑器或新焦点所有者在编辑器框架中的所有元素中获得键盘焦点}
 
 ]
 
-@MonitorMethod[@elem{The focus state of an editor} @elem{by the
-system} @elem{@method[editor<%> on-focus]} @elem{focus}]
+@;{@MonitorMethod[@elem{The focus state of an editor} @elem{by the
+system} @elem{@method[editor<%> on-focus]} @elem{focus}]}
+@MonitorMethod[@elem{编辑器的焦点状态} @elem{被系统} @elem{@method[editor<%> on-focus]} @elem{焦点}]
 
-See also @method[editor<%> get-focus-snip].
-
+@;{See also @method[editor<%> get-focus-snip].}
+另请参见@method[editor<%> get-focus-snip]。
 }
 
 
@@ -2512,19 +2580,23 @@ See also @method[editor<%> get-focus-snip].
                        [override? any/c #t])
            void?]{
 
-Sets the custom cursor for the editor to @racket[cursor]. If
+@;{Sets the custom cursor for the editor to @racket[cursor]. If
  @racket[override?] is a true value and @racket[cursor] is not
  @racket[#f], then this cursor overrides cursor settings in embedded
- editors.
+ editors.}
+  将编辑器的自定义光标设置为@racket[cursor]。如果@racket[override?]为真值且@racket[cursor]不是@racket[#f]，则此光标将覆盖嵌入编辑器中的光标设置。
 
-If the custom cursor is @racket[#f], the current cursor is removed,
+@;{If the custom cursor is @racket[#f], the current cursor is removed,
  and a cursor is selected automatically by the editor (depending on
  whether the cursor is pointing at a clickback). See @method[editor<%>
- adjust-cursor] for more information about the default selection.
+ adjust-cursor] for more information about the default selection.}
+  如果自定义光标是@racket[#f]，则当前光标将被删除，并且编辑器将自动选择一个光标（取决于光标是否指向单击返回）。有关默认选择的详细信息，请参见@method[editor<%>
+ adjust-cursor]。
 
-An embedding editor's custom cursor can override the cursor of an
+@;{An embedding editor's custom cursor can override the cursor of an
  embedded editor---even if the embedded editor has the caret---if
- the cursor is specified as an overriding cursor.
+ the cursor is specified as an overriding cursor.}
+  嵌入编辑器的自定义光标可以覆盖嵌入编辑器的光标，即使嵌入编辑器具有插入符号（如果将光标指定为覆盖光标）。
 
 }
 
@@ -2533,13 +2605,15 @@ An embedding editor's custom cursor can override the cursor of an
                          [temporary? any/c #f])
            void?]{
 
-Sets the filename to @racket[filename]. If @racket[filename] is
+@;{Sets the filename to @racket[filename]. If @racket[filename] is
  @racket[#f] or @racket[temporary?] is a true value, then the user
  will still be prompted for a name on future calls to
- @method[editor<%> save-file] and @method[editor<%> load-file].
+ @method[editor<%> save-file] and @method[editor<%> load-file].}
+  将文件名设置为@racket[filename]。如果@racket[filename]是@racket[#f]还是@racket[temporary?]为真值，则在以后调用时仍会提示用户输入名称以@method[editor<%> save-file]和@method[editor<%> load-file]。
 
-This method is also called when the filename changes through any
- method (such as @method[editor<%> load-file]).
+@;{This method is also called when the filename changes through any
+ method (such as @method[editor<%> load-file]).}
+ 当文件名通过任何方法（如@method[editor<%> load-file]）更改时，也会调用此方法。 
 
 }
 
@@ -2547,8 +2621,9 @@ This method is also called when the filename changes through any
 @defmethod[(set-inactive-caret-threshold [threshold (or/c 'no-caret 'show-inactive-caret 'show-caret)])
            void?]{
 
-Sets the threshold for painting an inactive selection.  See
- @method[editor<%> get-inactive-caret-threshold] for more information.
+@;{Sets the threshold for painting an inactive selection.  See
+ @method[editor<%> get-inactive-caret-threshold] for more information.}
+  设置绘制非活动选择的阈值。有关详细信息，请参阅@method[editor<%> get-inactive-caret-threshold]。
 
 }
 
@@ -2556,8 +2631,9 @@ Sets the threshold for painting an inactive selection.  See
 @defmethod[(set-keymap [keymap (or/c (is-a?/c keymap%) #f) #f])
            void?]{
 
-Sets the current keymap for the editor. A @racket[#f] argument removes
- all key mapping.
+@;{Sets the current keymap for the editor. A @racket[#f] argument removes
+ all key mapping.}
+  设置编辑器的当前键映射。@racket[#f]参数删除所有键映射。
 
 }
 
@@ -2565,12 +2641,14 @@ Sets the current keymap for the editor. A @racket[#f] argument removes
 @defmethod[(set-load-overwrites-styles [overwrite? any/c])
            void?]{
 
-Determines whether named styles in the current style list are replaced
+@;{Determines whether named styles in the current style list are replaced
  by @method[editor<%> load-file] when the loaded file contains style
- specifications.
+ specifications.}
+  确定当加载的文件包含样式规范时，当前样式列表中的命名样式是否替换为@method[editor<%> load-file]。
 
-See also @method[editor<%> get-load-overwrites-styles] and
- @method[editor<%> read-from-file].
+@;{See also @method[editor<%> get-load-overwrites-styles] and
+ @method[editor<%> read-from-file].}
+ 另请参见@method[editor<%> get-load-overwrites-styles]和@method[editor<%> read-from-file]。
 
 }
 
@@ -2578,11 +2656,13 @@ See also @method[editor<%> get-load-overwrites-styles] and
 @defmethod[(set-max-height [width (or/c (and/c real? (not/c negative?)) 'none)])
            void?]{
 
-Sets the maximum display height for the contents of the editor.  A
- value less or equal to @racket[0] indicates that there is no maximum.
+@;{Sets the maximum display height for the contents of the editor.  A
+ value less or equal to @racket[0] indicates that there is no maximum.}
+  设置编辑器内容的最大显示高度。小于或等于@racket[0]的值表示没有最大值。
 
-Setting the height is disallowed when the editor is internally locked
- for reflowing (see also @|lockdiscuss|).
+@;{Setting the height is disallowed when the editor is internally locked
+ for reflowing (see also @|lockdiscuss|).}
+  当编辑器内部锁定进行回流时，不允许设置高度（另请参见@|lockdiscuss|）。
 
 }
 
@@ -2590,14 +2670,17 @@ Setting the height is disallowed when the editor is internally locked
 @defmethod[(set-max-undo-history [count (or/c exact-nonnegative-integer? 'forever)])
            void?]{
 
-Sets the maximum number of undoables that will be remembered by the
+@;{Sets the maximum number of undoables that will be remembered by the
  editor. The default is @racket[0], which disables undo.  The symbol
  @indexed-racket['forever] is accepted as a synonym for a very large
- number.
+ number.}
+  设置编辑器将记住的可撤消文件的最大数目。默认值为@racket[0]，这将禁用撤消。符号@indexed-racket['forever]被认为是一个非常大的数字的同义词。
 
-When an editor is in preserve-all-history mode (see @method[editor<%>
+@;{When an editor is in preserve-all-history mode (see @method[editor<%>
  set-undo-preserves-all-history]), then any non-@racket[0] value is
- treated the same as @racket['forever].
+ treated the same as @racket['forever].}
+  当编辑器处于“保留所有历史记录”模式（请参见@method[editor<%>
+ set-undo-preserves-all-history]）时，任何非@racket[0]值都将被视为@racket['forever]。
 
 }
 
@@ -2605,68 +2688,82 @@ When an editor is in preserve-all-history mode (see @method[editor<%>
 @defmethod[(set-max-width [width (or/c (and/c real? (not/c negative?)) 'none)])
            void?]{
 
-Sets the maximum display width for the contents of the editor; zero or
+@;{Sets the maximum display width for the contents of the editor; zero or
  @racket['none] indicates that there is no maximum.  In a text editor,
  having no maximum disables automatic line breaking, and the minimum
  (positive) maximum width depends on the width of the autowrap
  bitmap. The maximum width of a text editor includes its left and
  right padding (see @method[text% set-padding]) and its autowrap
- bitmap (see @method[text% set-autowrap-bitmap]).
+ bitmap (see @method[text% set-autowrap-bitmap]).}
+  设置编辑器内容的最大显示宽度；零或@racket['none]表示没有最大值。在文本编辑器中，没有最大值将禁用自动换行，最小（正）最大宽度取决于自动换行位图的宽度。文本编辑器的最大宽度包括其左右填充（请参见@method[text% set-padding]）和自动环绕位图（请参见@method[text% set-autowrap-bitmap]）。
 
-Setting the width is disallowed when the editor is internally locked
- for reflowing (see also @|lockdiscuss|).
+@;{Setting the width is disallowed when the editor is internally locked
+ for reflowing (see also @|lockdiscuss|).}
+  当编辑器内部锁定以进行回流时，不允许设置宽度（另请参见@|lockdiscuss|）。
 
 }
 
 @defmethod[(set-min-height [width (or/c (and/c real? (not/c negative?)) 'none)])
            void?]{
 
-Sets the minimum display height for the contents of the editor; zero
- or @racket['none] indicates that there is no minimum.
+@;{Sets the minimum display height for the contents of the editor; zero
+ or @racket['none] indicates that there is no minimum.}
+  设置编辑器内容的最小显示高度；零或“无”表示没有最小值。
 
-Setting the height is disallowed when the editor is internally locked
- for reflowing (see also @|lockdiscuss|).
+@;{Setting the height is disallowed when the editor is internally locked
+ for reflowing (see also @|lockdiscuss|).}
+  当编辑器内部锁定进行回流时，不允许设置高度（另请参见内部编辑器锁定）。
 
 }
 
 @defmethod[(set-min-width [width (or/c (and/c real? (not/c negative?)) 'none)])
            void?]{
 
-Sets the minimum display width for the contents of the editor; zero or
- @racket['none] indicates that there is no minimum.
+@;{Sets the minimum display width for the contents of the editor; zero or
+ @racket['none] indicates that there is no minimum.}
+  设置编辑器内容的最小显示宽度；零或@racket['none]表示没有最小值。
 
-Setting the width is disallowed when the editor is internally locked
-for reflowing (see also @|lockdiscuss|).
+@;{Setting the width is disallowed when the editor is internally locked
+for reflowing (see also @|lockdiscuss|).}
+  当编辑器内部锁定以进行回流时，不允许设置宽度（另请参见@|lockdiscuss|）。
 
 }
 
 @defmethod[(set-modified [modified? any/c])
            void?]{
 
-Sets the modified state of the editor. Usually, the state is changed
+@;{Sets the modified state of the editor. Usually, the state is changed
  automatically after an insertion, deletion, or style change by
  calling this method. (This method is also called when the
  modification state changes through @italic{any} method.) This method
- is usually not called when the state of the flag is not changing.
+ is usually not called when the state of the flag is not changing.}
+  设置编辑器的修改状态。通常，通过调用此方法，在插入、删除或样式更改之后，状态会自动更改。（当修改状态通过@italic{任何}方法更改时，也会调用此方法。）当标志的状态不更改时，通常不会调用此方法。
 
-See also @method[editor<%> is-modified?] and @method[editor<%>
-on-snip-modified].
+@;{See also @method[editor<%> is-modified?] and @method[editor<%>
+on-snip-modified].}
+  也参见@method[editor<%> is-modified?]和@method[editor<%>
+on-snip-modified]。
 
-When @racket[modified?] is true, then an internal modify-counter is
- set to @racket[1].
+@;{When @racket[modified?] is true, then an internal modify-counter is
+ set to @racket[1].}
+  @racket[modified?]为真，则将内部修改计数器设置为@racket[1]。
 
-When @racket[modified?] is @racket[#f] and the editor's undo or redo
+@;{When @racket[modified?] is @racket[#f] and the editor's undo or redo
  stack contains a system-created undoer that resets the modified state
  (because the preceding undo or redo action puts the editor back to a
  state where the modification state was @racket[#f]), the undoer is
- disabled.
+ disabled.}
+  @racket[modified?]是@racket[#f]，并且编辑器的“撤消”或“重做”堆栈包含一个系统创建的撤消程序，它重置修改后的状态（因为前面的“撤消”或“重做”操作将编辑器恢复到修改状态为@racket[#f]的状态），撤消程序被禁用。
 
-Regardless of the value of @racket[modified?], the editor's
- adminstrator's @method[editor-admin% modified] method is called.
+@;{Regardless of the value of @racket[modified?], the editor's
+ adminstrator's @method[editor-admin% modified] method is called.}
+  不管@racket[modified?]值是怎样，将调用编辑器的管理员的@method[editor-admin% modified]方法。
 
-Finally, if @racket[modified?] is @racket[#f] and the internal
+@;{Finally, if @racket[modified?] is @racket[#f] and the internal
  modify-counter is set to @racket[0], then the @method[snip%
- set-unmodified] method is called on every snip within the editor.
+ set-unmodified] method is called on every snip within the editor.}
+  最后，如果@racket[modified?]是@racket[#f]，内部修改计数器设置为@racket[0]，那么在编辑器中的每个截图上调用@method[snip%
+ set-unmodified]方法。
 
 }
 
@@ -2674,11 +2771,13 @@ Finally, if @racket[modified?] is @racket[#f] and the internal
 @defmethod[(set-paste-text-only [text-only? any/c])
            void?]{
 
-Sets whether the editor accepts only text from the clipboard, or both
+@;{Sets whether the editor accepts only text from the clipboard, or both
  text and snips. By default, an editor accepts both text and
- snips.
+ snips.}
+  设置编辑器是只接受剪贴板中的文本，还是同时接受文本和剪切。默认情况下，编辑器接受文本和剪切。
 
-See also @method[editor<%> get-paste-text-only].
+@;{See also @method[editor<%> get-paste-text-only].}
+  另请参见@method[editor<%> get-paste-text-only]。
 
 }
 
@@ -2686,9 +2785,10 @@ See also @method[editor<%> get-paste-text-only].
                           [data (is-a?/c editor-data%)])
            void?]{
 
-Sets extra data associated with the snip (e.g., @techlink{location}
+@;{Sets extra data associated with the snip (e.g., @techlink{location}
  information in a pasteboard). See @|editordatadiscuss| for more
- information.
+ information.}
+  设置与剪切相关的额外数据（例如，粘贴板中的@techlink{定位（location）}信息）。有关详细信息，请参见@|editordatadiscuss|。
 
 }
 
@@ -2696,26 +2796,31 @@ Sets extra data associated with the snip (e.g., @techlink{location}
 @defmethod[(set-style-list [style-list (is-a?/c style-list%)])
            void?]{
 
-Sets the editor's style list. Styles currently in use with the old
+@;{Sets the editor's style list. Styles currently in use with the old
  style list will be ``moved'' to the new style list. In this ``move,''
  if a named style already exists in the new style list, then the new
- style with the same name will be used in place of the old style.
+ style with the same name will be used in place of the old style.}
+  设置编辑器的样式列表。当前与旧样式列表一起使用的样式将“移动”到新样式列表。在此“移动”中，如果新样式列表中已存在命名样式，则将使用同名的新样式代替旧样式。
 
-Setting the style list is disallowed when the editor is internally
- locked for reflowing (see also @|lockdiscuss|).
+@;{Setting the style list is disallowed when the editor is internally
+ locked for reflowing (see also @|lockdiscuss|).}
+  当编辑器内部锁定以进行回流时，不允许设置样式列表（另请参见@|lockdiscuss|）。
 
 }
 
 @defmethod[(set-undo-preserves-all-history [on? any/c]) void?]{
 
-When @racket[on?] is true, configures the editor to preserve all
+@;{When @racket[on?] is true, configures the editor to preserve all
 editing history, including operations that have been undone, as long
 as the maximum undo history is non-zero (see @method[editor<%>
 set-max-undo-history]).  Otherwise, operations that are undone (and not
-redone) before another operation are lost from the editor's history.
+redone) before another operation are lost from the editor's history.}
+  当@racket[on?]为真，则将编辑器配置为保留所有编辑历史记录，包括已撤消的操作，只要最大撤消历史记录为非零（请参见@method[editor<%>
+set-max-undo-history]）。否则，在另一个操作从编辑器历史记录中丢失之前已撤消（且未重做）的操作。
 
-The default mode is determined by the @Resource{emacs-undo} preference
-(see @secref["mredprefs"]).
+@;{The default mode is determined by the @Resource{emacs-undo} preference
+(see @secref["mredprefs"]).}
+  默认模式由@Resource{emacs-undo}首选项确定（请参见@secref["mredprefs"]）。
 
 @history[#:added "1.1"]}
 
@@ -2723,26 +2828,31 @@ The default mode is determined by the @Resource{emacs-undo} preference
 @defmethod[(size-cache-invalid)
            void?]{
 
-This method is called when the drawing context given to the editor by
+@;{This method is called when the drawing context given to the editor by
 its administrator changes in a way that makes cached size information
-(such as the width of a string) invalid.
+(such as the width of a string) invalid.}
+  当其管理员提供给编辑器的绘图上下文发生更改，使缓存的大小信息（如字符串的宽度）无效时，调用此方法。
 
-The default implementation eventually propagates the message to snips,
+@;{The default implementation eventually propagates the message to snips,
 and, more generally, causes @tech{location} information to be
-recalculated on demand.
+recalculated on demand.}
+默认的实现最终会将消息传播到剪切，更一般地说，还会根据需要重新计算@tech{定位（location）}信息。
 
-See also @method[editor<%> invalidate-bitmap-cache].}
+@;{See also @method[editor<%> invalidate-bitmap-cache].}}
+     另请参见@method[editor<%> invalidate-bitmap-cache]。            
 
 
 @defmethod[(style-has-changed [style (or/c (is-a?/c style<%>) #f)])
            void?]{
 
-Notifies the editor that a style in its style list has changed. This
+@;{Notifies the editor that a style in its style list has changed. This
  method is automatically registered with the editor's style list using
  @xmethod[style-list% notify-on-change] and automatically deregistered
- when the style list is removed from the editor.
+ when the style list is removed from the editor.}
+通知编辑器其样式列表中的样式已更改。此方法使用@xmethod[style-list% notify-on-change]并且自动注册到编辑器的样式列表，并在样式列表从编辑器中删除时自动取消注册。
 
-See @xmethod[style-list% notify-on-change] for more information.
+@;{See @xmethod[style-list% notify-on-change] for more information.}
+  有关详细信息，请参阅@xmethod[style-list% notify-on-change]。
 
 }
 
@@ -2750,33 +2860,39 @@ See @xmethod[style-list% notify-on-change] for more information.
 @defmethod[(undo)
            void?]{
 
-Undoes the last editor change, if undos have been enabled by calling
+@;{Undoes the last editor change, if undos have been enabled by calling
  @method[editor<%> set-max-undo-history] with a non-zero integer or
- @racket['forever].
+ @racket['forever].}
+  如果通过使用非零整数或@racket['forever]调用@method[editor<%> set-max-undo-history]启用了撤消，则撤消上一次编辑器更改。
 
-If the editor is currently performing an undo or redo, the method call
- is ignored.
+@;{If the editor is currently performing an undo or redo, the method call
+ is ignored.}
+ 如果编辑器当前正在执行撤消或重做，则方法调用将被忽略。
 
-The user may enable Emacs-style undo for editors; see
+@;{The user may enable Emacs-style undo for editors; see
  @|mrprefsdiscuss|. Normally, undo operations add to the redo stack
  (see @method[editor<%> redo]), and any undoable (non-undo) operation
  clears the redo stack. With Emacs-style undo, the redo stack is added
  back to the undo stack, along with the original undos, so that a
- complete history is kept in the undo stack.
+ complete history is kept in the undo stack.}
+  用户可以为编辑器启用Emacs样式撤消；请参见@|mrprefsdiscuss|。通常，撤消操作会添加到重做堆栈（请参见@method[editor<%> redo]），任何可撤消（非撤消）操作都会清除重做堆栈。使用Emacs样式的撤消，将重做堆栈与原始撤消一起添加回撤消堆栈，以便在撤消堆栈中保留完整的历史记录。
 
-The system may perform an undo without calling this method in response
+@;{The system may perform an undo without calling this method in response
  to other method calls. Use methods such as
- @method[editor<%> on-change] to monitor editor content changes.
+ @method[editor<%> on-change] to monitor editor content changes.}
+  系统可以在不调用此方法以响应其他方法调用的情况下执行撤消操作。使用@method[editor<%> on-change]等方法监视编辑器内容更改。
 
-See also @method[editor<%> add-undo].
-
+@;{See also @method[editor<%> add-undo].}
+另请参见@method[editor<%> add-undo]。
+  
 }
 
 
 @defmethod[(undo-preserves-all-history?) boolean?]{
 
-Reports whether the editor is in preserve-all-history mode.
-See @method[editor<%> set-undo-preserves-all-history] for more information.
+@;{Reports whether the editor is in preserve-all-history mode.
+See @method[editor<%> set-undo-preserves-all-history] for more information.}
+  报告编辑器是否处于保留所有历史记录模式。有关详细信息，请参见@method[editor<%> set-undo-preserves-all-history]。
 
 @history[#:added "1.1"]}
 
@@ -2784,26 +2900,30 @@ See @method[editor<%> set-undo-preserves-all-history] for more information.
 @defmethod*[([(use-file-text-mode) boolean?]
              [(use-file-text-mode [on? any/c]) void?])]{
 
-Gets or sets a boolean that controls if files are saved in
+@;{Gets or sets a boolean that controls if files are saved in
 @racket['text] or @racket['binary] mode (as in @racket[open-input-file]'s
 @racket[#:mode] argument). This flag is consulted only when the
 format is @racket['text] or @racket['text-force-cr]. 
 See @method[editor<%> load-file] for information on 
-formats.
-
-The setting is consulted by
+formats.}
+获取或设置一个布尔值，该值控制文件是否以@racket['text]或@racket['binary]模式保存（如在@racket[open-input-file]的@racket[#:mode]参数中）。仅当格式为@racket['text]或@racket['text-force-cr]时才查阅此标志。有关格式的信息，请参阅@method[editor<%> load-file]。
+  
+@;{The setting is consulted by
 @method[editor<%> save-file] after @method[editor<%> on-save-file] is
-called.
+called.}
+  调用@method[editor<%> on-save-file]后，@method[editor<%> save-file]将查询该设置。
 
-Overriding this method is a reliable way to detect changes to the internal
-boolean.
+@;{Overriding this method is a reliable way to detect changes to the internal
+boolean.}
+  重写此方法是检测内部布尔值更改的可靠方法。
 }
 
 
 @defmethod[(write-footers-to-file [stream (is-a?/c editor-stream-out%)])
            boolean?]{
 
-See @method[editor<%> write-headers-to-file].
+@;{See @method[editor<%> write-headers-to-file].}
+  参见@method[editor<%> write-headers-to-file]。
 
 }
 
@@ -2813,34 +2933,39 @@ See @method[editor<%> write-headers-to-file].
 
 @methspec{
 
-Called when the editor is being saved to a file.  The return value is
+@;{Called when the editor is being saved to a file.  The return value is
  @racket[#t] if there are no errors, @racket[#f] otherwise. Override
  this method to add custom header data to a file, but always call the
- inherited method so that it can write its own extra headers.
+ inherited method so that it can write its own extra headers.}
+  规范：在编辑器保存到文件时调用。如果没有错误，返回值为@racket[#t]，否则返回值为@racket[#f]。重写此方法以将自定义头数据添加到文件中，但始终调用继承的方法，以便它可以编写自己的额外头。
 
-To write a header item, call @method[editor<%>
+@;{To write a header item, call @method[editor<%>
  begin-write-header-footer-to-file], passing a box for an
  integer. Then write the header data and end by calling
  @method[editor<%> end-write-header-footer-to-file], passing back the
  integer that was put into the box.  Follow this procedure correctly
- or the file will be corrupted.
+ or the file will be corrupted.}
+  若要写入标题项，请调用@method[editor<%> begin-write-header-footer-to-file]，传递一个整数框。然后写入头数据，并通过调用@method[editor<%> end-write-header-footer-to-file]结束，将输入框中的整数返回。正确执行此过程，否则文件将损坏。
 
 }
 @methimpl{
 
-Does nothing.
+@;{Does nothing.}
+  默认实现：不执行任何操作。
 
 }}
 
 @defmethod[(write-to-file [stream (is-a?/c editor-stream-out%)])
            boolean?]{
 
-Writes the current editor contents to the given stream.  The return
+@;{Writes the current editor contents to the given stream.  The return
  value is @racket[#t] if there are no errors, @racket[#f] otherwise. See
- also @|filediscuss|.
+ also @|filediscuss|.}
+  将当前编辑器内容写入给定流。如果没有错误，返回值为@racket[#t]，否则返回值为@racket[#f]。另参见@|filediscuss|。
 
-If the editor's style list has already been written to the stream, it
+@;{If the editor's style list has already been written to the stream, it
  is not re-written. Instead, the editor content indicates that the
  editor shares a previously-written style list. This sharing will be
- recreated when the stream is later read.
+ recreated when the stream is later read.}
+  如果编辑器的样式列表已写入流，则不会重新写入。相反，编辑器内容指示编辑器共享以前编写的样式列表。稍后读取流时，将重新创建此共享。
 }}
