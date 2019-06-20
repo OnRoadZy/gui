@@ -109,7 +109,7 @@
  @racket[try-chain?] is @racket[#f]; an exception is also raised, but
  the exception handler cannot escape (see
  @secref["evtcontjump"]).}
-如果@racket[try-chain?]不是@racket[#f]，链接到此键的键映射将搜索函数名。如果找不到函数且@racket[try-chain?]是@racket[#f]；也会引发异常，但异常处理程序无法逃脱（请参阅@secref["evtcontjump"]）。
+如果@racket[try-chain?]不是@racket[#f]，链接到此键的键映射将搜索函数名。如果找不到函数且@racket[try-chain?]是@racket[#f]；也会引发异常，但异常处理程序无法转义（请参阅@secref["evtcontjump"]）。
   
 }
 
@@ -214,7 +214,7 @@
  @item{@litchar{a:}@;{ --- Mac OS: Option}——Mac OS：Option}
 
  @item{@litchar{m:}@;{ --- Windows: Alt; Unix: Meta; Mac OS: Command, when
- @racket[map-command-as-meta-key] produces @racket[#t]}——当@racket[map-command-as-meta-key]方法为@racket[#t]，Windows: Alt; Unix: Meta; Mac OS: Command}
+ @racket[map-command-as-meta-key] produces @racket[#t]}——当@racket[map-command-as-meta-key]方法为@racket[#t]，Windows：Alt；Unix：Meta；Mac OS：Command}
 
  @item{@litchar{d:}@;{ --- Mac OS: Command}——Mac OS：Command}
 
@@ -350,44 +350,44 @@
   一个状态可以匹配一个键映射（或键映射链）中映射的多个状态字符串；当一个状态匹配多个状态字符串时，通过根据特定性对字符串排序来选择映射。一个状态字符串，它提到更多的按修饰符，其排名高于其他状态字符串，如果两个字符串提到相同数量的按修饰符，则提到更多未按修饰符的状态字符串排名更高。最后，一个状态字符串包括@litchar{?:}并且仅与Shift、AltGr/Option和/或Caps Lock的相反用法匹配，并且排名低于所有不依赖的匹配项@litchar{?:}，而需要同时使用Shift和AltGr/Option的则排名更低。如果多个匹配字符串具有相同的秩，则可以任意选择匹配项。
 
 @;{Examples:}
-  
+  示例：
 
 @itemize[
 
  @item{@racket["space"]@;{ --- matches whenever the space bar is pressed,
  regardless of the state of modifiers keys.}
-        }
+        ——无论修改器键的状态如何，只要按下空格键就会匹配。}
 
  @item{@racket["~c:space"]@;{ --- matches whenever the space bar is pressed
  and the Control key is not pressed.}
-        }
+        ——只要按下空格键而不按下Control键，就会匹配。}
 
  @item{@racket["a"]@;{ --- matches whenever @litchar{a} is typed, regardless of
  the state of modifiers keys (other than Shift).}
-        }
+        ——无论何时键入@litchar{a}，都匹配，而不管修改器键的状态如何（Shift除外）。}
 
  @item{@racket[":a"]@;{ --- matches only when @litchar{a} is typed with no
  modifier keys pressed.}
-        }
+        ——仅当键入@litchar{a}时不按修改键时匹配。}
 
  @item{@racket["~c:a"]@;{ --- matches whenever @litchar{a} is typed and neither
  the Shift key nor the Control key is pressed.}
-        }
+        ——每次键入@litchar{a}时都匹配，并且既不按Shift键也不按Control键。}
 
  @item{@racket["c:m:~g:x"]@;{ --- matches whenever @litchar{x} is typed
  with Control and Alt (Windows) or Meta (Unix) is pressed, as long as
  the Control-Alt combination is not formed by AltGr on Windows.}
-        }
+        ——只要在Windows上的AltGr不构成Control-Alt组合，只要在键入@litchar{x}时使用Control并按下Alt（Windows）或Meta（Unix），就会匹配。}
 
  @item{@racket[":esc;:c:c"]@;{ --- matches an Escape key press (no
  modifiers) followed by a Control-C press (no modifiers other than
  Control).}
-        }
+        ——匹配Escape键按下（无修改器），然后是Control-C按下（除Control之外无修改器）。}
 
  @item{@racket["?:d:+"]@;{ --- matches when Command is pressed with key
   that produces @litchar{+}, even if producing @litchar{+} normally requires
   pressing Shift.}
-        }
+        ——用产生@litchar{+}的键按下命令时匹配，即使产生@litchar{+}通常需要按下Shift键。}
 
 ]
 
@@ -395,17 +395,17 @@
  key sequence both as a prefix and as a complete sequence raises an
  exception, but the exception handler cannot escape (see
  @secref["evtcontjump"]).}
-  
+  调用@method[keymap% map-function]函数以前缀和完整序列的形式映射特定的键序列会引发异常，但异常处理程序无法转义（请参见@secref["evtcontjump"]）。
 
 @;{A function name does not have to be mapped to a handler before input
  states are mapped to the name; the handler is dispatched by name at
  the time of invocation. The event handler mapped to a function name
  can be changed without affecting the map from input states to
  function names.}
-
+在输入状态映射到名称之前，不必将函数名映射到处理程序；调用时按名称调度处理程序。映射到函数名的事件处理程序可以更改，而不会影响从输入状态到函数名的映射。
 
 @;{@history[#:changed "1.2" @elem{Added @litchar{g:} and @litchar{~g:} support.}]}
-  @history[#:changed "1.2" @elem{Added @litchar{g:} and @litchar{~g:} support.}]
+  @history[#:changed "1.2" @elem{添加@litchar{g:}和@litchar{~g:}支持。}]
  }
 
 
@@ -415,7 +415,7 @@
 @;{If @racket[keymap] was previously chained from this keymap (through
  @method[keymap% chain-to-keymap]), then it is removed from the
  chain-to list.}
-  
+  如果@racket[keymap]以前是从这个键映射链接的（通过@method[keymap% chain-to-keymap]），那么它将从链到列表中删除。
 
 }
 
@@ -425,7 +425,8 @@
 
 @;{Removes a callback installed with @method[keymap%
  set-grab-key-function].}
-  
+  删除使用@method[keymap%
+ set-grab-key-function]函数安装的回调。
 
 }
 
@@ -434,7 +435,8 @@
 
 @;{Removes a callback installed with @method[keymap%
  set-grab-mouse-function].}
-
+删除使用@method[keymap%
+ set-grab-mouse-function]函数安装的回调。
   
 }
 
@@ -447,7 +449,8 @@
  removed from the keymap. If another callback is installed before
  @method[keymap% break-sequence] is called, the old callback is
  invoked immediately before the new one is installed.}
-  
+  安装在调用@method[keymap%  break-sequence]时调用的回调过程。调用一次后，回调将从keymap中删除。如果在调用@method[keymap%
+ break-sequence]之前安装了另一个回调，则在安装新回调之前立即调用旧回调。
 
 }
 
@@ -457,7 +460,7 @@
 
 @;{Sets the maximum number of milliseconds that can separate the clicks
  of a double-click.}
-  
+  设置双击可分离单击的最大毫秒数。
 
 }
 
@@ -475,15 +478,16 @@
  matches in the chained keymap (when the chained keymap does not have
  its own grab callback).}
   
+安装一个回调过程，该过程在键映射将输入与函数名匹配或与输入匹配失败后调用。一次只能安装一个键盘抓取功能。当使用抓取回调将键映射链接到键映射时，将为链接键映射中的匹配项调用回调（当链接键映射没有自己的抓取回调时）。
 
 @;{If a grab callback returns a true value for a matching or non-matching
  callback, the event is considered handled. If the callback returns a
  true value for a matching callback, then the matching keymap function
  is not called by the keymap.}
-  
+  如果抓取回调返回匹配或不匹配回调的真值，则视为已处理该事件。如果回调返回匹配回调的真值，则键映射不会调用匹配的键映射函数。
 
 @;{The callback procedure @racket[f] will be invoked as:}
-
+回调过程@racket[f]将被调用为：
   
 @racketblock[
 (f _str _keymap _editor _event)
@@ -496,11 +500,13 @@
  keymap in which the callback was installed. The @racket[_editor] and
  @racket[_event] arguments are the same as passed on to the matching
  keymap function.}
-  
+  @racket[_str]参数是匹配回调函数的名称，或者@racket[#f]是不匹配回调函数的名称。@racket[_keymap]参数是匹配的键映射（可能是链接到安装回调的键映射）或安装回调的键映射。@racket[_editor]和@racket[_event]参数与传递给匹配的键映射函数的参数相同。
+
 
 @;{Key grab callback functions are de-installed with @method[keymap%
  remove-grab-key-function].}
-  
+  键抓取回调函数与@method[keymap%
+ remove-grab-key-function]一起卸载。
 
 }
 
@@ -513,7 +519,7 @@
            void?]{
 
 @;{Like @method[keymap% set-grab-key-function], but for mouse events.}
-  
+象@method[keymap% set-grab-key-function]，但用于鼠标事件。
 
 }}
 
