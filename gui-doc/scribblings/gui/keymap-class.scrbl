@@ -519,7 +519,7 @@
            void?]{
 
 @;{Like @method[keymap% set-grab-key-function], but for mouse events.}
-象@method[keymap% set-grab-key-function]，但用于鼠标事件。
+类似@method[keymap% set-grab-key-function]，但用于鼠标事件。
 
 }}
 
