@@ -3,31 +3,37 @@
 
 @defclass/title[text% object% (editor<%>)]{
 
-A @racket[text%] object is a standard text editor. A text editor is
+@;{A @racket[text%] object is a standard text editor. A text editor is
  displayed on the screen through an @racket[editor-canvas%] object or
- some other @techlink{display}.
+ some other @techlink{display}.}
+  文本%对象是标准文本编辑器。文本编辑器通过编辑器-画布%对象或其他一些显示显示在屏幕上。
 
 
 @defconstructor[([line-spacing (and/c real? (not/c negative?)) 1.0]
                  [tab-stops (listof real?) null]
                  [auto-wrap any/c #f])]{
 
-The @racket[line-spacing] argument sets the additional amount of space
+@;{The @racket[line-spacing] argument sets the additional amount of space
  (in DC units) inserted between each line in the editor when the
  editor is displayed. This spacing is included in the reported height
- of each line.
+ of each line.}
+  行距参数设置显示编辑器时在编辑器中每行之间插入的额外空间量（以直流单位表示）。此间距包含在每行的报告高度中。
 
-See @method[text% set-tabs] for information about @racket[tabstops].
+@;{See @method[text% set-tabs] for information about @racket[tabstops].}
+  有关制表位的信息，请参见设置制表位。
 
-If @racket[auto-wrap] is true, then auto-wrapping is enabled via
- @method[editor<%> auto-wrap].
+@;{If @racket[auto-wrap] is true, then auto-wrapping is enabled via
+ @method[editor<%> auto-wrap].}
+  如果自动换行为真，则通过自动换行启用自动换行。
 
-A new @racket[keymap%] object is created for the new editor.  See also
- @method[editor<%> get-keymap] and @method[editor<%> set-keymap].
+@;{A new @racket[keymap%] object is created for the new editor.  See also
+ @method[editor<%> get-keymap] and @method[editor<%> set-keymap].}
+  为新编辑器创建了一个新的keymap%对象。另请参见获取键映射和设置键映射。
 
-A new @racket[style-list%] object is created for the new editor.  See
+@;{A new @racket[style-list%] object is created for the new editor.  See
  also @method[editor<%> get-style-list] and @method[editor<%>
- set-style-list].
+ set-style-list].}
+ 将为新编辑器创建新的样式列表%对象。另请参见获取样式列表和设置样式列表。 
 
 }
 
@@ -38,20 +44,24 @@ A new @racket[style-list%] object is created for the new editor.  See
            void?]{
 @methspec{
 
-Called after the style is changed for a given range (and after the
+@;{Called after the style is changed for a given range (and after the
  @techlink{display} is refreshed; use @method[text% on-change-style]
  and @method[editor<%> begin-edit-sequence] to avoid extra refreshes
- when @method[text% after-change-style] modifies the editor).
+ when @method[text% after-change-style] modifies the editor).}
+  规范：在给定范围内更改样式后调用（并且在刷新显示后调用；在更改样式时使用并开始编辑序列，以避免在更改样式修改编辑器后进行额外刷新）。
 
-See also @method[text% can-change-style?] and @method[editor<%>
- on-edit-sequence].
+@;{See also @method[text% can-change-style?] and @method[editor<%>
+ on-edit-sequence].}
+  看也可以改变风格吗？以及编辑序列。
 
-No internals locks are set when this method is called.
+@;{No internals locks are set when this method is called.}
+  调用此方法时不设置内部锁。
 
 }
 @methimpl{
 
-Does nothing.
+@;{Does nothing.}
+ 默认实现：不执行任何操作。 
 
 }}
 
@@ -61,25 +71,30 @@ Does nothing.
            void?]{
 @methspec{
 
-Called after a given range is deleted from the editor (and after the
+@;{Called after a given range is deleted from the editor (and after the
  @techlink{display} is refreshed; use @method[text% on-delete] and
  @method[editor<%> begin-edit-sequence] to avoid extra refreshes when
- @method[text% after-delete] modifies the editor).
+ @method[text% after-delete] modifies the editor).}
+  指定：从编辑器中删除给定范围后调用（并在刷新显示后调用；在删除时使用并开始编辑序列，以避免在删除后修改编辑器时额外刷新）。
 
-The @racket[start] argument specifies the starting @techlink{position}
+@;{The @racket[start] argument specifies the starting @techlink{position}
  of the deleted range. The @racket[len] argument specifies number of
  deleted @techlink{item}s (so @math{@racket[start]+@racket[len]} is
- the ending @techlink{position} of the deleted range).
+ the ending @techlink{position} of the deleted range).}
+  start参数指定已删除范围的起始位置。len参数指定已删除的项目数（因此start+len是已删除范围的结束位置）。
 
-See also @method[text% can-delete?] and @method[editor<%>
- on-edit-sequence].
+@;{See also @method[text% can-delete?] and @method[editor<%>
+ on-edit-sequence].}
+  看到也可以删除吗？以及编辑序列。
 
-No internals locks are set when this method is called.
+@;{No internals locks are set when this method is called.}
+  调用此方法时不设置内部锁。
 
 }
 @methimpl{
 
-Does nothing.
+@;{Does nothing.}
+  默认实现：不执行任何操作。
 
 }}
 
@@ -89,24 +104,29 @@ Does nothing.
            void?]{
 @methspec{
 
-Called after @techlink{item}s are inserted into the editor (and after
+@;{Called after @techlink{item}s are inserted into the editor (and after
  the @techlink{display} is refreshed; use @method[text% on-insert] and
  @method[editor<%> begin-edit-sequence] to avoid extra refreshes when
- @method[text% after-insert] modifies the editor).
+ @method[text% after-insert] modifies the editor).}
+  规范：在项插入编辑器后调用（并且在刷新显示后调用；在插入时使用并开始编辑序列，以避免在插入后修改编辑器时额外刷新）。
 
-The @racket[start] argument specifies the @techlink{position} of the insert. The
+@;{The @racket[start] argument specifies the @techlink{position} of the insert. The
  @racket[len] argument specifies the total length (in @techlink{position}s) of
- the inserted @techlink{item}s.
+ the inserted @techlink{item}s.}
+  start参数指定插入的位置。len参数指定插入项的总长度（位置）。
 
-See also @method[text% can-insert?] and @method[editor<%>
- on-edit-sequence].
+@;{See also @method[text% can-insert?] and @method[editor<%>
+ on-edit-sequence].}
+  见也可以插入？以及编辑序列。
 
-No internals locks are set when this method is called.
+@;{No internals locks are set when this method is called.}
+  调用此方法时不设置内部锁。
 
 }
 @methimpl{
 
-Does nothing.
+@;{Does nothing.}
+  默认实现：不执行任何操作。
 
 }}
 
@@ -115,19 +135,23 @@ Does nothing.
            void?]{
 @methspec{
 
-Called after adjacent snips in the editor are combined into one.
+@;{Called after adjacent snips in the editor are combined into one.}
+  规范：在编辑器中的相邻截图合并为一个截图后调用。
 
-The @racket[pos] argument specifies the @techlink{position} within the editor
+@;{The @racket[pos] argument specifies the @techlink{position} within the editor
  where the snips were merged (i.e., one old snip was just before
  @racket[pos], one old was just after @racket[pos], and the new snip spans
- @racket[pos]).
+ @racket[pos]).}
+  pos参数指定编辑器中截图合并的位置（即，一个旧截图位于pos之前，一个旧截图位于pos之后，新截图跨越pos）。
 
-See also @method[snip% merge-with].
+@;{See also @method[snip% merge-with].}
+  另请参见合并。
 
 }
 @methimpl{
 
-Does nothing.
+@;{Does nothing.}
+默认实现：不执行任何操作。  
 
 }}
 
@@ -137,16 +161,19 @@ Does nothing.
 
 @methspec{
 
-Called after the start and end @techlink{position} have been moved (but not
- when the @techlink{position} is moved due to inserts or deletes).
+@;{Called after the start and end @techlink{position} have been moved (but not
+ when the @techlink{position} is moved due to inserts or deletes).}
+  规范：在开始位置和结束位置被移动后调用（但由于插入或删除而移动位置时不调用）。
 
-See also
-@method[editor<%> on-edit-sequence].
+@;{See also
+@method[editor<%> on-edit-sequence].}
+ 另请参见编辑序列。 
 
 }
 @methimpl{
 
-Does nothing.
+@;{Does nothing.}
+  默认实现：不执行任何操作。
 
 }}
 
@@ -156,22 +183,26 @@ Does nothing.
 
 @methspec{
 
-Called after the editor's maximum or minimum height or width is
+@;{Called after the editor's maximum or minimum height or width is
  changed (and after the @techlink{display} is refreshed; use
  @method[text% on-set-size-constraint] and @method[editor<%>
  begin-edit-sequence] to avoid extra refreshes when @method[text%
- after-set-size-constraint] modifies the editor).
+ after-set-size-constraint] modifies the editor).}
+  规范：在更改编辑器的最大或最小高度或宽度后调用（并且在刷新显示后调用；在“设置大小”约束上使用并开始编辑序列，以避免在“设置大小”约束修改编辑器后进行额外刷新）。
 
-(This callback method is provided because setting an editor's maximum
- width may cause lines to be re-flowed with soft newlines.)
+@;{(This callback method is provided because setting an editor's maximum
+ width may cause lines to be re-flowed with soft newlines.)}
+  （提供此回调方法是因为设置编辑器的最大宽度可能会导致行使用软换行符重新流动。）
 
-See also @method[text% can-set-size-constraint?] and @method[editor<%>
- on-edit-sequence].
+@;{See also @method[text% can-set-size-constraint?] and @method[editor<%>
+ on-edit-sequence].}
+  也可以设置大小约束吗？以及编辑序列。
 
 }
 @methimpl{
 
-Does nothing.
+@;{Does nothing.}
+  默认实现：不执行任何操作。
 
 }}
 
@@ -181,17 +212,20 @@ Does nothing.
            void?]{
 @methspec{
 
-Called after a snip in the editor is split into two, either through a
+@;{Called after a snip in the editor is split into two, either through a
  call to @method[text% split-snip] or during some other action, such
- as inserting.
+ as inserting.}
+ 规范：在编辑器中的一个截图被拆分为两个截图后调用，可以通过调用拆分截图，也可以在一些其他操作（如插入）期间调用。 
 
-The @racket[pos] argument specifies the @techlink{position} within the editor
- where a snip was split.
+@;{The @racket[pos] argument specifies the @techlink{position} within the editor
+ where a snip was split.}
+ pos参数指定在编辑器中拆分截图的位置。 
 
 }
 @methimpl{
 
-Does nothing.
+@;{Does nothing.}
+  默认实现：不执行任何操作。
 
 }}
 
@@ -199,9 +233,10 @@ Does nothing.
                            [end exact-nonnegative-integer?])
            void?]{
 
-Simulates a user click that invokes a clickback, if the given range of
+@;{Simulates a user click that invokes a clickback, if the given range of
  @techlink{position}s is within a clickback's region. See also
- @|clickbackdiscuss|.
+ @|clickbackdiscuss|.}
+  如果给定的位置范围在clickback的区域内，则模拟调用clickback的用户单击。另请参见返回。
 
 }
 
@@ -212,21 +247,25 @@ Simulates a user click that invokes a clickback, if the given range of
 
 @methspec{
 
-Called before the style is changed in a given range of the editor. If
+@;{Called before the style is changed in a given range of the editor. If
  the return value is @racket[#f], then the style change will be
- aborted.
+ aborted.}
+  规范：在编辑器的给定范围内更改样式之前调用。如果返回值为f，则样式更改将中止。
 
-The editor is internally locked for writing during a call to this
+@;{The editor is internally locked for writing during a call to this
  method (see also @|lockdiscuss|). Use @method[text%
- after-change-style] to modify the editor, if necessary.
+ after-change-style] to modify the editor, if necessary.}
+  在调用此方法期间，编辑器被内部锁定以进行写入（另请参见内部编辑器锁定）。如有必要，使用“更改后样式”修改编辑器。
 
-See also @method[text% on-change-style], @method[text%
- after-change-style], and @method[editor<%> on-edit-sequence].
+@;{See also @method[text% on-change-style], @method[text%
+ after-change-style], and @method[editor<%> on-edit-sequence].}
+  另请参见“更改样式”、“更改样式后”和“编辑序列”。
 
 }
 @methimpl{
 
-Returns @racket[#t].
+@;{Returns @racket[#t].}
+  默认实现：返回t。
 
 }
 }
@@ -237,26 +276,31 @@ Returns @racket[#t].
            boolean?]{
 @methspec{
 
-Called before a range is deleted from the editor.
+@;{Called before a range is deleted from the editor.
 If the return value is @racket[#f], then the
-delete will be aborted.
+delete will be aborted.}
+  规范：在从编辑器中删除范围之前调用。如果返回值为f，则删除将中止。
 
-The @racket[start] argument specifies the starting @techlink{position}
+@;{The @racket[start] argument specifies the starting @techlink{position}
  of the range to delete. The @racket[len] argument specifies number of
  @techlink{item}s to delete (so @math{@racket[start]+@racket[len]} is
- the ending @techlink{position} of the range to delete).
+ the ending @techlink{position} of the range to delete).}
+  start参数指定要删除的范围的起始位置。len参数指定要删除的项目数（因此start+len是要删除的范围的结束位置）。
 
-The editor is internally locked for writing during a call to this method
+@;{The editor is internally locked for writing during a call to this method
 (see also @|lockdiscuss|). Use
-@method[text% after-delete] to modify the editor, if necessary.
+@method[text% after-delete] to modify the editor, if necessary.}
+  在调用此方法期间，编辑器被内部锁定以进行写入（另请参见内部编辑器锁定）。如有必要，使用“删除后”修改编辑器。
 
-See also @method[text% on-delete], @method[text% after-delete], and
- @method[editor<%> on-edit-sequence].
+@;{See also @method[text% on-delete], @method[text% after-delete], and
+ @method[editor<%> on-edit-sequence].}
+  另请参见“删除”、“删除后”和“编辑序列”。
 
 }
 @methimpl{
 
-Returns @racket[#t].
+@;{Returns @racket[#t].}
+ 默认实现：返回t。 
 
 }}
 
@@ -266,24 +310,29 @@ Returns @racket[#t].
            boolean?]{
 @methspec{
 
-Called before @techlink{item}s are inserted into the editor.  If the
- return value is @racket[#f], then the insert will be aborted.
+@;{Called before @techlink{item}s are inserted into the editor.  If the
+ return value is @racket[#f], then the insert will be aborted.}
+  规范：在项插入编辑器之前调用。如果返回值为f，则插入将中止。
 
-The @racket[start] argument specifies the @techlink{position} of the potential
+@;{The @racket[start] argument specifies the @techlink{position} of the potential
  insert. The @racket[len] argument specifies the total length (in
- @techlink{position}s) of the @techlink{item}s to be inserted.
+ @techlink{position}s) of the @techlink{item}s to be inserted.}
+  start参数指定潜在插入的位置。len参数指定要插入的项的总长度（位置）。
 
-The editor is internally locked for writing during a call to this
+@;{The editor is internally locked for writing during a call to this
  method (see also @|lockdiscuss|). Use @method[text% after-insert] to
- modify the editor, if necessary.
+ modify the editor, if necessary.}
+  在调用此方法期间，编辑器被内部锁定以进行写入（另请参见内部编辑器锁定）。如有必要，在插入后使用可修改编辑器。
 
-See also @method[text% on-insert], @method[text% after-insert], and
- @method[editor<%> on-edit-sequence].
+@;{See also @method[text% on-insert], @method[text% after-insert], and
+ @method[editor<%> on-edit-sequence].}
+  另请参见“插入”、“插入后”和“编辑序列”。
 
 }
 @methimpl{
 
-Returns @racket[#t].
+@;{Returns @racket[#t].}
+ 默认实现：返回t。 
 
 }}
 
@@ -294,20 +343,24 @@ Returns @racket[#t].
 
 @methspec{
 
-Called before the editor's maximum or minimum height or width
+@;{Called before the editor's maximum or minimum height or width
 is changed. If the return value is @racket[#f], then the
-change will be aborted.
+change will be aborted.}
+  规格：在更改编辑器的最大或最小高度或宽度之前调用。如果返回值为f，则更改将中止。
 
-(This callback method is provided because setting an editor's maximum
-width may cause lines to be re-flowed with soft newlines.)
+@;{(This callback method is provided because setting an editor's maximum
+width may cause lines to be re-flowed with soft newlines.)}
+ 提供此回调方法是因为设置编辑器的最大宽度可能会导致行使用软换行符重新流动。） 
 
-See also @method[text% on-set-size-constraint], @method[text%
- after-set-size-constraint], and @method[editor<%> on-edit-sequence].
+@;{See also @method[text% on-set-size-constraint], @method[text%
+ after-set-size-constraint], and @method[editor<%> on-edit-sequence].}
+  另请参见“设置大小约束”、“设置大小约束之后”和“编辑序列上”。
 
 }
 @methimpl{
 
-Returns @racket[#t].
+@;{Returns @racket[#t].}
+  默认实现：返回t。
 
 }}
 
@@ -315,10 +368,13 @@ Returns @racket[#t].
 @defmethod[(caret-hidden?)
            boolean?]{
 
-Returns @racket[#t] if the caret is hidden for this editor or @racket[#f]
-otherwise.
+@;{Returns @racket[#t] if the caret is hidden for this editor or @racket[#f]
+otherwise.}
+  如果插入符号对此编辑器隐藏，则返回t，否则返回f。
 
-See also @method[text% hide-caret].
+
+@;{See also @method[text% hide-caret].}
+  另请参见隐藏插入符号。
 
 }
 
@@ -334,23 +390,26 @@ See also @method[text% hide-caret].
                             [counts-as-mod? any/c #t])
               void?])]{
 
-Changes the style for a region in the editor by applying a style delta
+@;{Changes the style for a region in the editor by applying a style delta
  or installing a specific style.  If @racket[start] is @racket['start]
  and @racket[end] is @racket['end], then the currently selected
  @techlink{item}s are changed. Otherwise, if @racket[end] is
  @racket['end], then the style is changed from @racket[start] until
  the end of the selection.  If @racket[counts-as-mod?] is @racket[#f],
  then @method[editor<%> set-modified] is not called after applying the
- style change.
+ style change.}
+  通过应用样式增量或安装特定样式，在编辑器中更改区域的样式。如果“开始”为“开始”，“结束”为“结束”，则当前选定的项目将被更改。否则，如果“结束”是“结束”，则样式将从开始更改到选择的结束。如果算作mod？是f，则应用样式更改后不调用set modified。
 
-To change a large collection of snips from one style to another style,
+@;{To change a large collection of snips from one style to another style,
  consider providing a @racket[style<%>] instance rather than a
  @racket[style-delta%] instance. Otherwise, @method[text%
  change-style] must convert the @racket[style-delta%] instance to the
  @racket[style<%>] instance for every snip; this conversion consumes
- both time and (temporary) memory.
+ both time and (temporary) memory.}
+  要将大量截图从一种样式更改为另一种样式，请考虑提供一个样式<%>实例，而不是样式增量%实例。否则，对于每个截图，change-style必须将style delta%实例转换为style<%>实例；此转换同时消耗时间和（临时）内存。
 
-When @racket[style] is provided: @InStyleListNote[@racket[style]]
+@;{When @racket[style] is provided: @InStyleListNote[@racket[style]]}
+  如果提供样式：编辑器的样式列表必须包含样式，否则样式将不会更改。另请参见convert in style list%。
 
 }
 
@@ -362,14 +421,16 @@ When @racket[style] is provided: @InStyleListNote[@racket[style]]
                  [end (or/c exact-nonnegative-integer? 'end) 'end])
            void?]{
 
-Copies specified range of text into the clipboard. If @racket[extend?] is
+@;{Copies specified range of text into the clipboard. If @racket[extend?] is
  not @racket[#f], the old clipboard contents are appended. If
  @racket[start] is @racket['start] or @racket[end] is @racket['end], then the
- current selection start/end is used.
+ current selection start/end is used.}
+  将指定范围的文本复制到剪贴板中。如果扩展？不是f，将追加旧的剪贴板内容。如果开始为“开始”或结束为“结束”，则使用当前选择的开始/结束。
 
-See @|timediscuss| for a discussion of the @racket[time] argument. If
+@;{See @|timediscuss| for a discussion of the @racket[time] argument. If
  @racket[time] is outside the platform-specific range of times,
- @|MismatchExn|.
+ @|MismatchExn|.}
+  有关时间参数的讨论，请参见剪切和粘贴时间。如果时间超出平台特定的时间范围，将引发exn:fail:contract异常。
 
 }
 
@@ -378,10 +439,11 @@ See @|timediscuss| for a discussion of the @racket[time] argument. If
            (copy-self-to [dest (or/c (is-a?/c text%) (is-a?/c pasteboard%))])
            void?]{
 
-In addition to the default @xmethod[editor<%> copy-self-to] work,
+@;{In addition to the default @xmethod[editor<%> copy-self-to] work,
  this editor's file format, wordbreak function, wordbreak map,
  click-between-threshold, caret visibility state, overwrite mode
- state, and autowrap bitmap are installed into @racket[dest].
+ state, and autowrap bitmap are installed into @racket[dest].}
+  除了编辑器中的默认“自我复制到”<%>工作外，此编辑器的文件格式、分词功能、分词映射、单击阈值之间、插入符号可见性状态、覆盖模式状态和自动换行位图都安装在dest中。
 
 }
 
@@ -393,14 +455,17 @@ In addition to the default @xmethod[editor<%> copy-self-to] work,
                 [end (or/c exact-nonnegative-integer? 'end) 'end])
            void?]{
 
-Copies and then deletes the specified range. If @racket[extend?] is not
+@;{Copies and then deletes the specified range. If @racket[extend?] is not
  @racket[#f], the old clipboard contents are appended. If @racket[start] is
  @racket['start] or @racket[end] is @racket['end], then the current
- selection start/end is used.
+ selection start/end is used.}
+  复制然后删除指定的范围。如果扩展？不是f，将追加旧的剪贴板内容。如果开始为“开始”或结束为“结束”，则使用当前选择的开始/结束。
 
-See @|timediscuss| for a discussion of the @racket[time] argument. If
+
+@;{See @|timediscuss| for a discussion of the @racket[time] argument. If
  @racket[time] is outside the platform-specific range of times,
- @|MismatchExn|.
+ @|MismatchExn|.}
+  有关时间参数的讨论，请参见剪切和粘贴时间。如果时间超出平台特定的时间范围，将引发exn:fail:contract异常。
 
 }
 
@@ -412,19 +477,21 @@ See @|timediscuss| for a discussion of the @racket[time] argument. If
              [(delete)
               void?])]{
 
-Deletes the specified range or the currently selected text (when no
+@;{Deletes the specified range or the currently selected text (when no
  range is provided) in the editor. If @racket[start] is
  @racket['start], then the starting selection @techlink{position} is
  used; if @racket[end] is @racket['back], then only the character
  preceding @racket[start] is deleted.  If @racket[scroll-ok?] is not
  @racket[#f] and @racket[start] is the same as the current caret
  @techlink{position}, then the editor's @techlink{display} may be
- scrolled to show the new selection @techlink{position}.
+ scrolled to show the new selection @techlink{position}.}
+  在编辑器中删除指定的范围或当前选定的文本（如果没有提供范围）。如果start为“start”，则使用开始选择位置；如果end为“back”，则只删除开始前的字符。如果滚动正常？不是f且开始位置与当前插入符号位置相同，则可以滚动编辑器显示以显示新的选择位置。
 
 
-@MonitorMethod[@elem{The content of an editor} @elem{the
+@;{@MonitorMethod[@elem{The content of an editor} @elem{the
  system in response to other method
- calls} @elem{@method[text% on-delete]} @elem{content deletion}]
+ calls} @elem{@method[text% on-delete]} @elem{content deletion}]}
+  编辑器的内容可以被系统响应其他方法调用更改，这样的更改不会通过这个方法；使用on delete来监视内容删除更改。
 
 }
 
@@ -435,19 +502,22 @@ Deletes the specified range or the currently selected text (when no
            void?]{
 @methspec{
 
-Called to copy a region of the editor into the clipboard.  This method
+@;{Called to copy a region of the editor into the clipboard.  This method
  is provided so that it can be overridden by subclasses.  Do not call
- this method directly; instead, call @method[text% copy].
+ this method directly; instead, call @method[text% copy].}
+规范：调用以将编辑器的一个区域复制到剪贴板中。提供此方法以便子类重写它。不要直接调用此方法，而是调用copy。  
 
-See @|timediscuss| for a discussion of the @racket[time] argument. If
+@;{See @|timediscuss| for a discussion of the @racket[time] argument. If
  @racket[time] is outside the platform-specific range of times,
- @|MismatchExn|.
+ @|MismatchExn|.}
+  有关时间参数的讨论，请参见剪切和粘贴时间。如果时间超出平台特定的时间范围，将引发exn:fail:contract异常。
 
 }
 @methimpl{
 
-Copy the data from @racket[start] to @racket[end], extending the current
- clipboard contexts if @racket[extend?] is not @racket[#f].
+@;{Copy the data from @racket[start] to @racket[end], extending the current
+ clipboard contexts if @racket[extend?] is not @racket[#f].}
+  默认实现：从开始到结束复制数据，如果扩展则扩展当前剪贴板上下文？不是F。
 
 }}
 
@@ -457,18 +527,23 @@ Copy the data from @racket[start] to @racket[end], extending the current
            void?]{
 @methspec{
 
-Called to paste the current contents of the clipboard into the editor.
+@;{Called to paste the current contents of the clipboard into the editor.
  This method is provided so that it can be overridden by subclasses.
- Do not call this method directly; instead, call @method[text% paste].
+ Do not call this method directly; instead, call @method[text% paste].}
+  规范：调用以将剪贴板的当前内容粘贴到编辑器中。提供此方法以便子类重写它。不要直接调用此方法，而是调用Paste。
 
-See @|timediscuss| for a discussion of the @racket[time] argument. If
+@;{See @|timediscuss| for a discussion of the @racket[time] argument. If
  @racket[time] is outside the platform-specific range of times,
- @|MismatchExn|.
+ @|MismatchExn|.}
+  有关时间参数的讨论，请参见剪切和粘贴时间。如果时间超出平台特定的时间范围，将引发exn:fail:contract异常。
+
+
 
 }
 @methimpl{
 
-Pastes into the @techlink{position} @racket[start].
+@;{Pastes into the @techlink{position} @racket[start].}
+  默认实现：粘贴到位置开始处。
 
 }}
 
@@ -478,19 +553,22 @@ Pastes into the @techlink{position} @racket[start].
            void?]{
 @methspec{
 
-Called to paste the current contents of the X11 selection on Unix (or the
+@;{Called to paste the current contents of the X11 selection on Unix (or the
  clipboard on Windows or Mac OS) into the editor.  This method is
  provided so that it can be overridden by subclasses.  Do not call
- this method directly; instead, call @method[text% paste-x-selection].
+ this method directly; instead, call @method[text% paste-x-selection].}
+  规范：调用以将Unix上x11选择的当前内容（或Windows或Mac OS上的剪贴板）粘贴到编辑器中。提供此方法以便子类重写它。不要直接调用此方法，而是调用Paste-X-Selection。
 
-See @|timediscuss| for a discussion of the @racket[time] argument. If
+@;{See @|timediscuss| for a discussion of the @racket[time] argument. If
  @racket[time] is outside the platform-specific range of times,
- @|MismatchExn|.
+ @|MismatchExn|.}
+  有关时间参数的讨论，请参见剪切和粘贴时间。如果时间超出平台特定的时间范围，将引发exn:fail:contract异常。
 
 }
 @methimpl{
 
-Pastes into the @techlink{position} @racket[start].
+@;{Pastes into the @techlink{position} @racket[start].}
+  默认实现：粘贴到位置开始处。
 
 }}
 
@@ -498,37 +576,44 @@ Pastes into the @techlink{position} @racket[start].
 @defmethod[(erase)
            void?]{
 
-Erases the contents of the editor.
+@;{Erases the contents of the editor.}
+  删除编辑器的内容。
 
-See also @method[text% delete].
+@;{See also @method[text% delete].}
+  另请参见删除。
 
 }
 
 @defmethod[(extend-position [pos exact-nonnegative-integer?]) void?]{
-  Updates the selection (see @method[text% set-position]) based on 
+  @;{Updates the selection (see @method[text% set-position]) based on 
   the result of @method[text% get-extend-end-position], 
-  @method[text% get-extend-start-position], and @racket[pos].
-  
-  If @racket[pos] is before the extend start and extend end positions,
+  @method[text% get-extend-start-position], and @racket[pos].}
+根据get extend end position、get extend start position和pos的结果更新选择（请参见设置位置）。
+    
+  @;{If @racket[pos] is before the extend start and extend end positions,
   then the selection goes from @racket[pos] to the extend end position.
   If it is after, then the selection goes from the extend start position
-  to @racket[pos].
+  to @racket[pos].}
+  如果pos在extend start和extend end位置之前，则选择从pos转到extend end位置。如果在之后，则选择从扩展开始位置转到位置。
   
-  Use this method to implement shift-modified movement keys in order to
-  properly extend the selection.
+  @;{Use this method to implement shift-modified movement keys in order to
+  properly extend the selection.}
+    使用此方法来实现移位修改的移动键，以便正确扩展选择。
 }
 
 @defmethod[(find-line [y real?]
                       [on-it? (or/c (box/c any/c) #f) #f])
            exact-nonnegative-integer?]{
 
-Given a @techlink{location} in the editor, returns the line at the
- @techlink{location}. @|LineNumbering|
+@;{Given a @techlink{location} in the editor, returns the line at the
+ @techlink{location}. @|LineNumbering|}
+给定编辑器中的位置，返回该位置处的行。从0开始对进行编号。
 
-@boxisfillnull[@racket[on-it?] @elem{@racket[#t] if the line actually
+@;{@boxisfillnull[@racket[on-it?] @elem{@racket[#t] if the line actually
  touches this @techlink{position}, or @racket[#f] otherwise}] (A large
  enough @racket[y] will always return the last line number, but will
- set @racket[on-it?] to @racket[#f].)
+ set @racket[on-it?] to @racket[#f].)}
+  在上面吗？如果线条实际接触到该位置，则框中会填充t，否则会填充f，除非在其上？是f.（足够大的y将始终返回最后一个行号，但将在其上设置？至F.）
 
 @|OVD| @|FCA|
 
@@ -540,18 +625,21 @@ Given a @techlink{location} in the editor, returns the line at the
                          [end (or/c exact-nonnegative-integer? 'eof) 'eof])
            (or/c exact-nonnegative-integer? #f)]{
 
-Like @method[text% find-string], but specifically finds a paragraph
+@;{Like @method[text% find-string], but specifically finds a paragraph
 break (possibly more efficiently than searching text).}
+与查找字符串类似，但特别是查找段落分隔符（可能比搜索文本更有效）。
+ }
 
 
 @defmethod[(find-next-non-string-snip [after (or/c (is-a?/c snip%) #f)])
            (or/c (is-a?/c snip%) #f)]{
 
-Given a snip, returns the next snip in the editor (after the given
+@;{Given a snip, returns the next snip in the editor (after the given
  one) that is not an instance of @racket[string-snip%]. If
  @racket[#f] is given as the snip, the result is the first non-string
  snip in the editor (if any). If no non-string snip is found after the
- given snip, the result is @racket[#f].
+ given snip, the result is @racket[#f].}
+  给定一个snip，返回编辑器中的下一个snip（在给定的snip之后），它不是字符串snip%的实例。如果给定f作为截图，则结果是编辑器中的第一个非字符串截图（如果有）。如果给定截图后未找到非字符串截图，则结果为f。
 
 }
 
@@ -563,20 +651,25 @@ Given a snip, returns the next snip in the editor (after the given
                           [edge-close? (or/c (box/c real?) #f) #f])
            exact-nonnegative-integer?]{
 
-Given a @techlink{location} in the editor, returns the @techlink{position} at the
- @techlink{location}.
+@;{Given a @techlink{location} in the editor, returns the @techlink{position} at the
+ @techlink{location}.}
+  给定编辑器中的位置，返回该位置的位置。
 
-See @|ateoldiscuss| for a discussion of the @racket[at-eol?] argument.
+
+
+@;{See @|ateoldiscuss| for a discussion of the @racket[at-eol?] argument.
  @boxisfillnull[@racket[on-it?] @elem{@racket[#t] if the line actually touches this
- @techlink{position}, or @racket[#f] otherwise}]
+ @techlink{position}, or @racket[#f] otherwise}]}
+  关于at eol的讨论，请参见“尾部歧义”？参数。在上面吗？如果线条实际接触到该位置，则框中会填充t，否则会填充f，除非在其上？是F·F
 
-@boxisfillnull[@racket[edge-close?] @elem{it will be filled in with a value
+@;{@boxisfillnull[@racket[edge-close?] @elem{it will be filled in with a value
  indicating how close the point is to the vertical edges of the @techlink{item}
  when the point falls on the @techlink{item}}] If the point is closest to the left
  edge of the @techlink{item}, the value will be negative; otherwise, the value
  will be positive. In either case, then absolute value of the returned
  result is the distance from the point to the edge of the @techlink{item}. The
- values 100 and -100 indicate infinity.
+ values 100 and -100 indicate infinity.}
+  边缘接近？框中填充了该值，该值指示点落在项上时该点与项的垂直边缘的距离，除非边缘关闭？为f。如果点最靠近项的左边缘，则该值为负；否则，该值为正。无论哪种情况，返回结果的绝对值都是从点到项目边缘的距离。值100和-100表示无穷大。
 
 @|OVD| @|FCA|
 
@@ -590,15 +683,18 @@ See @|ateoldiscuss| for a discussion of the @racket[at-eol?] argument.
                                   [edge-close? (or/c (box/c real?) #f) #f])
            exact-nonnegative-integer?]{
 
-Given a @techlink{location} within a line of the editor, returns the
- @techlink{position} at the @techlink{location}. @|LineNumbering|
-
-See @|ateoldiscuss| for a discussion of the @racket[at-eol?] argument.
+@;{Given a @techlink{location} within a line of the editor, returns the
+ @techlink{position} at the @techlink{location}. @|LineNumbering|}
+给定编辑器行中的位置，返回该位置处的位置。从0开始对进行编号。
+  
+@;{See @|ateoldiscuss| for a discussion of the @racket[at-eol?] argument.
  @boxisfillnull[@racket[on-it?] @elem{@racket[#t] if the line actually
- touches this @techlink{position}, or @racket[#f] otherwise}]
+ touches this @techlink{position}, or @racket[#f] otherwise}]}
+ 关于at eol的讨论，请参见“尾部歧义”？参数。在上面吗？如果线条实际接触到该位置，则框中会填充t，否则会填充f，除非在其上？是F·F 
 
-See @method[text% find-position] for a discussion of
- @racket[edge-close?].
+@;{See @method[text% find-position] for a discussion of
+ @racket[edge-close?].}
+  关于边缘闭合的讨论，请参见查找位置？.
 
 @|OVD| @|FCA|
 
@@ -610,29 +706,39 @@ See @method[text% find-position] for a discussion of
                       [s-pos (or/c (box/c exact-nonnegative-integer?) #f) #f])
            (or/c (is-a?/c snip%) #f)]{
 
-Returns the snip at a given @techlink{position}, or @racket[#f] if an appropriate
- snip cannot be found.
+@;{Returns the snip at a given @techlink{position}, or @racket[#f] if an appropriate
+ snip cannot be found.}
+  返回给定位置的截图，如果找不到合适的截图，则返回f。
 
-If the @techlink{position} @racket[pos] is between
+@;{If the @techlink{position} @racket[pos] is between
 two snips, @racket[direction] specifies which snip to return; @racket[direction]
-can be any of the following:
+can be any of the following:}
+  如果位置位置在两个截图之间，则方向指定要返回的截图；方向可以是以下任意一个：
+
 @itemize[
 
- @item{@racket['before-or-none] --- returns the snip before the
+ @item{@racket['before-or-none]@;{ --- returns the snip before the
  @techlink{position}, or @racket[#f] if @racket[pos] is @racket[0]}
+        'before or none-返回位置前的截图，如果位置为0，则返回f}
 
- @item{@racket['before] --- returns the snip before the @techlink{position},
+ @item{@racket['before]@;{ --- returns the snip before the @techlink{position},
  or the first snip if @racket[pos] is @racket[0]}
+        '之前-返回位置前的截图，或者如果位置为0，则返回第一个截图}
 
- @item{@racket['after] --- returns the snip after the @techlink{position}, or
+ @item{@racket['after]@;{ --- returns the snip after the @techlink{position}, or
  the last snip if @racket[pos] is the last @techlink{position}}
+        '之后-返回位置之后的截图，或者如果位置是最后一个位置，则返回最后一个截图}
 
- @item{@racket['after-or-none] -- returns the snip after the
+ @item{@racket['after-or-none]@;{ -- returns the snip after the
  @techlink{position}, or @racket[#f] if @racket[pos] is the last @techlink{position} or larger}
+        'after or none–返回位置后的截图，如果位置是最后一个或更大的位置，则返回f
+
+}
 
 ]
 
-@boxisfillnull[@racket[s-pos] @elem{the @techlink{position} where the returned snip starts}]
+@;{@boxisfillnull[@racket[s-pos] @elem{the @techlink{position} where the returned snip starts}]}
+  除非S-POS为F，否则S-POS框将填充返回截图开始的位置。
 
 }
 
@@ -645,26 +751,31 @@ can be any of the following:
                         [case-sensitive? any/c #t])
            (or/c exact-nonnegative-integer? #f)]{
 
-Finds an exact-match string in the editor and returns its @techlink{position}. 
- If the string is not found, @racket[#f] is returned.
+@;{Finds an exact-match string in the editor and returns its @techlink{position}. 
+ If the string is not found, @racket[#f] is returned.}
+  在编辑器中查找完全匹配的字符串并返回其位置。如果找不到字符串，则返回_f。
 
-The @racket[direction] argument can be @racket['forward] or
+
+@;{The @racket[direction] argument can be @racket['forward] or
  @racket['backward], indicating a forward search or backward
  search respectively. In the case of a forward search, the return
  value is the starting @techlink{position} of the string; for a backward search,
  the ending @techlink{position} is returned.  However, if @racket[get-start?] is
  @racket[#f], then the other end of the string @techlink{position} will be
- returned.
+ returned.}
+  方向参数可以是“向前”或“向后”，分别表示向前搜索或向后搜索。对于正向搜索，返回值是字符串的起始位置；对于反向搜索，返回结束位置。但是，如果开始？为f，则返回字符串位置的另一端。
 
-The @racket[start] and @racket[end] arguments set the starting and ending
+@;{The @racket[start] and @racket[end] arguments set the starting and ending
  @techlink{position}s of a forward search (use @racket[start] > @racket[end] for a
  backward search). If @racket[start] is @racket['start], then the search
  starts at the start of the selection. If @racket[end] is @racket['eof],
  then the search continues to the end (for a forward search) or start
- (for a backward search) of the editor.
+ (for a backward search) of the editor.}
+  start和end参数设置正向搜索的开始和结束位置（使用start>end进行反向搜索）。如果start是'start'，则搜索将从所选内容的开头开始。如果end为'eof，则搜索将继续到编辑器的结尾（对于正向搜索）或开始（对于反向搜索）。
 
-If @racket[case-sensitive?] is @racket[#f], then an uppercase and lowercase
- of each alphabetic character are treated as equivalent.
+@;{If @racket[case-sensitive?] is @racket[#f], then an uppercase and lowercase
+ of each alphabetic character are treated as equivalent.}
+  如果区分大小写？是f，则每个字母字符的大小写都被视为等效字符。
 
 }
 
@@ -683,11 +794,12 @@ If @racket[case-sensitive?] is @racket[#f], then an uppercase and lowercase
                    (or/c (cons/c (is-a?/c editor<%>)
                                  nested-editor-search-result)
                          exact-nonnegative-integer?))))]{
-  Like @method[text% find-string], but also searches in embedded editors,
+  @;{Like @method[text% find-string], but also searches in embedded editors,
        returning a series of cons pairs whose @racket[car] positions
        are the editors on the path to the editor where the search
        string occurred and whose final @racket[cdr] position is the 
-       search result position.
+       search result position.}
+    与find string类似，但也在嵌入式编辑器中搜索，返回一系列cons对，其car位置是指向发生搜索字符串的编辑器路径上的编辑器，其最终cdr位置是搜索结果位置。
 }
                                                 
 @defmethod[(find-string-all [str non-empty-string?]
@@ -698,9 +810,10 @@ If @racket[case-sensitive?] is @racket[#f], then an uppercase and lowercase
                             [case-sensitive any/c #t])
            (listof exact-nonnegative-integer?)]{
 
-Finds all occurrences of a string using @method[text% find-string]. If
+@;{Finds all occurrences of a string using @method[text% find-string]. If
  no occurrences are found, the empty list is returned.  The arguments
- are the same as for @method[text% find-string].
+ are the same as for @method[text% find-string].}
+  使用查找字符串查找所有出现的字符串。如果未找到匹配项，则返回空列表。参数与find字符串相同。
 
 }
 
@@ -718,9 +831,10 @@ Finds all occurrences of a string using @method[text% find-string]. If
                            (or/c (cons/c (is-a?/c editor<%>)
                                          nested-editor-search-result)
                                  (listof exact-nonnegative-integer?))))))]{
-Like @method[text% find-string-embedded], but also searches in embedded
+@;{Like @method[text% find-string-embedded], but also searches in embedded
 editors, returning search  results a list of the editors that contain
-the matches.
+the matches.}
+  类似于find string embedded，但也在embedded editors中搜索，返回搜索结果包含匹配项的编辑器列表。
 }
 
 @defmethod[(find-wordbreak [start (or/c (box/c exact-nonnegative-integer?) #f)]
@@ -728,33 +842,42 @@ the matches.
                            [reason (or/c 'caret 'line 'selection 'user1 'user2)])
            void?]{
 
-Finds wordbreaks in the editor using the current wordbreak procedure.
- See also @method[text% set-wordbreak-func].
+@;{Finds wordbreaks in the editor using the current wordbreak procedure.
+ See also @method[text% set-wordbreak-func].}
+ 使用当前分词过程在编辑器中查找分词。另请参见设置分词功能。 
 
-The contents of the @racket[start] argument specifies an @techlink{position} to start
+@;{The contents of the @racket[start] argument specifies an @techlink{position} to start
  searching backwards to the next word start; its will be filled with
  the starting @techlink{position} of the word that is found.  If @racket[start] is
- @racket[#f], no backward search is performed.
+ @racket[#f], no backward search is performed.}
+  start参数的内容指定向后搜索下一个单词start的位置；它将用找到的单词的起始位置填充。如果start为f，则不执行向后搜索。
 
-The contents of the @racket[end] argument specifies an @techlink{position} to start
+@;{The contents of the @racket[end] argument specifies an @techlink{position} to start
  searching forwards to the next word end; its will be filled with the
  ending @techlink{position} of the word that is found.  If @racket[end] is
- @racket[#f], no forward search is performed.
+ @racket[#f], no forward search is performed.}
+  END参数的内容指定了一个位置，从该位置开始向前搜索到下一个单词END；它将用找到的单词的结束位置填充。如果END为F，则不执行正向搜索。
 
-The @racket[reason] argument specifies more information about what the
+@;{The @racket[reason] argument specifies more information about what the
  wordbreak is used for. For example, the wordbreaks used to move the
  caret may be different from the wordbreaks used to break lines. The
- possible values of @racket[reason] are:
+ possible values of @racket[reason] are:}
+  reason参数指定有关分词符的用途的详细信息。例如，用于移动插入符号的换行符可能与用于换行的换行符不同。原因的可能价值是：
 
 @itemize[
-@item{@racket['caret] --- find a wordbreak suitable for moving the caret}
-@item{@racket['line] --- find a wordbreak suitable for breaking lines}
-@item{@racket['selection] --- find a wordbreak suitable for selecting the closest word}
-@item{@racket['user1] --- for other (not built-in) uses}
-@item{@racket['user2] --- for other (not built-in) uses}
+@item{@racket['caret]@;{ --- find a wordbreak suitable for moving the caret}
+       插入符号-查找适合移动插入符号的分词符}
+@item{@racket['line]@;{ --- find a wordbreak suitable for breaking lines}
+       '行-查找适合换行的分词符}
+@item{@racket['selection]@;{ --- find a wordbreak suitable for selecting the closest word}
+       '选择-查找适合选择最近单词的分词符}
+@item{@racket['user1]@;{ --- for other (not built-in) uses}
+       'user1-用于其他（非内置）用途}
+@item{@racket['user2]@;{ --- for other (not built-in) uses}
+       user2-用于其他（非内置）用途}
 ]
 
-The actual handling of @racket[reason] is controlled by the current
+@;{The actual handling of @racket[reason] is controlled by the current
  wordbreak procedure; see @method[text% set-wordbreak-func]for
  details. The default handler and default wordbreak map treats
  alphanumeric characters the same for @racket['caret], @racket['line],
@@ -763,7 +886,8 @@ The actual handling of @racket[reason] is controlled by the current
  words.  For example a comma should not be counted as part of the
  preceding word for moving the caret past the word or double-clicking
  the word, but the comma should stay on the same line as the word (and
- thus counts in the same ``line word'').
+ thus counts in the same ``line word'').}
+  原因的实际处理由当前分词过程控制；有关详细信息，请参阅设置分词功能。默认的处理程序和默认的分词映射处理字母数字字符与“插入符号”、“行”和“选择”的字符相同。非字母数字、非空格、非连字符不换行，而是换行插入符号和选择字。例如，在将插入符号移过单词或双击单词时，逗号不应算作前一个单词的一部分，但逗号应与单词保持在同一行（因此在同一“行单词”中计数）。
 
 }
 
@@ -771,9 +895,10 @@ The actual handling of @racket[reason] is controlled by the current
 @defmethod[(flash-off)
            void?]{
 
-Turns off the hiliting and shows the normal selection range again; see
+@;{Turns off the hiliting and shows the normal selection range again; see
  @method[text% flash-on]. There is no effect if this method is called
- when flashing is already off.
+ when flashing is already off.}
+  关闭亲合并再次显示正常选择范围；请参见闪光打开。如果在已关闭闪烁时调用此方法，则不会产生任何效果。
 
 }
 
@@ -785,16 +910,19 @@ Turns off the hiliting and shows the normal selection range again; see
                      [timeout exact-nonnegative-integer? 500])
            void?]{
 
-Temporarily hilites a region in the editor without changing the
- current selection.
+@;{Temporarily hilites a region in the editor without changing the
+ current selection.}
+  在编辑器中临时隐藏区域，而不更改当前选择。
 
-See @|ateoldiscuss| for a discussion of the @racket[at-eol?] argument. If
+@;{See @|ateoldiscuss| for a discussion of the @racket[at-eol?] argument. If
  @racket[scroll?] is not @racket[#f], the editor's @techlink{display} will be scrolled
  if necessary to show the hilited region. If @racket[timeout] is greater
  than 0, then the hiliting will be automatically turned off after the
- given number of milliseconds.
+ given number of milliseconds.}
+  关于at eol的讨论，请参见“尾部歧义”？参数。如果滚动？不是f，如果需要显示隐藏区域，编辑器的显示将滚动。如果超时值大于0，则在给定的毫秒数后会自动关闭隐藏。
 
-See also  @method[text% flash-off].
+@;{See also  @method[text% flash-off].}
+  另请参见闪光关闭。
 
 }
 
@@ -802,26 +930,30 @@ See also  @method[text% flash-off].
 @defmethod[(get-anchor)
            boolean?]{
 
-Returns @racket[#t] if the selection is currently auto-extending. See
- also @method[text% set-anchor].
+@;{Returns @racket[#t] if the selection is currently auto-extending. See
+ also @method[text% set-anchor].}
+  如果选择当前正在自动扩展，则返回t。另请参见设置锚定。
 
 }
 
 @defmethod[(get-autowrap-bitmap-width) (and/c real? (not/c negative?))]{
-  Returns the width of the bitmap last passed to @method[text% set-autowrap-bitmap]
+  @;{Returns the width of the bitmap last passed to @method[text% set-autowrap-bitmap]
   or @racket[zero?] if no bitmap has been passed to @method[text% set-autowrap-bitmap] or
-  if @racket[#f] was most recently passed.
+  if @racket[#f] was most recently passed.}
+    返回上次传递给设置自动换行位图或零的位图的宽度？如果没有传递任何位图来设置自动环绕位图，或者最近传递了f。
 }
 
 @defmethod[(get-between-threshold)
            (and/c real? (not/c negative?))]{
 
-Returns an amount used to determine the meaning of a user click. If
+@;{Returns an amount used to determine the meaning of a user click. If
  the click falls within the threshold of a position between two
  @techlink{item}s, then the click registers on the space between the
- @techlink{item}s rather than on either @techlink{item}.
+ @techlink{item}s rather than on either @techlink{item}.}
+  返回用于确定用户单击的含义的金额。如果点击在两个项目之间的一个位置的阈值内，那么点击会在项目之间的空白处注册，而不是在任何一个项目上注册。
 
-See also @method[text% set-between-threshold].
+@;{See also @method[text% set-between-threshold].}
+  另请参见在阈值之间设置。
 
 }
 
@@ -829,12 +961,14 @@ See also @method[text% set-between-threshold].
 @defmethod[(get-character [start exact-nonnegative-integer?])
            char?]{
 
-Returns the character following the @techlink{position}
+@;{Returns the character following the @techlink{position}
  @racket[start]. The character corresponds to getting non-flattened
- text from the editor.
+ text from the editor.}
+  返回位置开始后的字符。字符对应于从编辑器中获取非扁平文本。
 
-If @racket[start] is greater than or equal to the last
- @techlink{position}, @racket[#\nul] is returned.
+@;{If @racket[start] is greater than or equal to the last
+ @techlink{position}, @racket[#\nul] is returned.}
+  如果start大于或等于最后一个位置，则返回nul。
 
 }
 
@@ -842,28 +976,32 @@ If @racket[start] is greater than or equal to the last
 @defmethod[(get-end-position)
            exact-nonnegative-integer?]{
 
-Returns the ending @techlink{position} of the current selection. See
- also @method[text% get-position].
+@;{Returns the ending @techlink{position} of the current selection. See
+ also @method[text% get-position].}
+  返回当前所选内容的结束位置。另请参见获取位置。
 
 }
 
 @defmethod[(get-extend-start-position) exact-nonnegative-integer?]{
-  Returns the beginning of the ``extend'' region if the selection
+  @;{Returns the beginning of the ``extend'' region if the selection
   is currently being extended via, e.g., shift and a cursor movement key; 
-  otherwise returns the same value as @method[text% get-start-position].
+  otherwise returns the same value as @method[text% get-start-position].}
+    如果当前正在通过（例如shift和光标移动键）扩展选择，则返回“扩展”区域的开头；否则返回与get start position相同的值。
 }
 
 @defmethod[(get-extend-end-position) exact-nonnegative-integer?]{
-  Returns the beginning of the ``extend'' region if the selection
+  @;{Returns the beginning of the ``extend'' region if the selection
   is currently being extended via, e.g., shift and a cursor movement key; 
-  otherwise returns the same value as @method[text% get-end-position].
+  otherwise returns the same value as @method[text% get-end-position].}
+    如果当前正在通过（例如shift和光标移动键）扩展选择，则返回“扩展”区域的开头；否则返回与get end position相同的值。
 }
 
 @defmethod[(get-file-format)
            (or/c 'standard 'text 'text-force-cr)]{
 
-Returns the format of the last file saved from or loaded into this
- editor. See also @method[editor<%> load-file].
+@;{Returns the format of the last file saved from or loaded into this
+ editor. See also @method[editor<%> load-file].}
+  返回上次保存或加载到此编辑器中的文件的格式。另请参见加载文件。
 
 }
 
@@ -871,18 +1009,20 @@ Returns the format of the last file saved from or loaded into this
 @defmethod[(get-line-spacing)
            (and/c real? (not/c negative?))]{
 
-Returns the spacing inserted by the editor between each line. This
- spacing is included in the reported height of each line.
+@;{Returns the spacing inserted by the editor between each line. This
+ spacing is included in the reported height of each line.}
+  返回编辑器在每行之间插入的间距。此间距包含在每行的报告高度中。
 
 }
 
 @defmethod[(get-overwrite-mode)
            boolean?]{
 
-Returns @racket[#t] if the editor is in overwrite mode, @racket[#f]
+@;{Returns @racket[#t] if the editor is in overwrite mode, @racket[#f]
  otherwise. Overwrite mode only affects the way that @method[editor<%>
  on-default-char] handles keyboard input for insertion characters. See
- also @method[text% set-overwrite-mode].
+ also @method[text% set-overwrite-mode].}
+  如果编辑器处于覆盖模式，则返回t，否则返回f。覆盖模式只影响默认字符处理插入字符的键盘输入的方式。另请参见设置覆盖模式。
 
 }
 
@@ -892,25 +1032,28 @@ Returns @racket[#t] if the editor is in overwrite mode, @racket[#f]
                                  (and/c real? (not/c negative?))
                                  (and/c real? (not/c negative?)))]{
 
-Returns the editor's padding for its left, top, right, and bottom
-sides (in that order).
+@;{Returns the editor's padding for its left, top, right, and bottom
+sides (in that order).}
+  返回编辑器左侧、顶部、右侧和底部的填充（按此顺序）。
 
-See also @method[text% set-padding].}
-
+@;{See also @method[text% set-padding].}}
+     另请参见设置填充。
 
 @defmethod[(get-position [start (or/c (box/c exact-nonnegative-integer?) #f)]
                          [end (or/c (box/c exact-nonnegative-integer?) #f) #f])
            void?]{
 
-Returns the current selection range in @techlink{position}s.  If
+@;{Returns the current selection range in @techlink{position}s.  If
 nothing is selected, the @racket[start] and @racket[end] will be
-the same number and that number will be where the insertion point is.
+the same number and that number will be where the insertion point is.}
+  返回位置中的当前选择范围。如果未选择任何内容，则开始和结束将是相同的数字，并且插入点所在的位置将是该数字。
 
-See also @method[text% get-start-position] 
-and @method[text% get-end-position].
+@;{See also @method[text% get-start-position] 
+and @method[text% get-end-position].}
+  另请参见获取开始位置和结束位置。
 
-@boxisfillnull[@racket[start] @elem{the starting @techlink{position} of the selection}]
-@boxisfillnull[@racket[end] @elem{the ending @techlink{position} of the selection}]
+@;{@boxisfillnull[@racket[start] @elem{the starting @techlink{position} of the selection}]@boxisfillnull[@racket[end] @elem{the ending @techlink{position} of the selection}]}
+  除非“开始”是f，否则“开始”框将填充所选内容的开始位置。除非“结束”是f，否则“结束”框将填充所选内容的结束位置。
 
 }
 
@@ -919,16 +1062,19 @@ and @method[text% get-end-position].
                             [end exact-nonnegative-integer?])
            (or/c (is-a?/c editor-data%) #f)]{
 
-Gets extra data associated with a given region. See
- @|editordatadiscuss| for more information.
+@;{Gets extra data associated with a given region. See
+ @|editordatadiscuss| for more information.}
+  获取与给定区域关联的额外数据。有关详细信息，请参见编辑器数据。
 
-This method is @italic{not} called when the whole editor is saved to a
+@;{This method is @italic{not} called when the whole editor is saved to a
  file. In such cases, the information can be stored in the header or
- footer; see @|globaleditordatadiscuss|.
+ footer; see @|globaleditordatadiscuss|.}
+  当整个编辑器保存到文件中时，不会调用此方法。在这种情况下，信息可以存储在页眉或页脚中；参见全局数据：页眉和页脚。
 
-This method is meant to be overridden; the default @method[text%
+@;{This method is meant to be overridden; the default @method[text%
  set-region-data] method does not store information to be retrieved by
- this method.
+ this method.}
+  此方法将被重写；默认的set region数据方法不存储此方法要检索的信息。
 
 }
 
@@ -936,13 +1082,14 @@ This method is meant to be overridden; the default @method[text%
 @defmethod[(get-revision-number)
            (and/c real? (not/c negative?))]{
 
-Returns an inexact number that increments every time the editor is
+@;{Returns an inexact number that increments every time the editor is
  changed in one of the following ways: a snip is inserted (see
  @method[text% after-insert]), a snip is deleted (see @method[text%
  after-delete]), a snip is split (see @method[text%
  after-split-snip]), snips are merged (see @method[text%
  after-merge-snips]), or a snip changes its count (which is rare; see
- @method[snip-admin% recounted]).
+ @method[snip-admin% recounted]).}
+  返回一个不精确的数字，该数字在每次以下列方式之一更改编辑器时递增：插入一个截图（请参见插入后）、删除一个截图（请参见删除后）、拆分一个截图（请参见拆分截图后）、合并截图（请参见合并截图后）或更改其计数（这很少见；请参见重新计数）。
 
 }
 
@@ -950,8 +1097,9 @@ Returns an inexact number that increments every time the editor is
 @defmethod[(get-snip-position [snip (is-a?/c snip%)])
            (or/c exact-nonnegative-integer? #f)]{
 
-Returns the starting @techlink{position} of a given snip or
- @racket[#f] if the snip is not in this editor.
+@;{Returns the starting @techlink{position} of a given snip or
+ @racket[#f] if the snip is not in this editor.}
+  返回给定截图的起始位置，如果截图不在此编辑器中，则返回f。
 
 }
 
@@ -962,15 +1110,19 @@ Returns the starting @techlink{position} of a given snip or
                                            [y (or/c (box/c real?) #f) #f])
            boolean?]{
 
-Gets a snip's @techlink{position} and top left @techlink{location} in editor
+@;{Gets a snip's @techlink{position} and top left @techlink{location} in editor
  coordinates.  The return value is @racket[#t] if the snip is found,
- @racket[#f] otherwise.
+ @racket[#f] otherwise.}
+  获取截图的位置和编辑器坐标中左上角的位置。如果找到截图，返回值为t，否则返回值为f。
 
-@boxisfillnull[@racket[pos] @elem{starting @techlink{position} of @racket[snip]}]
-@boxisfillnull[@racket[x] @elem{left @techlink{location} of @racket[snip] in editor coordinates}]
-@boxisfillnull[@racket[y] @elem{top @techlink{location} of @racket[snip] in editor coordinates}]
+@;{@boxisfillnull[@racket[pos] @elem{starting @techlink{position} of @racket[snip]}]}
+  
+@;{@boxisfillnull[@racket[x] @elem{left @techlink{location} of @racket[snip] in editor coordinates}]
+   @boxisfillnull[@racket[y] @elem{top @techlink{location} of @racket[snip] in editor coordinates}]}
+  除非位置是F，否则位置框中填充了snip的起始位置。除非X是F，否则X框中填充了snip在编辑器坐标中的左侧位置。除非Y是F，否则Y框中填充了snip在编辑器坐标中的顶部位置。
 
-When @techlink{location} information is requested: @|OVD| @|FCA|
+@;{When @techlink{location} information is requested: @|OVD| @|FCA|}
+  当请求位置信息时：
 
 }
 
@@ -978,8 +1130,9 @@ When @techlink{location} information is requested: @|OVD| @|FCA|
 @defmethod[(get-start-position)
            exact-nonnegative-integer?]{
 
-Returns the starting @techlink{position} of the current selection. See also
- @method[text% get-position].
+@;{Returns the starting @techlink{position} of the current selection. See also
+ @method[text% get-position].}
+  返回当前所选内容的起始位置。另请参见获取位置。
 
 }
 
@@ -987,7 +1140,7 @@ Returns the starting @techlink{position} of the current selection. See also
 @defmethod[(get-styles-sticky)
            boolean?]{
 
-In the normal mode for a text editor, style settings are sticky. With
+@;{In the normal mode for a text editor, style settings are sticky. With
  sticky styles, when a string or character is inserted into an editor,
  it gets the style of the snip preceding the insertion point (or the
  snip that includes the insertion point if text is inserted into an
@@ -995,13 +1148,16 @@ In the normal mode for a text editor, style settings are sticky. With
  is called to set the style at the caret @techlink{position} (when it
  is not a range), then the style is remembered; if the editor is not
  changed before text is inserted at the caret, then the text gets the
- remembered style.
+ remembered style.}
+  在文本编辑器的正常模式下，样式设置是粘性的。对于粘性样式，当字符串或字符插入到编辑器中时，它将获取插入点之前的截图样式（或者，如果文本插入到现有字符串截图中，则包含插入点的截图样式）。或者，如果调用change-style在插入符号位置设置样式（当它不是范围时），则该样式将被记住；如果在插入插入符号处的文本之前未更改编辑器，则该文本将获得记住的样式。
 
-With non-sticky styles, text inserted into an editor always gets the
+@;{With non-sticky styles, text inserted into an editor always gets the
  style in the editor's style list named by @method[editor<%>
- default-style-name].
+ default-style-name].}
+  对于非粘性样式，插入到编辑器中的文本总是在编辑器的样式列表中以默认样式名命名。
 
-See also @method[text% set-styles-sticky].
+@;{See also @method[text% set-styles-sticky].}
+  另请参见设置Styles Sticky。
 
 }
 
@@ -1011,17 +1167,20 @@ See also @method[text% set-styles-sticky].
                      [in-units (or/c (box/c any/c) #f) #f])
            (listof real?)]{
 
-Returns the current tab-position array as a list.
+@;{Returns the current tab-position array as a list.}
+  以列表形式返回当前选项卡位置数组。
 
-@boxisfillnull[@racket[length] @elem{the length of the tab array (and therefore the returned 
+@;{@boxisfillnull[@racket[length] @elem{the length of the tab array (and therefore the returned 
 list)}]
-@boxisfillnull[@racket[tab-width] @elem{the width used for tabs past the 
+   @boxisfillnull[@racket[tab-width] @elem{the width used for tabs past the 
 end of the tab array}]
-@boxisfillnull[@racket[in-units] @elem{@racket[#t] if the tabs are specified in
-canvas units or @racket[#f] if they are specified in space-widths}]
+   @boxisfillnull[@racket[in-units] @elem{@racket[#t] if the tabs are specified in
+canvas units or @racket[#f] if they are specified in space-widths}]}
+  除非长度为f，否则“长度”框将填充选项卡数组的长度（因此返回的列表）。除非选项卡宽度为f，否则“选项卡宽度”框将填充选项卡超过选项卡数组末尾时使用的宽度。如果选项卡以画布单位指定，则“输入单位”框将填充t；如果选项卡以空格宽度指定，则填充f。nless单位为F。
 
-See also 
-@method[text% set-tabs].
+@;{See also 
+@method[text% set-tabs].}
+  另请参见设置选项卡。
 
 }
 
@@ -1032,17 +1191,20 @@ See also
                      [force-cr? any/c #f])
            string?]{
 
-Gets the text from @racket[start] to @racket[end]. If @racket[end] is
+@;{Gets the text from @racket[start] to @racket[end]. If @racket[end] is
  @racket['eof], then the contents are returned from @racket[start] until the
- end of the editor.
+ end of the editor.}
+  获取从头到尾的文本。如果end是'eof，那么内容将从开始返回到编辑器结束。
 
-If @racket[flattened?] is not @racket[#f], then flattened text is returned.
+@;{If @racket[flattened?] is not @racket[#f], then flattened text is returned.
  See @|textdiscuss| for a discussion of flattened vs. non-flattened
- text.
+ text.}
+  如果被压扁？不是f，则返回扁平文本。关于扁平文本与非扁平文本的讨论，请参见扁平文本。
 
-If @racket[force-cr?] is not @racket[#f] and @racket[flattened?] is not
+@;{If @racket[force-cr?] is not @racket[#f] and @racket[flattened?] is not
  @racket[#f], then automatic newlines (from word-wrapping) are
- written into the return string as real newlines.
+ written into the return string as real newlines.}
+  如果强制CR？不是被压扁了吗？不是f，则自动换行（从换行开始）作为真正的换行写入返回字符串。
 
 }
 
@@ -1050,11 +1212,12 @@ If @racket[force-cr?] is not @racket[#f] and @racket[flattened?] is not
 @defmethod[(get-top-line-base)
            (and/c real? (not/c negative?))]{
 
-Returns the distance from the top of the editor to the alignment
+@;{Returns the distance from the top of the editor to the alignment
  baseline of the top line. This method is primarily used when an
  editor is an @techlink{item} within another editor.
 The reported baseline distance includes the editor's
- top padding (see @method[text% set-padding]).
+ top padding (see @method[text% set-padding]).}
+  返回从编辑器顶部到顶行对齐基线的距离。此方法主要用于当编辑器是另一个编辑器中的项时。报告的基线距离包括编辑器的顶部填充（请参见设置填充）。
 
 @|OVD| @FCAME[]
 
@@ -1066,16 +1229,19 @@ The reported baseline distance includes the editor's
                                    [all? any/c #t])
            void?]{
 
-Returns the range of lines which are currently visible (or partially
- visible) to the user. @|LineNumbering|
+@;{Returns the range of lines which are currently visible (or partially
+ visible) to the user. @|LineNumbering|}
+  返回用户当前可见（或部分可见）的行的范围。从0开始对进行编号。
 
-@boxisfillnull[@racket[start] @elem{first line visible to the user}]
-@boxisfillnull[@racket[end] @elem{last line visible to the user}]
+@;{@boxisfillnull[@racket[start] @elem{first line visible to the user}]
+   @boxisfillnull[@racket[end] @elem{last line visible to the user}]}
+  开始框中填充用户可见的第一行，除非开始是f。结束框中填充用户可见的最后一行，除非结束是f。
 
-If the editor is displayed by multiple canvases and @racket[all?] is
+@;{If the editor is displayed by multiple canvases and @racket[all?] is
  @racket[#t], then the computed range includes all visible lines in all
  @techlink{display}s. Otherwise, the range includes only the visible lines in the
- current @techlink{display}.
+ current @techlink{display}.}
+  如果编辑器由多幅画布和所有画布显示？为t，则计算范围包括所有显示中的所有可见行。否则，范围仅包括当前显示中的可见行。
 
 @|OVD| @|FCA|
 
@@ -1087,16 +1253,19 @@ If the editor is displayed by multiple canvases and @racket[all?] is
                                        [all? any/c #t])
            void?]{
 
-Returns the range of @techlink{position}s that are currently visible (or
- partially visible) to the user.
+@;{Returns the range of @techlink{position}s that are currently visible (or
+ partially visible) to the user.}
+  返回用户当前可见（或部分可见）的位置范围。
 
-@boxisfillnull[@racket[start] @elem{first @techlink{position} visible to the user}]
-@boxisfillnull[@racket[end] @elem{last @techlink{position} visible to the user}]
+@;{@boxisfillnull[@racket[start] @elem{first @techlink{position} visible to the user}]
+   @boxisfillnull[@racket[end] @elem{last @techlink{position} visible to the user}]}
+  开始框中填充用户可见的第一个位置，除非开始是F。结束框中填充用户可见的最后一个位置，除非结束是F。
 
-If the editor is displayed by multiple canvases and @racket[all?] is
+@;{If the editor is displayed by multiple canvases and @racket[all?] is
  @racket[#t], then the computed range includes all visible @techlink{position}s in
  all @techlink{display}s. Otherwise, the range includes only the visible
- @techlink{position}s in the current @techlink{display}.
+ @techlink{position}s in the current @techlink{display}.}
+  如果编辑器由多幅画布和所有画布显示？为t，则计算范围包括所有显示中的所有可见位置。否则，范围仅包括当前显示中的可见位置。
 
 @|OVD| @|FCA|
 
@@ -1106,9 +1275,10 @@ If the editor is displayed by multiple canvases and @racket[all?] is
 @defmethod[(get-wordbreak-map)
            (or/c (is-a?/c editor-wordbreak-map%) #f)]{
 
-Returns the wordbreaking map that is used by the standard wordbreaking
+@;{Returns the wordbreaking map that is used by the standard wordbreaking
  function. See @method[text% set-wordbreak-map] and 
- @racket[editor-wordbreak-map%] for more information.
+ @racket[editor-wordbreak-map%] for more information.}
+  返回标准分词函数使用的分词映射。有关详细信息，请参阅Set Wordbreak Map和Editor Wordbreak Map%。
 
 }
 
@@ -1116,14 +1286,17 @@ Returns the wordbreaking map that is used by the standard wordbreaking
 @defmethod[(hide-caret [hide? any/c])
            void?]{
 
-Determines whether the caret is shown when the editor has the keyboard
- focus.
+@;{Determines whether the caret is shown when the editor has the keyboard
+ focus.}
+  确定当编辑器具有键盘焦点时是否显示插入符号。
 
-If @racket[hide?] is not @racket[#f], then the caret or selection hiliting
+@;{If @racket[hide?] is not @racket[#f], then the caret or selection hiliting
  will not be drawn for the editor. The editor can still own the
- keyboard focus, but no caret will be drawn to indicate the focus.
+ keyboard focus, but no caret will be drawn to indicate the focus.}
+  如果藏起来？不是f，则不会为编辑器绘制插入符号或隐藏选定内容。编辑器仍然可以拥有键盘焦点，但不会绘制任何插入符号来指示焦点。
 
-See also @method[text% caret-hidden?] and @method[editor<%> lock].
+@;{See also @method[text% caret-hidden?] and @method[editor<%> lock].}
+  另请参见隐藏的插入符号？然后锁上。
 
 }
 
@@ -1161,38 +1334,47 @@ See also @method[text% caret-hidden?] and @method[editor<%> lock].
                       [end (or/c exact-nonnegative-integer? 'same) 'same])
               void?])]{
 
-Inserts text or a snip into @this-obj[] at @techlink{position}
+@;{Inserts text or a snip into @this-obj[] at @techlink{position}
  @racket[start].  If @racket[n] is provided, the only the first
- @racket[n] characters of @racket[str] are inserted. 
+ @racket[n] characters of @racket[str] are inserted. }
+  在位置开始处将文本或截图插入A-TEXT。如果提供n，则只插入str的前n个字符。
 
-When a @racket[snip] is provided: The snip cannot be inserted into
+
+
+@;{When a @racket[snip] is provided: The snip cannot be inserted into
  multiple editors or multiple times within a single editor. As the
  snip is inserted, its current style is converted to one in the
- editor's style list; see also @method[style-list% convert].
+ editor's style list; see also @method[style-list% convert].}
+  提供截图时：截图不能插入多个编辑器或在单个编辑器中多次插入。插入截图时，其当前样式将转换为编辑器样式列表中的样式；另请参见转换。
 
-When a @racket[char] is provided: @|insertcharundos|
+@;{When a @racket[char] is provided: @|insertcharundos|}
+  当提供字符时：
 
-When @racket[start] is not provided, the current selection start is
+@;{When @racket[start] is not provided, the current selection start is
  used. If the current selection covers a range of @techlink{item}s,
  then @racket[char] replaces the selected text. The selection's start
  and end @techlink{position}s are moved to the end of the inserted
- character.
+ character.}
+  如果未提供Start，则使用当前选择Start。如果当前所选内容包含一系列项目，则char将替换所选文本。选择的开始和结束位置将移动到插入字符的结尾。
 
-For a case where @racket[end] is not provided and has no default, the
+@;{For a case where @racket[end] is not provided and has no default, the
  current selection end is used. Otherwise, if @racket[end] is not
  @racket['same], then the inserted value replaces the region from
  @racket[start] to @racket[end], and the selection is left at the end
  of the inserted text. Otherwise, if the insertion @techlink{position}
  is before or equal to the selection's start/end @techlink{position},
  then the selection's start/end @techlink{position} is incremented by
- the length of @racket[str].
+ the length of @racket[str].}
+  对于未提供结束且没有默认值的情况，将使用当前选择结束。否则，如果“结束”不相同，则插入的值将替换从开始到结束的区域，并且所选内容将保留在插入文本的末尾。否则，如果插入位置早于或等于所选内容的开始/结束位置，则所选内容的开始/结束位置将增加str的长度。
 
-If @racket[scroll-ok?] is not @racket[#f] and @racket[start] is the
+@;{If @racket[scroll-ok?] is not @racket[#f] and @racket[start] is the
  same as the current selection's start @techlink{position}, then the
  editor's @techlink{display} is scrolled to show the new selection
- @techlink{position}.
+ @techlink{position}.}
+  如果滚动正常？不是F且开始位置与当前选择的开始位置相同，然后滚动编辑器显示以显示新的选择位置。
 
-See also @method[text% get-styles-sticky].
+@;{See also @method[text% get-styles-sticky].}
+  另请参见获取Styles Sticky。
 
 }
 
@@ -1205,14 +1387,16 @@ See also @method[text% get-styles-sticky].
                     [end exact-nonnegative-integer?])
               void?])]{
 
-Cuts the text in the given region. If @racket[start] and @racket[end]
+@;{Cuts the text in the given region. If @racket[start] and @racket[end]
  are not supplied, then the selected region plus all whitespace to the
  end of line is cut; the newline is also cut if only whitespace exists
- between the selection and the end of line.
+ between the selection and the end of line.}
+  剪切给定区域中的文本。如果没有提供开始和结束，则所选区域加上行尾的所有空白将被剪切；如果所选区域和行尾之间只存在空白，则换行符也将被剪切。
 
-See @|timediscuss| for a discussion of the @racket[time] argument. If
+@;{See @|timediscuss| for a discussion of the @racket[time] argument. If
  @racket[time] is outside the platform-specific range of times,
- @|MismatchExn|.
+ @|MismatchExn|.}
+  有关时间参数的讨论，请参见剪切和粘贴时间。如果时间超出平台特定的时间范围，将引发exn:fail:contract异常。
 
 }
 
@@ -1220,9 +1404,10 @@ See @|timediscuss| for a discussion of the @racket[time] argument. If
 @defmethod[(last-line)
            exact-nonnegative-integer?]{
 
-Returns the number of the last line in the editor. Lines are numbered
+@;{Returns the number of the last line in the editor. Lines are numbered
  starting with @racket[0], so this is one less than the number of lines
- in the editor.
+ in the editor.}
+  返回编辑器中最后一行的编号。行从0开始编号，因此这比编辑器中的行数少一行。
 
 @LineToPara[@racket[last-paragraph]]
 
@@ -1233,9 +1418,10 @@ Returns the number of the last line in the editor. Lines are numbered
 @defmethod[(last-paragraph)
            exact-nonnegative-integer?]{
 
-Returns the number of the last paragraph in the editor. Paragraphs are
+@;{Returns the number of the last paragraph in the editor. Paragraphs are
  numbered starting with @racket[0], so this is one less than the
- number of paragraphs in the editor.
+ number of paragraphs in the editor.}
+  返回编辑器中最后一段的编号。段落从0开始编号，因此这比编辑器中的段落数少一个。
 
 @|FCAMW|
 
@@ -1244,8 +1430,9 @@ Returns the number of the last paragraph in the editor. Paragraphs are
 @defmethod[(last-position)
            exact-nonnegative-integer?]{
 
-Returns the last selection @techlink{position} in the editor. This is
- also the number of @techlink{item}s in the editor.
+@;{Returns the last selection @techlink{position} in the editor. This is
+ also the number of @techlink{item}s in the editor.}
+  返回编辑器中的最后一个选择位置。这也是编辑器中的项目数。
 
 }
 
@@ -1253,16 +1440,19 @@ Returns the last selection @techlink{position} in the editor. This is
                               [visible? any/c #t])
            exact-nonnegative-integer?]{
 
-Returns the last @techlink{position} of a given line. @|LineNumbering|
+@;{Returns the last @techlink{position} of a given line. @|LineNumbering|}
+  返回给定行的最后一个位置。从0开始对进行编号。
 
-If there are fewer than @math{@racket[line]-1} lines, the end of the
+@;{If there are fewer than @math{@racket[line]-1} lines, the end of the
  last line is returned. If @racket[line] is less than 0, then the end
- of the first line is returned.
+ of the first line is returned.}
+  如果少于第1行，则返回最后一行的结尾。如果行小于0，则返回第一行的结尾。
 
-If the line ends with @tech{invisible} @techlink{item}s (such as a
+@;{If the line ends with @tech{invisible} @techlink{item}s (such as a
  newline) and @racket[visible?] is not @racket[#f], the first
  @techlink{position} before the @tech{invisible} @techlink{item}s is
- returned.
+ returned.}
+  如果行以不可见项（如换行符）结尾并且可见？不是f，返回不可见项之前的第一个位置。
 
 @LineToPara[@racket[paragraph-end-position]]
 
@@ -1274,8 +1464,9 @@ If the line ends with @tech{invisible} @techlink{item}s (such as a
 @defmethod[(line-length [i exact-nonnegative-integer?])
            exact-nonnegative-integer?]{
 
-Returns the number of @techlink{item}s in a given
-line. @|LineNumbering|
+@;{Returns the number of @techlink{item}s in a given
+line. @|LineNumbering|}
+  返回给定行中的项数。从0开始对进行编号。
 
 @|FCAMW| @|EVD|
 
@@ -1286,11 +1477,13 @@ line. @|LineNumbering|
                           [top? any/c #t])
            real?]{
 
-Given a line number, returns the @techlink{location} of the line. @|LineNumbering|
+@;{Given a line number, returns the @techlink{location} of the line. @|LineNumbering|}
+  给定行号，返回行的位置。从0开始对进行编号。
 
-If @racket[top?] is not @racket[#f], the @techlink{location} for the
+@;{If @racket[top?] is not @racket[#f], the @techlink{location} for the
  top of the line is returned; otherwise, the @techlink{location} for
- the bottom of the line is returned.
+ the bottom of the line is returned.}
+  如果顶部？不是f，返回行顶部的位置；否则，返回行底部的位置。
 
 @LineToPara[@racket[paragraph-location]]
 
@@ -1301,8 +1494,9 @@ If @racket[top?] is not @racket[#f], the @techlink{location} for the
 @defmethod[(line-paragraph [start exact-nonnegative-integer?])
            exact-nonnegative-integer?]{
 
-Returns the paragraph number of the paragraph containing the line.
- @|LineNumbering| @|ParagraphNumbering|
+@;{Returns the paragraph number of the paragraph containing the line.
+ @|LineNumbering| @|ParagraphNumbering|}
+  返回包含行的段落的段落编号。从0开始对进行编号。段落编号从0开始。
 
 @|FCAMW| @|EVD|
 
@@ -1312,37 +1506,45 @@ Returns the paragraph number of the paragraph containing the line.
                                 [visible? any/c #t])
            exact-nonnegative-integer?]{
 
-Returns the first @techlink{position} of the given line. @|LineNumbering|
+@;{Returns the first @techlink{position} of the given line. @|LineNumbering|}
+  返回给定行的第一个位置。从0开始对进行编号。
 
-If there are fewer than @math{@racket[line]-1} lines, the start of the
+@;{If there are fewer than @math{@racket[line]-1} lines, the start of the
 last line is returned. If @racket[line] is less than 0, then
-the start of the first line is returned.
+the start of the first line is returned.}
+  如果少于第1行，则返回最后一行的开头。如果行小于0，则返回第一行的开头。
 
-If the line starts with @tech{invisible} @techlink{item}s and @racket[visible?] is not
+@;{If the line starts with @tech{invisible} @techlink{item}s and @racket[visible?] is not
  @racket[#f], the first @techlink{position} past the @tech{invisible} @techlink{item}s is
- returned.
+ returned.}
+  如果行以不可见项和可见项开头？不是f，返回不可见项后的第一个位置。
 
 @LineToPara[@racket[paragraph-start-position]]
 
 @|FCAMW|
 
-To calculate lines, if the following are true:
+@;{To calculate lines, if the following are true:}
+  要计算行，如果以下为真：
 @itemize[
 
- @item{the editor is not displayed (see @secref["tb:miaoverview"]),}
+ @item{@;{the editor is not displayed (see @secref["tb:miaoverview"]),}
+         不显示编辑器（请参见编辑器结构和术语）。}
 
- @item{a maximum width is set for the editor, and} 
+ @item{@;{a maximum width is set for the editor, and}
+         编辑从未被浏览过}
 
- @item{the editor has never been viewed}
+ @item{@;{the editor has never been viewed}
+         编辑从未被浏览过}
 
 ]
 
-then this method ignores the editor's maximum width and any automatic
+@;{then this method ignores the editor's maximum width and any automatic
  line breaks it might imply.  If the first two of the above conditions
  are true and the editor was @italic{formerly} displayed, this method
  uses the line breaks from the most recent display of the
  editor. (Insertions or deletions since the display shift line breaks
- within the editor in the same way as @techlink{item}s.)
+ within the editor in the same way as @techlink{item}s.)}
+  然后，该方法忽略编辑器的最大宽度，并且可能意味着任何自动换行。如果上述两个条件中的前两个为真，并且以前显示编辑器，则此方法使用编辑器最新显示的换行符。（插入或删除，因为显示的移位行在编辑器中以与项相同的方式断开。）
 
 }
 
@@ -1352,35 +1554,50 @@ then this method ignores the editor's maximum width and any automatic
                           [kind (or/c 'simple 'word 'page 'line) 'simple])
            void?]{
 
-Moves the current selection. 
+@;{Moves the current selection. }
+  移动当前所选内容。
 
-The possible values for @racket[code] are:
+@;{The possible values for @racket[code] are:}
+  代码的可能值为：
 
 @itemize[
-@item{@racket['home] --- go to start of file}
-@item{@racket['end] --- go to end of file}
-@item{@racket['right] --- move right}
-@item{@racket['left] --- move left}
-@item{@racket['up] --- move up}
-@item{@racket['down] --- move down}
+@item{@racket['home]@;{ --- go to start of file}
+       '主页-转到文件开头}
+@item{@racket['end]@;{ --- go to end of file}
+       '结束-转到文件结尾'}
+@item{@racket['right]@;{ --- move right}
+       向右-向右移动}
+@item{@racket['left]@;{ --- move left}
+       左-向左移动}
+@item{@racket['up]@;{ --- move up}
+       '向上-向上移动}
+@item{@racket['down]@;{ --- move down}
+       '向下-向下移动}
 ]
 
-If @racket[extend?] is not @racket[#f], the selection range is
+@;{If @racket[extend?] is not @racket[#f], the selection range is
  extended instead of moved.  If anchoring is on (see @method[text%
  get-anchor] and @method[text% set-anchor]), then @racket[extend?] is
  effectively forced to @racket[#t]. See also @method[text% get-extend-start-position]
- and @method[text% get-extend-end-position].
+ and @method[text% get-extend-end-position].}
+  如果扩展？不是f，选择范围被扩展而不是移动。如果锚定已启用（请参见获取锚定并设置锚定），则展开？有效地被强制到T。另请参见获取扩展开始位置和扩展结束位置。
 
-The possible values for @racket[kind] are:
+@;{The possible values for @racket[kind] are:}
+  种类的可能值为：
 
 @itemize[
-@item{@racket['simple] --- move one item or line}
-@item{@racket['word] --- works with @racket['right] or @racket['left]}
-@item{@racket['page] --- works with @racket['up] or @racket['down]}
-@item{@racket['line] --- works with @racket['right] or @racket['left]; moves to the start or end of the line}
+@item{@racket['simple]@;{ --- move one item or line}
+       '简单-移动一个项目或行}
+@item{@racket['word]@;{ --- works with @racket['right] or @racket['left]}
+       “Word-与”“right”“或”“left一起使用”}
+@item{@racket['page]@;{ --- works with @racket['up] or @racket['down]}
+       page-与”up“或”down“一起使用}
+@item{@racket['line]@;{ --- works with @racket['right] or @racket['left]; moves to the start or end of the line}
+       '行-与'right'或'left'一起使用；移动到行的开头或结尾}
 ]
 
-See also @method[text% set-position].
+@;{See also @method[text% set-position].}
+  另请参见设置位置。
 
 }
 
@@ -1392,21 +1609,25 @@ See also @method[text% set-position].
 
 @methspec{
 
-Called before the style is changed in a given range of the editor,
+@;{Called before the style is changed in a given range of the editor,
  after @method[text% can-change-style?] is called to verify that the
  change is ok. The @method[text% after-change-style] method is
- guaranteed to be called after the change has completed.
+ guaranteed to be called after the change has completed.}
+  规范：在编辑器的给定范围内更改样式之前调用，可以更改样式之后调用吗？调用以验证更改是否正确。确保在更改完成后调用After Change样式方法。
 
-The editor is internally locked for writing during a call to this method
+@;{The editor is internally locked for writing during a call to this method
  (see also @|lockdiscuss|). Use 
-@method[text% after-change-style] to modify the editor, if necessary.
+@method[text% after-change-style] to modify the editor, if necessary.}
+  在调用此方法期间，编辑器被内部锁定以进行写入（另请参见内部编辑器锁定）。如有必要，使用“更改后样式”修改编辑器。
 
-See also @method[editor<%> on-edit-sequence].
+@;{See also @method[editor<%> on-edit-sequence].}
+  另请参见编辑序列。
 
 }
 @methimpl{
 
-Does nothing.
+@;{Does nothing.}
+  默认实现：不执行任何操作。
 
 }
 }
@@ -1416,24 +1637,29 @@ Does nothing.
            (on-default-char [event (is-a?/c key-event%)])
            void?]{
 
-Handles the following:
+@;{Handles the following:}
+ 处理以下内容： 
 
 @itemize[
 
- @item{Delete and Backspace --- calls @method[text% delete].} 
+ @item{@;{Delete and Backspace --- calls @method[text% delete].}
+         删除和退格-调用删除。}
 
- @item{The arrow keys, Page Up, Page Down, Home, and End (including
+ @item{@;{The arrow keys, Page Up, Page Down, Home, and End (including
   shifted versions) --- moves the selection @techlink{position} with
   @method[text% move-position].}
+         箭头键“向上翻页”、“向下翻页”、“主页”和“结束”（包括移位版本）-用“移动位置”移动选择位置。}
 
- @item{Any other character in the range @racket[(integer->char 32)] to
+ @item{@;{Any other character in the range @racket[(integer->char 32)] to
  @racket[(integer->char 255)] --- inserts the character into the
  editor.}
+         范围（integer->char 32）到（integer->char 255）中的任何其他字符—将该字符插入编辑器。}
 
 ]
 
-Note that an editor's @racket[editor-canvas%] normally handles mouse
- wheel events (see also @method[editor-canvas% on-char] ).
+@;{Note that an editor's @racket[editor-canvas%] normally handles mouse
+ wheel events (see also @method[editor-canvas% on-char] ).}
+  请注意，编辑器的编辑器画布%通常处理鼠标滚轮事件（另请参见char）。
 
 }
 
@@ -1442,22 +1668,28 @@ Note that an editor's @racket[editor-canvas%] normally handles mouse
            (on-default-event [event (is-a?/c mouse-event%)])
            void?]{
 
-Tracks clicks on a clickback (see @method[text% set-clickback]) of
+@;{Tracks clicks on a clickback (see @method[text% set-clickback]) of
  changes the selection. Note that @method[editor<%> on-event]
  dispatches to a caret-owning snip and detects a click on an
- event-handling snip before calling to this method.
+ event-handling snip before calling to this method.}
+  跟踪对更改选择的单击返回（请参见设置单击返回）的单击。请注意，在调用此方法之前，on事件将发送给拥有snip的插入符号并检测单击事件处理snip。
+
+
 
 @itemize[
 
- @item{Clicking on a clickback region starts clickback tracking. See
+ @item{@;{Clicking on a clickback region starts clickback tracking. See
  @method[text% set-clickback] for more information. Moving over a
  clickback changes the shape of the mouse cursor.}
+         点击一个点击后退区域开始点击后退跟踪。有关详细信息，请参阅设置单击返回。移到一个单击后退上会更改鼠标光标的形状。}
 
- @item{Clicking anywhere else moves the caret to the closest @techlink{position}
+ @item{@;{Clicking anywhere else moves the caret to the closest @techlink{position}
  between @techlink{item}s. Shift-clicking extends the current selection.}
+         单击其他任何位置将插入符号移动到项目之间最近的位置。按住Shift键单击可扩展当前选择。}
 
- @item{Dragging extends the selection, scrolling if possible when the
+ @item{@;{Dragging extends the selection, scrolling if possible when the
  selection is dragged outside the editor's visible region.}
+         拖动可扩展所选内容，如果可能，则在将所选内容拖到编辑器可见区域之外时滚动。}
 
 ]
 }
@@ -1469,27 +1701,31 @@ Tracks clicks on a clickback (see @method[text% set-clickback]) of
            void?]{
 @methspec{
 
-Called before a range is deleted from the editor, after @method[text%
+@;{Called before a range is deleted from the editor, after @method[text%
  can-delete?] is called to verify that the deletion is ok. The
  @method[text% after-delete] method is guaranteed to be called after
- the delete has completed.
+ the delete has completed.}
+  规范：在从编辑器中删除某个范围之前调用，可以删除之后调用？调用以验证删除是否正常。确保在删除完成后调用After Delete方法。
 
-The @racket[start] argument specifies the starting @techlink{position}
+@;{The @racket[start] argument specifies the starting @techlink{position}
  of the range to delete. The @racket[len] argument specifies number of
  @techlink{item}s to delete (so @math{@racket[start]+@racket[len]} is
- the ending @techlink{position} of the range to delete).
+ the ending @techlink{position} of the range to delete).}
+  start参数指定要删除的范围的起始位置。len参数指定要删除的项目数（因此start+len是要删除的范围的结束位置）。
 
-The editor is internally locked for writing during a call to this
+@;{The editor is internally locked for writing during a call to this
  method (see also @|lockdiscuss|). Use @method[text% after-delete] to
- modify the editor, if necessary.
-
-See also @method[editor<%> on-edit-sequence].
-
+ modify the editor, if necessary.}
+在调用此方法期间，编辑器被内部锁定以进行写入（另请参见内部编辑器锁定）。如有必要，使用“删除后”修改编辑器。
+  
+@;{See also @method[editor<%> on-edit-sequence].}
+  另请参见编辑序列。
 
 }
 @methimpl{
 
-Does nothing.
+@;{Does nothing.}
+  默认实现：不执行任何操作。
 
 }}
 
@@ -1500,25 +1736,30 @@ Does nothing.
            void?]{
 @methspec{
 
-Called before @techlink{item}s are inserted into the editor, after
+@;{Called before @techlink{item}s are inserted into the editor, after
  @method[text% can-insert?] is called to verify that the insertion is
  ok. The @method[text% after-insert] method is guaranteed to be called
- after the insert has completed.
+ after the insert has completed.}
+  规范：在项目插入编辑器之前调用，在项目插入之后可以调用？调用以验证插入是否正确。确保在插入完成后调用After Insert方法。
 
-The @racket[start] argument specifies the @techlink{position} of the insert. The
+@;{The @racket[start] argument specifies the @techlink{position} of the insert. The
  @racket[len] argument specifies the total length (in @techlink{position}s) of the
- @techlink{item}s to be inserted.
+ @techlink{item}s to be inserted.}
+  start参数指定插入的位置。len参数指定要插入的项的总长度（位置）。
 
-The editor is internally locked for writing during a call to this
+@;{The editor is internally locked for writing during a call to this
  method (see also @|lockdiscuss|). Use @method[text% after-insert] to
- modify the editor, if necessary.
+ modify the editor, if necessary.}
+  在调用此方法期间，编辑器被内部锁定以进行写入（另请参见内部编辑器锁定）。如有必要，在插入后使用可修改编辑器。
 
-See also @method[editor<%> on-edit-sequence].
+@;{See also @method[editor<%> on-edit-sequence].}
+  另请参见编辑序列。
 
 }
 @methimpl{
 
-Does nothing.
+@;{Does nothing.}
+  默认实现：不执行任何操作。
 
 }}
 
@@ -1528,15 +1769,17 @@ Does nothing.
 
 @methspec{
 
-Called by @method[text% insert] when a string or character is inserted
+@;{Called by @method[text% insert] when a string or character is inserted
 into the editor, this method creates and returns a new instance of
 @racket[string-snip%] to store inserted text. The returned string snip
-is empty (i.e., its @techlink{count} is zero).
+is empty (i.e., its @techlink{count} is zero).}
+  规范：当一个字符串或字符插入到编辑器中时，通过插入调用，此方法创建并返回一个字符串snip%的新实例来存储插入的文本。返回的字符串snip为空（即其计数为零）。
 
 }
 @methimpl{
 
-Returns a @racket[string-snip%] instance.
+@;{Returns a @racket[string-snip%] instance.}
+  默认实现：返回字符串snip%实例。
 
 }}
 
@@ -1545,14 +1788,16 @@ Returns a @racket[string-snip%] instance.
 
 @methspec{
 
-Creates and returns a new instance of @racket[tab-snip%] to store an
+@;{Creates and returns a new instance of @racket[tab-snip%] to store an
  inserted tab. The returned tab snip is empty (i.e., its @techlink{count}
- is zero).
+ is zero).}
+  规范：创建并返回tab snip%的新实例以存储插入的制表符。返回的制表符snip为空（即其计数为零）。
 
 }
 @methimpl{
 
-Returns a @racket[tab-snip%] instance.
+@;{Returns a @racket[tab-snip%] instance.}
+  默认实现：返回一个tab snip%实例。
 
 }}
 
@@ -1562,11 +1807,13 @@ Returns a @racket[tab-snip%] instance.
            void?]{
 
 @methspec{
-Called after @tech{locations} have changed and are recomputed for the editor.
+@;{Called after @tech{locations} have changed and are recomputed for the editor.}
+  规范：在位置更改并为编辑器重新计算之后调用。
 }
 @methimpl{
 
-Does nothing.
+@;{Does nothing.}
+  默认实现：不执行任何操作。
 }}
 
 @defmethod[#:mode pubment 
@@ -1575,21 +1822,25 @@ Does nothing.
 
 @methspec{
 
-Called before the editor's maximum or minimum height or width is
+@;{Called before the editor's maximum or minimum height or width is
  changed, after @method[text% can-set-size-constraint?] is called to
  verify that the change is ok. The @method[text%
  after-set-size-constraint] method is guaranteed to be called after
- the change has completed.
+ the change has completed.}
+  规格：在编辑器的最大或最小高度或宽度更改之前调用，在可以设置大小约束之后调用？调用以验证更改是否正确。确保在更改完成后调用after-set-size约束方法。
 
-(This callback method is provided because setting an editor's maximum
- width may cause lines to be re-flowed with soft newlines.)
+@;{(This callback method is provided because setting an editor's maximum
+ width may cause lines to be re-flowed with soft newlines.)}
+  （提供此回调方法是因为设置编辑器的最大宽度可能会导致行使用软换行符重新流动。）
 
-See also @method[editor<%> on-edit-sequence].
+@;{See also @method[editor<%> on-edit-sequence].}
+  另请参见编辑序列。
 
 }
 @methimpl{
 
-Does nothing.
+@;{Does nothing.}
+  默认实现：不执行任何操作。
 
 }}
 
@@ -1597,7 +1848,8 @@ Does nothing.
 @defmethod[(paragraph-end-line [paragraph exact-nonnegative-integer?])
            exact-nonnegative-integer?]{
 
-Returns the ending line of a given paragraph. @|ParagraphNumbering| @|LineNumbering|
+@;{Returns the ending line of a given paragraph. @|ParagraphNumbering| @|LineNumbering|}
+  返回给定段落的结束行。段落编号从0开始。从0开始对进行编号。
 
 @|FCAMW| @|EVD|
 
@@ -1608,15 +1860,20 @@ Returns the ending line of a given paragraph. @|ParagraphNumbering| @|LineNumber
                                    [visible? any/c #t])
            exact-nonnegative-integer?]{
 
-Returns the ending @techlink{position} of a given paragraph. @|ParagraphNumbering|
+@;{Returns the ending @techlink{position} of a given paragraph. @|ParagraphNumbering|}
+  返回给定段落的结束位置。段落编号从0开始。
 
-If there are fewer than @math{@racket[paragraph]-1} paragraphs, the
+
+
+@;{If there are fewer than @math{@racket[paragraph]-1} paragraphs, the
  end of the last paragraph is returned. If @racket[paragraph] is less
- than 0, then the end of the first paragraph is returned.
+ than 0, then the end of the first paragraph is returned.}
+  如果少于第1段，则返回最后一段的结尾。如果段落小于0，则返回第一个段落的结尾。
 
-If the paragraph ends with @tech{invisible} @techlink{item}s (such as a newline)
+@;{If the paragraph ends with @tech{invisible} @techlink{item}s (such as a newline)
  and @racket[visible?] is not @racket[#f], the first @techlink{position}
- before the @tech{invisible} @techlink{item}s is returned.
+ before the @tech{invisible} @techlink{item}s is returned.}
+  如果段落以不可见项（如换行符）结尾并且可见？不是f，返回不可见项之前的第一个位置。
 
 }
 
@@ -1624,9 +1881,10 @@ If the paragraph ends with @tech{invisible} @techlink{item}s (such as a newline)
 @defmethod[(paragraph-start-line [paragraph exact-nonnegative-integer?])
            exact-nonnegative-integer?]{
 
-Returns the starting line of a given paragraph. If @racket[paragraph]
+@;{Returns the starting line of a given paragraph. If @racket[paragraph]
 is greater than the highest-numbered paragraph, then the editor's end
-@tech{position} is returned. @|ParagraphNumbering| @|LineNumbering|
+@tech{position} is returned. @|ParagraphNumbering| @|LineNumbering|}
+  返回给定段落的起始行。如果段落大于编号最高的段落，则返回编辑器的结束位置。段落编号从0开始。从0开始对进行编号。
 
 @|FCAMW| @|EVD|
 
@@ -1637,14 +1895,17 @@ is greater than the highest-numbered paragraph, then the editor's end
                                      [visible? any/c #t])
            exact-nonnegative-integer?]{
 
-Returns the starting @techlink{position} of a given paragraph. @|ParagraphNumbering|
+@;{Returns the starting @techlink{position} of a given paragraph. @|ParagraphNumbering|}
+  返回给定段落的起始位置。段落编号从0开始。
 
-If there are fewer than @math{@racket[paragraph]-1} paragraphs, the
- start of the last paragraph is returned.
+@;{If there are fewer than @math{@racket[paragraph]-1} paragraphs, the
+ start of the last paragraph is returned.}
+  如果少于第1段，则返回最后一段的开头。
 
-If the paragraph starts with @tech{invisible} @techlink{item}s and @racket[visible?] is
+@;{If the paragraph starts with @tech{invisible} @techlink{item}s and @racket[visible?] is
  not @racket[#f], the first @techlink{position} past the @tech{invisible} @techlink{item}s is
- returned.
+ returned.}
+  如果段落以不可见项和可见项开头？不是f，返回不可见项后的第一个位置。
 
 }
 
@@ -1655,17 +1916,19 @@ If the paragraph starts with @tech{invisible} @techlink{item}s and @racket[visib
                   [end (or/c exact-nonnegative-integer? 'same) 'same])
            void?]{
 
-Pastes into the specified range. If @racket[start] is @racket['start],
+@;{Pastes into the specified range. If @racket[start] is @racket['start],
  then the current selection start @techlink{position} is used. If
  @racket[start] is @racket['end], then the current selection end
  @techlink{position} is used. If @racket[end] is @racket['same], then
  @racket[start] is used for @racket[end], unless @racket[start] is
  @racket['start], in which case the current selection end
- @techlink{position} is used.
+ @techlink{position} is used.}
+  粘贴到指定范围。如果“开始”为“开始”，则使用当前选择的开始位置。如果“开始”是“结束”，则使用当前选择的结束位置。如果“结束”为“相同”，则“开始”用于“结束”，除非“开始”为“开始”，在这种情况下，将使用当前选择的结束位置。
 
-See @|timediscuss| for a discussion of the @racket[time] argument. If
+@;{See @|timediscuss| for a discussion of the @racket[time] argument. If
  @racket[time] is outside the platform-specific range of times,
- @|MismatchExn|.
+ @|MismatchExn|.}
+  有关时间参数的讨论，请参见剪切和粘贴时间。如果时间超出平台特定的时间范围，将引发exn:fail:contract异常。
 
 }
 
@@ -1673,20 +1936,23 @@ See @|timediscuss| for a discussion of the @racket[time] argument. If
 @defmethod[(paste-next)
            void?]{
 
-Editors collectively maintain a copy ring that holds up to 30 previous
+@;{Editors collectively maintain a copy ring that holds up to 30 previous
  copies (and cuts) among the editors. When it is called as the next
  method on an editor after a paste, the @method[text% paste-next]
  method replaces the text from a previous paste with the next data in
  the copy ring, incrementing the ring pointer so that the next
- @method[text% paste-next] pastes in even older data.
+ @method[text% paste-next] pastes in even older data.}
+  编辑人员共同维护一个复制环，在编辑人员中保留多达30个以前的副本（和剪切）。粘贴后，当它在编辑器上被调用为下一个方法时，“粘贴下一个方法”将用复制环中的下一个数据替换上一个粘贴中的文本，并递增环指针，以便下一个粘贴下一个粘贴在更旧的数据中。
 
-It is a copy ``ring'' because the ring pointer wraps back to the most
+@;{It is a copy ``ring'' because the ring pointer wraps back to the most
  recent copied data after the oldest remembered data is pasted. Any
  cut, copy, or (regular) paste operation resets the copy ring pointer
- back to the beginning.
+ back to the beginning.}
+ 这是一个复制的“环”，因为在粘贴最旧的记忆数据之后，环指针会回折到最近复制的数据。任何剪切、复制或（常规）粘贴操作都会将复制环指针重置回起始位置。 
 
-If the previous operation on the editor was not a paste, calling
- @method[text% paste-next] has no effect.
+@;{If the previous operation on the editor was not a paste, calling
+ @method[text% paste-next] has no effect.}
+  如果编辑器上的上一个操作不是粘贴，则调用PasteNext没有效果。
 
 }
 
@@ -1697,17 +1963,21 @@ If the previous operation on the editor was not a paste, calling
                               [end (or/c exact-nonnegative-integer? 'same) 'same])
            void?]{
 
-Pastes into the specified range. If @racket[start] is @racket['start],
+@;{Pastes into the specified range. If @racket[start] is @racket['start],
  then the current selection start @techlink{position} is used. If
  @racket[start] is @racket['end], then the current selection end
  @techlink{position} is used. If @racket[end] is @racket['same], then
  @racket[start] is used for @racket[end], unless @racket[start] is
  @racket['start], in which case the current selection end
- @techlink{position} is used.
+ @techlink{position} is used.}
+  粘贴到指定范围。如果“开始”为“开始”，则使用当前选择的开始位置。如果“开始”是“结束”，则使用当前选择的结束位置。如果“结束”为“相同”，则“开始”用于“结束”，除非“开始”为“开始”，在这种情况下，将使用当前选择的结束位置。
 
-See @|timediscuss| for a discussion of the @racket[time] argument. If
+
+
+@;{See @|timediscuss| for a discussion of the @racket[time] argument. If
  @racket[time] is outside the platform-specific range of times,
- @|MismatchExn|.
+ @|MismatchExn|.}
+  有关时间参数的讨论，请参见剪切和粘贴时间。如果时间超出平台特定的时间范围，将引发exn:fail:contract异常。
 
 }
 
@@ -1715,11 +1985,13 @@ See @|timediscuss| for a discussion of the @racket[time] argument. If
                           [at-eol? any/c #f])
            exact-nonnegative-integer?]{
 
-Returns the line number of the line containing a given @techlink{position}. @|LineNumbering|
+@;{Returns the line number of the line containing a given @techlink{position}. @|LineNumbering|}
+  返回包含给定位置的行的行号。从0开始对进行编号。
 
 @LineToPara[@racket[position-paragraph]]
 
-See @|ateoldiscuss| for a discussion of @racket[at-eol?].
+@;{See @|ateoldiscuss| for a discussion of @racket[at-eol?].}
+  另见paragraph start position，其中对段落进行操作（由显式换行符确定）替代（由两个显式换行符确定字符和自动换行）。
 
 @|FCAMW| @|EVD|
 
@@ -1734,23 +2006,28 @@ See @|ateoldiscuss| for a discussion of @racket[at-eol?].
                               [whole-line? any/c #f])
            void?]{
 
-Returns the @techlink{location} of a given @techlink{position}. See also @method[text% position-locations].
+@;{Returns the @techlink{location} of a given @techlink{position}. See also @method[text% position-locations].}
+  返回给定位置的位置。另请参见位置位置。
 
-@boxisfillnull[@racket[x] @elem{the x-@techlink{location} of the @techlink{position} @racket[start] in editor
+@;{@boxisfillnull[@racket[x] @elem{the x-@techlink{location} of the @techlink{position} @racket[start] in editor
 coordinates} ]
-@boxisfillnull[@racket[y] @elem{the y-@techlink{location} (top or bottom; see below) of the
-@techlink{position} @racket[start] in editor coordinates}]
+   @boxisfillnull[@racket[y] @elem{the y-@techlink{location} (top or bottom; see below) of the
+@techlink{position} @racket[start] in editor coordinates}]}
+  除非x是f，否则x框将填充位置起点在编辑器坐标中的x位置。除非y是f，否则y框将填充位置起点在编辑器坐标中的y位置（顶部或底部；请参见下文）。
 
-See @|ateoldiscuss| for a discussion of @racket[at-eol?].
+@;{See @|ateoldiscuss| for a discussion of @racket[at-eol?].}
+  关于在EOL的讨论，请参见《最后的意义》？.
 
-If @racket[top?] is not @racket[#f], the top coordinate of the @techlink{location}
+@;{If @racket[top?] is not @racket[#f], the top coordinate of the @techlink{location}
 is returned, otherwise the bottom coordinate of the
-@techlink{location} is returned.
+@techlink{location} is returned.}
+  如果顶部？不是f，返回位置的顶坐标，否则返回位置的底坐标。
 
-The top @racket[y] @techlink{location} may be different for different @techlink{position}s
+@;{The top @racket[y] @techlink{location} may be different for different @techlink{position}s
 within a line when different-sized graphic objects are used. If
 @racket[whole-line?] is not @racket[#f], the minimum top @techlink{location} or
-maximum bottom @techlink{location} for the whole line is returned in @racket[y].
+maximum bottom @techlink{location} for the whole line is returned in @racket[y].}
+  当使用不同大小的图形对象时，一条线中不同位置的顶部Y位置可能不同。如果整条线？不是f，整行的最小顶部位置或最大底部位置返回y。
 
 @|OVD| @|FCA|
 
@@ -1766,8 +2043,9 @@ maximum bottom @techlink{location} for the whole line is returned in @racket[y].
                                [whole-line? any/c #f])
            void?]{
 
-Like @method[text% position-location], but returns both the ``top''
-and ``bottom'' results at once.
+@;{Like @method[text% position-location], but returns both the ``top''
+and ``bottom'' results at once.}
+  类似于位置位置，但同时返回“top”和“bottom”结果。
 
 @|OVD| @|FCA|
 
@@ -1777,9 +2055,11 @@ and ``bottom'' results at once.
                                [at-eol? any/c #f])
            exact-nonnegative-integer?]{
 
-See @|ateoldiscuss| for a discussion of @racket[at-eol?].
+@;{See @|ateoldiscuss| for a discussion of @racket[at-eol?].}
+  关于在EOL的讨论，请参见《最后的意义》？.
 
-Returns the paragraph number of the paragraph containing a given @techlink{position}.
+@;{Returns the paragraph number of the paragraph containing a given @techlink{position}.}
+  返回包含给定位置的段落的段落编号。
 
 }
 
@@ -1793,8 +2073,9 @@ Returns the paragraph number of the paragraph containing a given @techlink{posit
                               [overwrite-styles? any/c #f])
               boolean?])]{
 
-New data is inserted at the @techlink{position} indicated by @racket[start], or at
- the current @techlink{position} if @racket[start] is @racket['start].
+@;{New data is inserted at the @techlink{position} indicated by @racket[start], or at
+ the current @techlink{position} if @racket[start] is @racket['start].}
+  新数据将插入到“开始”指示的位置，或者如果“开始”为“开始”，则插入到当前位置。
 
 }
 
@@ -1803,8 +2084,9 @@ New data is inserted at the @techlink{position} indicated by @racket[start], or 
                              [end exact-nonnegative-integer?])
            void?]{
 
-Removes all clickbacks installed for exactly the range @racket[start]
- to @racket[end]. See also @|clickbackdiscuss|.
+@;{Removes all clickbacks installed for exactly the range @racket[start]
+ to @racket[end]. See also @|clickbackdiscuss|.}
+  删除为范围从头到尾安装的所有单击后退。另请参见返回。
 
 }
 
@@ -1815,35 +2097,42 @@ Removes all clickbacks installed for exactly the range @racket[start]
                                [bias (or/c 'start 'end 'none) 'none])
            boolean?]{
 
-Scrolls the editor so that a given @techlink{position} is visible. 
+@;{Scrolls the editor so that a given @techlink{position} is visible. }
+  滚动编辑器，使给定位置可见。
 
-If @racket[end] is @racket['same] or equal to @racket[start], then @techlink{position}
+@;{If @racket[end] is @racket['same] or equal to @racket[start], then @techlink{position}
  @racket[start] is made visible.  See @|ateoldiscuss| for a discussion of
- @racket[at-eol?].
+ @racket[at-eol?].}
+  如果“结束”等于“开始”，则“位置开始”可见。关于在EOL的讨论，请参见《最后的意义》？.
 
-If @racket[end] is not @racket['same] and not the same as @racket[start],
+@;{If @racket[end] is not @racket['same] and not the same as @racket[start],
  then the range @racket[start] to @racket[end] is made visible and
- @racket[at-eol?] is ignored.
+ @racket[at-eol?] is ignored.}
+  如果“结束”与“开始”不相同，那么“开始”到“结束”的范围是可见的，并且在EOL？被忽略。
 
-When the specified range cannot fit in the visible area, @racket[bias]
+@;{When the specified range cannot fit in the visible area, @racket[bias]
  indicates which end of the range to display. When @racket[bias] is
  @racket['start], then the start of the range is displayed. When
  @racket[bias] is @racket['end], then the end of the range is
- displayed. Otherwise, @racket[bias] must be @racket['none].
+ displayed. Otherwise, @racket[bias] must be @racket['none].}
+  当指定的范围不适合可见区域时，偏差指示要显示范围的哪一端。当“偏移”为“开始”时，则显示范围的开始。当“偏移”为“结束”时，则显示范围的结束。否则，偏差必须为“无”。
 
-If the editor is scrolled, then the editor is redrawn and the return
+@;{If the editor is scrolled, then the editor is redrawn and the return
  value is @racket[#t]; otherwise, the return value is @racket[#f].  If
  refreshing is delayed (see @method[editor<%> refresh-delayed?]), then
  the scroll request is saved until the delay has ended. The scroll is
  performed (immediately or later) by calling @method[editor<%>
- scroll-editor-to].
+ scroll-editor-to].}
+  如果滚动编辑器，则重新绘制编辑器，返回值为t；否则，返回值为f。如果刷新延迟（请参见刷新延迟？），然后保存滚动请求，直到延迟结束。通过调用滚动编辑器来执行滚动（立即或稍后）。
 
-Scrolling is disallowed when the editor is internally locked for
- reflowing (see also @|lockdiscuss|).
+@;{Scrolling is disallowed when the editor is internally locked for
+ reflowing (see also @|lockdiscuss|).}
+  当编辑器被内部锁定以进行回流时，不允许滚动（另请参见内部编辑器锁定）。
 
-The system may scroll the editor without calling this method. For
+@;{The system may scroll the editor without calling this method. For
  example, a canvas displaying an editor might scroll the editor to
- handle a scrollbar event.
+ handle a scrollbar event.}
+  系统可以滚动编辑器而不调用此方法。例如，显示编辑器的画布可能会滚动编辑器以处理滚动条事件。
 
 }
 
@@ -1851,16 +2140,20 @@ The system may scroll the editor without calling this method. For
 @defmethod[(set-anchor [on? any/c])
            void?]{
 
-Turns anchoring on or off. This method can be overridden to affect or
+@;{Turns anchoring on or off. This method can be overridden to affect or
  detect changes in the anchor state. See also
- @method[text% get-anchor].
+ @method[text% get-anchor].}
+  打开或关闭锚定。可以重写此方法以影响或检测锚定状态中的更改。另请参见获取锚定。
 
-If @racket[on?] is not @racket[#f], then the selection will be
+
+
+@;{If @racket[on?] is not @racket[#f], then the selection will be
  automatically extended when cursor keys are used (or, more generally,
  when @method[text% move-position] is used to move the selection or the
  @racket[_keep-anchor?] argument to @method[text% set-position] is a true value),
  otherwise anchoring is turned off. Anchoring is automatically turned
- off if the user does anything besides cursor movements.
+ off if the user does anything besides cursor movements.}
+ 如果打开？如果不是f，则当使用光标键时，选择将自动扩展（或者，更普遍地说，当使用移动位置移动选择或保持锚定时）？设置位置的参数为真值），否则将关闭锚定。如果用户做了除光标移动以外的任何操作，则锚定将自动关闭。 
 
 }
 
@@ -1868,15 +2161,18 @@ If @racket[on?] is not @racket[#f], then the selection will be
 @defmethod[(set-autowrap-bitmap [bitmap (or/c (is-a?/c bitmap%) #f)])
            (or/c (is-a?/c bitmap%) #f)]{
 
-Sets the bitmap that is drawn at the end of a line when it is
- automatically line-wrapped.
+@;{Sets the bitmap that is drawn at the end of a line when it is
+ automatically line-wrapped.}
+  设置自动换行时在行尾绘制的位图。
 
-If @racket[bitmap] is @racket[#f], no autowrap indicator is drawn
+@;{If @racket[bitmap] is @racket[#f], no autowrap indicator is drawn
  (this is the default). The previously used bitmap (possibly
- @racket[#f]) is returned.
+ @racket[#f]) is returned.}
+  如果位图为f，则不会绘制自动换行指示器（这是默认值）。返回以前使用的位图（可能是f）。
 
-Setting the bitmap is disallowed when the editor is internally locked
- for reflowing (see also @|lockdiscuss|).
+@;{Setting the bitmap is disallowed when the editor is internally locked
+ for reflowing (see also @|lockdiscuss|).}
+  当编辑器内部锁定以进行回流时，不允许设置位图（另请参见内部编辑器锁定）。
 
 }
 
@@ -1884,13 +2180,15 @@ Setting the bitmap is disallowed when the editor is internally locked
 @defmethod[(set-between-threshold [threshold (and/c real? (not/c negative?))])
            void?]{
 
-Sets the graphical distance used to determine the meaning of a user
+@;{Sets the graphical distance used to determine the meaning of a user
  click. If a click falls within @racket[threshold] of a position
  between two @techlink{item}s, then the click registers on the space
- between the @techlink{item}s rather than on either @techlink{item}.
+ between the @techlink{item}s rather than on either @techlink{item}.}
+  设置用于确定用户单击含义的图形距离。如果一次点击在两个项目之间的一个位置的阈值范围内，那么点击会在项目之间的空白处注册，而不是在任何一个项目上注册。
 
-See also 
-@method[text% get-between-threshold].
+@;{See also 
+@method[text% get-between-threshold].}
+  另请参见介于阈值之间。
 
 }
 
@@ -1905,61 +2203,76 @@ See also
                           [call-on-down? any/c #f])
            void?]{
 
-Installs a clickback for a given region. If a clickback is already
- installed for an overlapping region, this clickback takes precedence.
+@;{Installs a clickback for a given region. If a clickback is already
+ installed for an overlapping region, this clickback takes precedence.}
+  为给定区域安装一个单击返回。如果已经为重叠区域安装了回接，则此回接优先。
 
-The callback procedure @racket[f] is called when the user selects the
+@;{The callback procedure @racket[f] is called when the user selects the
  clickback. The arguments to @racket[f] are this editor and the starting
- and ending range of the clickback.
+ and ending range of the clickback.}
+  当用户选择clickback时，将调用回调过程f。f的参数是这个编辑器和clickback的开始和结束范围。
 
-The @racket[hilite-delta] style delta is applied to the clickback text
+@;{The @racket[hilite-delta] style delta is applied to the clickback text
  when the user has clicked and is still holding the mouse over the
  clickback. If @racket[hilite-delta] is @racket[#f], then the clickback
- region's style is not changed when it is being selected.
+ region's style is not changed when it is being selected.}
+  hilite delta样式的delta应用于用户单击后仍将鼠标停留在单击上的单击回文本。如果hilite delta为f，则当选择时，单击返回区域的样式不会更改。
 
-If @racket[call-on-down?] is not @racket[#f], the clickback is called
+@;{If @racket[call-on-down?] is not @racket[#f], the clickback is called
  immediately when the user clicks the mouse button down, instead of
  after a mouse-up event. The @racket[hilite-delta] argument is not used
- in this case.
+ in this case.}
+  如果呼叫停止？不是f，当用户单击鼠标按钮时立即调用clickback，而不是在鼠标向上事件之后调用。这种情况下不使用hilite delta参数。
 
-See also @|clickbackdiscuss|.
+@;{See also @|clickbackdiscuss|.}
+  另请参见返回。
  }
 
 @defmethod[(set-file-format [format (or/c 'standard 'text 'text-force-cr)])
            void?]{
 
-Set the format of the file saved from this editor. 
+@;{Set the format of the file saved from this editor. }
+  设置从此编辑器保存的文件的格式。
 
-The legal formats are:
+
+
+@;{The legal formats are:}
+  法律格式为：
 
 @itemize[
-@item{@racket['standard] ---  a standard editor  file}
-@item{@racket['text] --- a text file}
-@item{@racket['text-force-cr] --- a text file; when writing, change 
+@item{@racket['standard]@;{ ---  a standard editor  file}
+       '标准-标准编辑器文件}
+@item{@racket['text]@;{ --- a text file}
+       文本-文本文件}
+@item{@racket['text-force-cr]@;{ --- a text file; when writing, change 
 automatic newlines (from word-wrapping) into real newlines}
+       'text force cr-文本文件；写入时，将自动换行（从换行）更改为真正的换行}
 ]
 
-@MonitorMethod[@elem{The file format of an editor} @elem{the
+@;{@MonitorMethod[@elem{The file format of an editor} @elem{the
  system in response to file loading and saving
  method calls} @elem{@method[editor<%> on-load-file] and
- @method[editor<%> on-save-file]} @elem{such file format}]
+ @method[editor<%> on-save-file]} @elem{such file format}]}
+  编辑器的文件格式可以被系统响应文件加载和保存方法调用更改，这样的更改不会通过这个方法；使用on load file and on save file来监视这样的文件格式更改。
 }
 
 
 @defmethod[(set-line-spacing [space (and/c real? (not/c negative?))])
            void?]{
 
-Sets the spacing inserted by the editor between each line. This
- spacing is included in the reported height of each line.
+@;{Sets the spacing inserted by the editor between each line. This
+ spacing is included in the reported height of each line.}
+  设置编辑器在每行之间插入的间距。此间距包含在每行的报告高度中。
 
 }
 
 @defmethod[(set-overwrite-mode [on? any/c])
            void?]{
 
-Enables or disables overwrite mode. See @method[text%
+@;{Enables or disables overwrite mode. See @method[text%
  get-overwrite-mode]. This method can be overridden to affect or
- detect changes in the overwrite mode.
+ detect changes in the overwrite mode.}
+  启用或禁用覆盖模式。请参见获取覆盖模式。可以重写此方法以影响或检测覆盖模式中的更改。
 
 }
 
@@ -1969,32 +2282,37 @@ Enables or disables overwrite mode. See @method[text%
                         [bottom (and/c real? (not/c negative?))])
            void?]{
 
-Sets padding that insets the editor's content when drawn within its
-@techlink{display}.
+@;{Sets padding that insets the editor's content when drawn within its
+@techlink{display}.}
+  设置在编辑器的显示中绘制时插入其内容的填充。
 
-Unlike any margin that may be applied by the editor's
+@;{Unlike any margin that may be applied by the editor's
 @techlink{display}, padding is counted in @techlink{location}
 information that is reported by methods such as @method[text%
 position-location]. For example, with a @racket[left] padding of 17.0
 and a @racket[top] padding of 9.0, the location of position 0 will be
 (17.0, 9.0) rather than (0, 0). Padding also contributes to the
 editor's size as reported by @method[editor<%> get-extent].}
+与编辑器显示可能应用的任何边距不同，填充在位置信息中进行计数，这些信息由位置位置等方法报告。例如，左填充17.0，上填充9.0，位置0的位置将是（17.0，9.0）而不是（0，0）。填充也有助于按get-extent报告的编辑器大小。
+ }
 
 
 @defmethod[(set-paragraph-alignment [paragraph exact-nonnegative-integer?]
                                     [alignment (or/c 'left 'center 'right)])
            void?]{
 
-Sets a paragraph-specific horizontal alignment. The alignment is only
+@;{Sets a paragraph-specific horizontal alignment. The alignment is only
  used when the editor has a maximum width, as set with
- @method[editor<%> set-max-width]. @|ParagraphNumbering|
+ @method[editor<%> set-max-width]. @|ParagraphNumbering|}
+  设置段落特定的水平对齐方式。仅当编辑器具有最大宽度时才使用对齐方式，如使用“设置最大宽度”设置的那样。段落编号从0开始。
 
-@italic{This method is experimental.} It works reliably only when the
+@;{@italic{This method is experimental.} It works reliably only when the
  paragraph is not merged or split. Merging or splitting a paragraph
  with alignment settings causes the settings to be transferred
  unpredictably (although other paragraphs in the editor can be safely
  split or merged). If the last paragraph in an editor is empty,
- settings assigned to it are ignored.
+ settings assigned to it are ignored.}
+  这种方法是实验性的。只有当段落没有合并或拆分时，它才能可靠地工作。使用对齐设置合并或拆分段落会导致设置无法预测地传输（尽管编辑器中的其他段落可以安全地拆分或合并）。如果编辑器中的最后一段为空，则忽略为其指定的设置。
 
 }
 
@@ -2005,17 +2323,20 @@ Sets a paragraph-specific horizontal alignment. The alignment is only
                                   [right (and/c real? (not/c negative?))])
            void?]{
 
-Sets a paragraph-specific margin. @|ParagraphNumbering|
+@;{Sets a paragraph-specific margin. @|ParagraphNumbering|}
+ 设置段落特定的边距。段落编号从0开始。 
 
-The first line of the paragraph is indented by @racket[first-left] points
+@;{The first line of the paragraph is indented by @racket[first-left] points
  within the editor. If the paragraph is line-wrapped (when the editor
  has a maximum width), subsequent lines are indented by @racket[left]
  points.  If the editor has a maximum width, the paragraph's maximum
  width for line-wrapping is @racket[right] points smaller than the
- editor's maximum width.
+ editor's maximum width.}
+  段落的第一行由编辑器中的第一个左点缩进。如果段落是换行的（当编辑器具有最大宽度时），则后续行将按左点缩进。如果编辑器具有最大宽度，则段落的换行最大宽度是小于编辑器最大宽度的右点。
 
-@italic{This method is experimental.} See @method[text%
- set-paragraph-alignment] for more information.
+@;{@italic{This method is experimental.} See @method[text%
+ set-paragraph-alignment] for more information.}
+  这种方法是实验性的。有关详细信息，请参见设置段落对齐。
 
 }
 
@@ -2027,38 +2348,53 @@ The first line of the paragraph is indented by @racket[first-left] points
                          [seltype (or/c 'default 'x 'local) 'default])
            void?]{
 
-Sets the current selection in the editor. 
+@;{Sets the current selection in the editor. }
+  在编辑器中设置当前选择。
 
-If @racket[end] is @racket['same] or less than or equal to @racket[start],
+
+
+@;{If @racket[end] is @racket['same] or less than or equal to @racket[start],
  the current start and end @techlink{position}s are both set to
- @racket[start]. Otherwise the given range is selected.
+ @racket[start]. Otherwise the given range is selected.}
+  如果“结束”等于或小于或等于“开始”，则当前开始位置和结束位置都设置为“开始”。否则将选择给定的范围。
 
-See @|ateoldiscuss| for a discussion of @racket[at-eol?]. If
+
+@;{See @|ateoldiscuss| for a discussion of @racket[at-eol?]. If
  @racket[scroll?]  is not @racket[#f], then the @techlink{display} is
- scrolled to show the selection if necessary.
+ scrolled to show the selection if necessary.}
+  关于在EOL的讨论，请参见《最后的意义》？如果滚动？不是f，则会滚动显示以显示所选内容（如有必要）。
 
-The @racket[seltype] argument is only used when the X Window System
- selection mechanism is enabled. The possible values are:
+@;{The @racket[seltype] argument is only used when the X Window System
+ selection mechanism is enabled. The possible values are:}
+  seltype参数仅在启用X窗口系统选择机制时使用。可能的值为：
+
 @itemize[
 
- @item{@racket['default] --- if this window has the keyboard focus
+ @item{@racket['default]@;{ --- if this window has the keyboard focus
  and given selection is non-empty, make it the current X selection}
+        '默认值-如果此窗口具有键盘焦点，并且给定的选择为非空，则使其成为当前的x选择}
 
- @item{@racket['x] --- if the given selection is non-empty, make
+ @item{@racket['x]@;{ --- if the given selection is non-empty, make
  it the current X selection}
+        'x-如果给定的选择非空，则将其设为当前的x选择}
 
- @item{@racket['local] --- do not change the
+ @item{@racket['local]@;{ --- do not change the
  current X selection}
+        '本地-不更改当前X选择}
 
 ]
 
-Setting the @techlink{position} is disallowed when the editor is internally
- locked for reflowing (see also @|lockdiscuss|).
+@;{Setting the @techlink{position} is disallowed when the editor is internally
+ locked for reflowing (see also @|lockdiscuss|).}
+  当编辑器内部锁定进行回流时，不允许设置位置（另请参见内部编辑器锁定）。
 
-The system may change the selection in an editor without calling this
- method (or any visible method).
 
-See also @racket[editor-set-x-selection-mode].
+@;{The system may change the selection in an editor without calling this
+ method (or any visible method).}
+  系统可以在编辑器中更改所选内容，而无需调用此方法（或任何可见方法）。
+
+@;{See also @racket[editor-set-x-selection-mode].}
+  另请参见editor-set-x-selection-mode。
 
 }
 
@@ -2070,18 +2406,28 @@ See also @racket[editor-set-x-selection-mode].
                                      [seltype (or/c 'default 'x 'local) 'default])
            void?]{
 
-Like  @method[text% set-position], but a scrolling bias can be specified.
+@;{Like  @method[text% set-position], but a scrolling bias can be specified.}
+  类似于设置位置，但可以指定滚动偏移。
 
-The possible values for @racket[bias] are:
+@;{The possible values for @racket[bias] are:}
+  偏差的可能值为：
+  
 @itemize[
-@item{@racket['start-only] --- only insure that the starting @techlink{position} is visible}
-@item{@racket['start] --- if the range doesn't fit in the visible area, show the starting @techlink{position}}
-@item{@racket['none] --- no special scrolling instructions}
-@item{@racket['end] --- if the range doesn't fit in the visible area, show the ending @techlink{position}}
-@item{@racket['end-only] --- only insure that the ending @techlink{position} is visible}
+@item{@racket['start-only]@;{ --- only insure that the starting @techlink{position} is visible}
+       '仅开始-仅确保开始位置可见}
+ 
+@item{@racket['start]@;{ --- if the range doesn't fit in the visible area, show the starting @techlink{position}}
+       '开始-如果范围不适合可见区域，则显示开始位置}
+@item{@racket['none]@;{ --- no special scrolling instructions}
+       '无-无特殊滚动说明}
+@item{@racket['end]@;{ --- if the range doesn't fit in the visible area, show the ending @techlink{position}}
+       '结束-如果范围不适合可见区域，则显示结束位置}
+@item{@racket['end-only]@;{ --- only insure that the ending @techlink{position} is visible}
+       '仅限结束-仅确保结束位置可见}
 ]
 
-See also @method[text% scroll-to-position].
+@;{See also @method[text% scroll-to-position].}
+  另请参见滚动到位置。
 
 }
 
@@ -2093,17 +2439,20 @@ See also @method[text% scroll-to-position].
 
 @methspec{
 
-Sets extra data associated with a given region. See
+@;{Sets extra data associated with a given region. See
  @|editordatadiscuss| and @method[text% get-region-data] for more
- information.
+ information.}
+  规范：设置与给定区域关联的额外数据。有关详细信息，请参见编辑器数据和获取区域数据。
 
-This method is meant to be overridden in combination with
- @method[text% get-region-data] .
+@;{This method is meant to be overridden in combination with
+ @method[text% get-region-data] .}
+  此方法应与get region数据一起重写。
 
 }
 @methimpl{
 
-Does nothing.
+@;{Does nothing.}
+  默认实现：不执行任何操作。
 
 }}
 
@@ -2111,8 +2460,9 @@ Does nothing.
 @defmethod[(set-styles-sticky [sticky? any/c])
            void?]{
 
-See @method[text% get-styles-sticky] for information about sticky
- styles.
+@;{See @method[text% get-styles-sticky] for information about sticky
+ styles.}
+  有关粘滞样式的信息，请参见获取Styles Sticky。
 
 }
 
@@ -2122,18 +2472,23 @@ See @method[text% get-styles-sticky] for information about sticky
                      [in-units? any/c #t])
            void?]{
 
-Sets the tabbing array for the editor.
+@;{Sets the tabbing array for the editor.}
+  设置编辑器的选项卡数组。
 
-The @racket[tabs] list determines the tabbing array. The tabbing array
+
+
+@;{The @racket[tabs] list determines the tabbing array. The tabbing array
  specifies the x-@techlink{location}s where each tab occurs. Tabs beyond the last
  specified tab are separated by a fixed amount @racket[tab-width].  If
  @racket[in-units?] is not @racket[#f], then tabs are specified in canvas
  units; otherwise, they are specified as a number of spaces. (If tabs
  are specified in spaces, then the graphic tab positions will change
- with the font used for the tab.)
+ with the font used for the tab.)}
+  选项卡列表确定选项卡数组。选项卡数组指定每个选项卡出现的X位置。超出最后一个指定选项卡的选项卡由固定数量的选项卡宽度分隔。如果是单位？不是f，则以画布单位指定选项卡；否则，它们被指定为若干空格。（如果在空格中指定了制表符，则图形制表符位置将随制表符使用的字体而更改。）
 
-Setting tabs is disallowed when the editor is internally locked for
- reflowing (see also @|lockdiscuss|).
+@;{Setting tabs is disallowed when the editor is internally locked for
+ reflowing (see also @|lockdiscuss|).}
+  当编辑器内部锁定以进行回流时，不允许使用设置选项卡（另请参见内部编辑器锁定）。
 
 }
 
@@ -2144,22 +2499,25 @@ Setting tabs is disallowed when the editor is internally locked for
                                    . -> . any)])
            void?]{
 
-Sets the word-breaking function for the editor.  For information about
+@;{Sets the word-breaking function for the editor.  For information about
  the arguments to the word-breaking function, see @method[text%
- find-wordbreak].
+ find-wordbreak].}
+  设置编辑器的分词功能。有关分词函数参数的信息，请参阅查找分词。
 
-The standard wordbreaking function uses the editor's
+@;{The standard wordbreaking function uses the editor's
  @racket[editor-wordbreak-map%] object to determine which characters
  break a word. See also @racket[editor-wordbreak-map%] and
- @method[text% set-wordbreak-map].
+ @method[text% set-wordbreak-map].}
+  标准分词函数使用编辑器的编辑器分词映射%对象来确定哪些字符可以分词。另请参见编辑器分词图%和设置分词图。
 
-Since the wordbreak function will be called when line breaks are being
+@;{Since the wordbreak function will be called when line breaks are being
  determined (in an editor that has a maximum width), there is a
  constrained set of @racket[text%] methods that the wordbreak
  function is allowed to invoke. It cannot invoke a member function
  that uses information about @techlink{location}s or lines (which are
  identified in this manual with ``@|OVD|''), but it can still invoke
- member functions that work with snips and @techlink{item}s.
+ member functions that work with snips and @techlink{item}s.}
+  由于在确定换行符时（在宽度最大的编辑器中），将调用分词功能，因此分词功能允许调用一组受约束的文本%方法。它不能调用使用位置或行信息的成员函数（在本手册中用“只有当显示编辑器时，结果才有效”（见编辑器结构和术语）。当get admin返回系统管理员（不是f）。）时，它仍然可以调用使用snips和items的成员函数。
 
 }
 
@@ -2167,11 +2525,13 @@ Since the wordbreak function will be called when line breaks are being
 @defmethod[(set-wordbreak-map [map (or/c (is-a?/c editor-wordbreak-map%) #f)])
            void?]{
 
-Sets the wordbreaking map that is used by the standard wordbreaking
- function. See @racket[editor-wordbreak-map%] for more information.
+@;{Sets the wordbreaking map that is used by the standard wordbreaking
+ function. See @racket[editor-wordbreak-map%] for more information.}
+  设置标准分词函数使用的分词映射。有关详细信息，请参阅编辑器分词图%。
 
-If @racket[map] is @racket[#f], then the standard map
- (@racket[the-editor-wordbreak-map]) is used.
+@;{If @racket[map] is @racket[#f], then the standard map
+ (@racket[the-editor-wordbreak-map]) is used.}
+  如果map是f，则使用标准映射（编辑器分词映射）。
 
 }
 
@@ -2179,13 +2539,15 @@ If @racket[map] is @racket[#f], then the standard map
 @defmethod[(split-snip [pos exact-nonnegative-integer?])
            void?]{
 
-Given a @techlink{position}, splits the snip that includes the
+@;{Given a @techlink{position}, splits the snip that includes the
  @techlink{position} (if any) so that the @techlink{position} is
  between two snips. The snip may refuse to split, although none of the
- built-in snip classes will ever refuse.
+ built-in snip classes will ever refuse.}
+  给定一个位置，分割包含位置（如果有的话）的剪子，使位置在两个剪子之间。尽管内置的snip类都不会拒绝，但snip可能拒绝拆分。
 
-Splitting a snip is disallowed when the editor is internally locked
- for reflowing (see also @|lockdiscuss|).
+@;{Splitting a snip is disallowed when the editor is internally locked
+ for reflowing (see also @|lockdiscuss|).}
+  当编辑器内部锁定以进行回流时，不允许拆分截图（另请参见内部编辑器锁定）。
 
 }
 
@@ -2196,10 +2558,11 @@ Splitting a snip is disallowed when the editor is internally locked
                           [end (or/c exact-nonnegative-integer? 'eof) 'eof])
            boolean?]{
 
-If @racket[start] is 0 and @racket[end] is @racket['eof] negative,
+@;{If @racket[start] is 0 and @racket[end] is @racket['eof] negative,
  then the entire contents are written to the stream. If @racket[end]
  is @racket['eof], then the contents are written from @racket[start]
  until the end of the editor. Otherwise, the contents of the given
- range are written.
-
+ range are written.}
+如果start为0，end为'eof负，则将整个内容写入流。如果end是'eof，那么内容将从编辑器的开始写入到结束。否则，将写入给定范围的内容。
+  
 }}
