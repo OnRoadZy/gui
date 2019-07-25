@@ -173,7 +173,7 @@
 
   (define reference-doc '(lib "scribblings/reference/reference.scrbl"))
 
-  (define SeeMzParam @elem{@;{(see @secref[#:doc reference-doc "parameters"])}（见@secref[#:doc reference-doc "parameters"]）})
+  (define SeeMzParam @elem{@;{(see @secref[#:doc reference-doc "parameters"])}（参见@secref[#:doc reference-doc "parameters"]）})
   
   (define DrawSizeNote "")
 

@@ -2,7 +2,7 @@
 @(require "common.rkt")
 
 @;{@title[#:style '(toc reveal)]{Overview}}
-@title[#:style '(toc reveal)]{概述}
+@title[#:tag "Overview" #:style '(toc reveal)]{概述}
 
 @local-table-of-contents[]
 

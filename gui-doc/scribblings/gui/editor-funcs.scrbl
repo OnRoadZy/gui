@@ -2,7 +2,7 @@
 @(require "common.rkt" scribble/bnf)
 
 @;{@title{Editor Functions}}
-@title{编辑器函数}
+@title[#:tag "Editor_Functions"]{编辑器函数}
 
 
 @defproc[(add-editor-keymap-functions [keymap (is-a?/c keymap%)])
